@@ -46,6 +46,7 @@
 					
 					<script>
 						function phoneCheck(){
+							
 							$.ajax({
 								url: 'check-phone-meessage',
 								data: {
@@ -74,12 +75,12 @@
 					function certification(){
 						 var certification = $('#certification').val();
 						 var userNumber = $('#memPhoneCheck').val();
-						 
+
 						 if(certification === userNumber){
 							$(".check1").text("인증번호가 일치합니다.");
 							$(".check1").css("color","green");
 							$("#memPhone").attr("disabled",true);
-							$("#memPhoneCheck").attr("disabled",true);
+							$("#memPhoneCheck").attr("disabled",true);							
 						 }
 						 else{
 							$(".check1").text("인증번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
@@ -94,28 +95,113 @@
 					<p>② 이메일 인증을 위해 정보를 입력하세요.</p>
 					<div class="enroll-input">
 						<input type="text" name="memEmail" id="memEmail" placeholder="&nbsp;&nbsp;이메일 주소" />
-						<button type="button">입력</button>
+						<button onclick="mail();" id="duplicate" disabled>인증</button>
 					</div>
+					
+					<script>
+					$(()=>{
+						
+						$('#memEmail').keyup(()=>{
+							var email = $('#memEmail').val();
+							var checkResult = $(".check2");
+
+							function mailFormCheck(email){
+							    var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+							    return form.test(email);
+							}
+							
+							
+							if(mailFormCheck(email)){
+								checkResult.show().css("color","green").text("올바른 이메일 형식입니다.");
+								$.ajax({
+									url: 'duplicate-check',
+									data: {
+										memEmail: $('#memEmail').val()
+										},
+									success:result=>{
+										console.log(result);
+										if(result === 'Y'){
+											$('#duplicate').removeAttr("disabled");
+											checkResult.show().css("color","green").text("사용가능한 이메일입니다.");
+										}
+										else{
+											checkResult.show().css("color","red").text("사용할 수 없는 이메일입니다.");
+										}
+									},
+									error:()=>{
+										console.log('실패');
+									}
+								});
+							}
+							else{
+								checkResult.show().css("color","red").text("올바르지 못한 이메일 형식입니다.");
+							}
+						})
+					})
+						
+					</script>
+					
+					<script>
+						function mail(){
+							$.ajax({
+								url: 'mail-check',
+								data: {
+									memEmail: $('#memEmail').val()
+									},
+								success:result=>{
+									console.log(result);
+									$('#sendMailCheck').val(result);
+								},
+								error:()=>{
+									console.log('실패');
+								}
+							});
+						}
+					</script>
+					
 					<div class="enroll-input">
+						<input type="hidden" name="sendMailCheck" id="sendMailCheck" value="" />
 						<input type="text" name="memEmailCheck" id="memEmailCheck" placeholder="&nbsp;&nbsp;인증번호" />
-						<button type="button">확인</button>
+						<button onclick="checkMail();">확인</button>
 						<div class="check2"></div>
 					</div>
 				</div>
+				
+				<script>
+				function checkMail(){
+					 var sendMailCheck = $('#sendMailCheck').val();
+					 var memEmailCheck = $('#memEmailCheck').val();
+					 var memberId = $('#memEmail').val();
+					 
+					 if(sendMailCheck === memEmailCheck){
+						$(".check2").text("인증번호가 일치합니다.");
+						$(".check2").css("color","green");
+						$("#memEmail").attr("disabled",true);
+						$("#memEmailCheck").attr("disabled",true);
+						$("#memberId").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 : " + memberId);
+					 }
+					 else{
+						$(".check2").text("인증번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
+						$(".check2").css("color","red");
+						$("#memEmail").val("");
+						$("#memEmailCheck").val("");
+					 }
+				}
+				</script>
 
 				<div class="template2">
 					<p>③ 회원가입을 위해 정보를 입력하세요.</p>
 					<div class="enroll-ID">
-						<div>&nbsp;&nbsp;아이디 : admin</div>
+						<div id="memberId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 : </div>
 					</div>
 					<div class="enroll-input others">
 						<input type="password" name="memPwd" id="memPwd" placeholder="&nbsp;&nbsp;비밀번호" />
 					</div>
 					<div class="enroll-input others">
-						<input type="password" name="memPwdCheck" id="memPwdCheck" placeholder="&nbsp;&nbsp;비밀번호확인" />
+						<input type="password" name="memPwdCheck" id="memPwdCheck" placeholder="&nbsp;&nbsp;비밀번호 확인" />
 					</div>
 					<div class="enroll-input others">
-						<input type="text" name="memName" id="memName" placeholder="&nbsp;&nbsp;이름" />
+						<input type="text" name="memName" id="memName" placeholder="&nbsp;&nbsp;이름" minlength="2"/>
 					</div>
 					<div class="check3"></div>
 				</div>
@@ -125,6 +211,7 @@
 						$('#memPwdCheck').keyup(()=>{
 							var pwd = $('#memPwd').val();
 							var chkPwd = $('#memPwdCheck').val();
+
 							if(pwd == chkPwd){
 								$(".check3").text("비밀번호가 일치합니다.");
 								$(".check3").css("color","green");
@@ -137,7 +224,43 @@
 					})
 				</script>
 				<br>
-				<button type="button">회원가입</button>
+				<script>
+					$(()=>{
+						var phone = $('#memPhone').val();
+						var email = $('#memEmail').val();
+						var pwd = $('#memPwd').val();
+						var name = $('#memName').val();
+						
+						if(phone.trim() !== "" && email.trim() !== "" && pwd.trim() !== "" && name.trim() !== ""){
+							$('#enroll').removeAttr("disabled");
+						}
+						else{
+							$(".check4").text("모든 항목을 입력해주시기 바랍니다.");
+							$(".check4").css("color","red");
+						}
+						
+						function enroll(){
+							$.ajax({
+								url: 'enroll',
+								data: {
+									memPhone: phone,
+									memEmail: email,
+									memPwd: pwd,
+									memName: name
+									},
+								success:result=>{
+									console.log(result);
+									$('#sendMailCheck').val(result);
+								},
+								error:()=>{
+									console.log('실패');
+								}
+							});
+						}
+						
+					})
+				</script>
+				<button onclick="enroll();" id="enroll" disabled>회원가입</button>
 
 			</div>
 		

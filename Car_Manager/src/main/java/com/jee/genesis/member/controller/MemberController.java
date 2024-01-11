@@ -1,14 +1,26 @@
 package com.jee.genesis.member.controller;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.jee.genesis.member.model.service.MemberService;
+import com.jee.genesis.member.model.vo.CertVO;
+import com.jee.genesis.member.model.vo.Member;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
@@ -63,6 +75,65 @@ public class MemberController {
 		  System.out.println(exception.getMessage());
 		}
 		
-        return  new Gson().toJson(randomNum);
+        return new Gson().toJson(randomNum);
+	}
+	
+	// ------------------------ 메일인증
+	@ResponseBody
+	@GetMapping(value="duplicate-check", produces="application/json; charset=UTF-8")
+	public String emailCheck(String memEmail) {
+		
+		String result = "";
+		
+		if(memberService.emailCheck(memEmail) > 0) {
+			result = "N";
+		} else {
+			result = "Y";
+		}
+		return new Gson().toJson(result);
+	}
+	
+	
+	@ResponseBody
+	@GetMapping(value="mail-check", produces="application/json; charset=UTF-8")
+	public String sendMailCheck(String memEmail, HttpServletRequest request) throws MessagingException {
+		
+		MimeMessage message = sender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		String ip = request.getRemoteAddr();
+		
+		Random r = new Random();
+		int i = r.nextInt(100000);
+		Format f = new DecimalFormat("000000");
+		String secret = f.format(i);
+		
+		CertVO certVo = CertVO.builder()
+							  .who(ip)
+							  .secret(secret)
+							  .build();
+		
+		memberService.sendMail(certVo);
+				
+		helper.setTo(memEmail);;
+		helper.setSubject("회원가입 인증번호입니다.");
+		helper.setText("인증번호 : " +secret+"\n");
+		
+		sender.send(message);
+		
+		return new Gson().toJson(secret);
+	}
+	
+	@GetMapping("enroll")
+	public String insertMember(Member m, Model model) {
+		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
+		m.setMemPwd(encPwd);
+		
+		if(memberService.insertMember(m)>0) {
+			return "redirect:/";
+		} else {
+			model.addAttribute("errorMsg", "회원가입에 실패하였습니다.");
+			return "common/errorPage";
+			
+		}
 	}
 }

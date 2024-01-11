@@ -12,4 +12,12 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 
+	public int emailCheck(SqlSessionTemplate sqlSession, String memEmail) {
+		return sqlSession.selectOne("memberMapper.memEmail", memEmail);
+	}
+
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
 }

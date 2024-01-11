@@ -26,8 +26,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.insertMember(sqlSession, m);
 	}
 
 	@Override
@@ -44,8 +43,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int emailCheck(String memEmail) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.emailCheck(sqlSession, memEmail);
 	}
 
 	@Override

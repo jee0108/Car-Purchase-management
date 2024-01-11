@@ -9,5 +9,9 @@
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
-
+	<select id="memEmail" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE MEM_EMAIL = #{memEmail}
+	</select>
 </mapper>
