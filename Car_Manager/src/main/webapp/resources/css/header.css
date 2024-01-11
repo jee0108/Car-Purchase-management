@@ -29,7 +29,7 @@ a {
 	color: rgb(193, 193, 193);
 	text-decoration-line: none;
 }
-a:hover{
+#header a:hover{
 	color: white;
 	font-weight: bolder;
 	text-decoration: none;

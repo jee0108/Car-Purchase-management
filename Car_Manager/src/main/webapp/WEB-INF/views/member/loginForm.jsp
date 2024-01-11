@@ -34,8 +34,8 @@
 			</form>
 
 			<div class="login-footer">
-				<a href="find-Id">아이디 찾기</a> | <a href="find-Pwd">비밀번호 찾기</a>
-				<div class="login-footer-end"><a href="member-enroll">회원가입 ►</a></div>
+				<a href="find-Id" class="login-a">아이디 찾기</a> | <a href="find-Pwd" class="login-a">비밀번호 찾기</a>
+				<div class="login-footer-end login-a"><a href="member-enroll">회원가입 ►</a></div>
 			</div>
 
 			
@@ -43,5 +43,7 @@
 		
 		
 	</div>
+
+	<jsp:include page="../common/footer2.jsp" />
 </body>
 </html>

@@ -1,0 +1,87 @@
+
+.text-align{
+	padding-top: 25px;
+	width: 400px;
+	margin: auto;
+}
+.enroll-wrap{
+	padding-top: 5px;
+	height: 85vh;
+}
+.enroll-title{
+	padding-top: 25px;
+	text-align: center;
+	color: rgb(66, 66, 66);
+	height: 100px;
+	width: 100vw;
+	font-weight: bold;
+	border-bottom: 1px solid rgb(180, 180, 180);
+}
+.enroll-title h5{font-size: 18px; font-weight: bold;}
+.enroll-title p{font-size: 12px;}
+.enroll-input{
+	font-size: 12px;
+	height: 45px;
+}
+.enroll-footer{
+	padding-top: 20px;
+	height: 50px;
+	font-size: 12px;
+	font-weight: bold;
+}
+.enroll-footer a:hover {
+	color: black;
+	text-decoration: none;
+}
+.enroll-footer-end{
+	text-align: end;
+	width: 75px;
+	float: inline-end;
+}
+.enroll-a{
+	text-decoration: none;
+	text-decoration-line: none;
+}
+.enroll-a:hover{
+	color: rgb(17, 17, 17) !important;
+	text-decoration: none;
+	text-decoration-line: none;
+}
+.enroll-input button {
+	display:inline-block;
+	width: 19%;
+	height: 40px;
+}
+button {
+	width: 100%;
+	height: 50px;
+	border: none;
+	background-color: rgb(17, 17, 17);
+	color: #eee;
+}
+input{
+	padding-left: 20px;
+	border: 1px solid rgb(180, 180, 180);
+	width: 80%;
+	height: 40px;
+}
+.others > input{
+ width: 100%;
+}
+.template1{height: 17vh;}
+.template2{height: 25vh;}
+.enroll-ID{
+	padding-top: 10px;
+	border: 1px solid rgb(180, 180, 180);
+	background-color: rgba(216, 216, 216, 0.616);
+	width: 100%;
+	height: 40px;
+	font-size: 13px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
+	margin-bottom: 4px;
+}
+.check3 {
+	height: 2vh;
+	font-size: 12px;
+}
