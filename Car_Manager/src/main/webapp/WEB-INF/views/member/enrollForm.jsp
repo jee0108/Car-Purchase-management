@@ -26,9 +26,11 @@
 			
 			<div>
 				<div class="template1">
+					
 					<p>① 휴대폰 인증을 위해 정보를 입력하세요.</p>
 					<div class="enroll-input">
-						<input type="tel" name="memPhone" id="memPhone" maxlength="11" placeholder="&nbsp;&nbsp;휴대폰번호( - 제외, 숫자만 입력)" />
+						<input type="tel" name="memPhone" id="memPhone" maxlength="11" placeholder="&nbsp;&nbsp;휴대폰번호( - 제외, 숫자만 입력)"
+						 onKeyup="this.value=this.value.replace(/[^0-9]/g,'')";/>
 						<button id="phoneCheckBtn" onclick="phoneCheck();" disabled>인증</button>
 					</div>
 
@@ -53,7 +55,7 @@
 									memPhone: $('#memPhone').val()
 									},
 								success:result=>{
-									//console.log(result);
+									console.log(result);
 									$('#certification').val(result);
 								},
 								error:()=>{
@@ -168,25 +170,25 @@
 				</div>
 				
 				<script>
-				function checkMail(){
-					 var sendMailCheck = $('#sendMailCheck').val();
-					 var memEmailCheck = $('#memEmailCheck').val();
-					 var memberId = $('#memEmail').val();
-					 
-					 if(sendMailCheck === memEmailCheck){
-						$(".check2").text("인증번호가 일치합니다.");
-						$(".check2").css("color","green");
-						$("#memEmail").attr("disabled",true);
-						$("#memEmailCheck").attr("disabled",true);
-						$("#memberId").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 : " + memberId);
-					 }
-					 else{
-						$(".check2").text("인증번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
-						$(".check2").css("color","red");
-						$("#memEmail").val("");
-						$("#memEmailCheck").val("");
-					 }
-				}
+					function checkMail(){
+						 var sendMailCheck = $('#sendMailCheck').val();
+						 var memEmailCheck = $('#memEmailCheck').val();
+						 var memberId = $('#memEmail').val();
+						 
+						 if(sendMailCheck === memEmailCheck){
+							$(".check2").text("인증번호가 일치합니다.");
+							$(".check2").css("color","green");
+							$("#memEmail").attr("disabled",true);
+							$("#memEmailCheck").attr("disabled",true);
+							$("#memberId").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 : " + memberId);
+						 }
+						 else{
+							$(".check2").text("인증번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
+							$(".check2").css("color","red");
+							$("#memEmail").val("");
+							$("#memEmailCheck").val("");
+						 }
+					}
 				</script>
 
 				<div class="template2">
@@ -224,44 +226,52 @@
 					})
 				</script>
 				<br>
+				<p class="check4"></p>
+				<button onclick="enrollMember();" id="enrollMember" disabled>회원 가입</button>
 				<script>
-					$(()=>{
+					$('input').keyup(()=>{
 						var phone = $('#memPhone').val();
+						var hiddenPhone = $('#certification').val();
+
 						var email = $('#memEmail').val();
+						var hiddenEmail = $('#sendMailCheck').val();
+
 						var pwd = $('#memPwd').val();
+						var memPwdCheck = $('#memPwdCheck').val();
+
 						var name = $('#memName').val();
+						console.log(phone +"/"+ hiddenPhone +"/"+ email+"/"+ hiddenEmail+"/"+ pwd+"/"+ memPwdCheck+"/"+ name);
 						
-						if(phone.trim() !== "" && email.trim() !== "" && pwd.trim() !== "" && name.trim() !== ""){
-							$('#enroll').removeAttr("disabled");
+						if(phone && hiddenPhone && email && hiddenEmail && pwd && memPwdCheck && name){
+							$('#enrollMember').removeAttr("disabled");
+							$(".check4").text("");
 						}
 						else{
 							$(".check4").text("모든 항목을 입력해주시기 바랍니다.");
 							$(".check4").css("color","red");
 						}
-						
-						function enroll(){
-							$.ajax({
-								url: 'enroll',
-								data: {
-									memPhone: phone,
-									memEmail: email,
-									memPwd: pwd,
-									memName: name
-									},
-								success:result=>{
-									console.log(result);
-									$('#sendMailCheck').val(result);
-								},
-								error:()=>{
-									console.log('실패');
-								}
-							});
-						}
-						
-					})
 				</script>
-				<button onclick="enroll();" id="enroll" disabled>회원가입</button>
-
+				<script>	
+					function enrollMember(){
+						alert('회원가입 함수가 호출되었습니다.');
+						$.ajax({
+							url: 'enrollMember',
+							data: {
+								memPhone: $('#memPhone').val(),
+								memEmail: $('#memEmail').val(),
+								memPwd: $('#memPwd').val(),
+								memName: $('#memName').val()
+								},
+							success:result=>{
+								console.log(result);
+								$('#sendMailCheck').val(result);
+							},
+							error:()=>{
+								console.log('실패');
+							}
+						});
+					}
+				</script>
 			</div>
 		
 		</div>

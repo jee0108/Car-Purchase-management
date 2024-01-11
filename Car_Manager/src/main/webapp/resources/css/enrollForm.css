@@ -1,6 +1,6 @@
 
 .text-align{
-	padding-top: 25px;
+	padding-top: 20px;
 	width: 400px;
 	margin: auto;
 }
@@ -53,6 +53,7 @@
 	height: 40px;
 }
 button {
+	margin-top: 10px;
 	width: 100%;
 	height: 50px;
 	border: none;
@@ -84,4 +85,8 @@ input{
 .check3 {
 	height: 2vh;
 	font-size: 12px;
+}
+.check4{
+	height: 1vh;
+	font-size: 12px !important;
 }

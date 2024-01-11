@@ -123,7 +123,7 @@ public class MemberController {
 		return new Gson().toJson(secret);
 	}
 	
-	@GetMapping("enroll")
+	@GetMapping("enrollMember")
 	public String insertMember(Member m, Model model) {
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
 		m.setMemPwd(encPwd);
