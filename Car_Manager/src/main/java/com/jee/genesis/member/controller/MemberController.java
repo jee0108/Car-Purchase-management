@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.jee.genesis.member.model.service.MemberService;
@@ -122,18 +125,34 @@ public class MemberController {
 		
 		return new Gson().toJson(secret);
 	}
-	
-	@GetMapping("enrollMember")
-	public String insertMember(Member m, Model model) {
+	@ResponseBody
+	@GetMapping(value="enrollMember", produces="application/json; charset=UTF-8")
+	public String insertMember(Member m) {
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
 		m.setMemPwd(encPwd);
 		
+		String message = "";
+		
 		if(memberService.insertMember(m)>0) {
-			return "redirect:/";
+			message = "success";
 		} else {
-			model.addAttribute("errorMsg", "회원가입에 실패하였습니다.");
-			return "common/errorPage";
-			
+			message = "error";
 		}
+		return new Gson().toJson(message);
+	}
+	
+	@RequestMapping("login")
+	public ModelAndView login(Member m, HttpSession session, ModelAndView mv) {
+		
+		Member loginUser = memberService.loginMember(m);
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {// 로그인 성공
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("redirect:/");
+		} else {// 로그인 실페 => 
+			mv.addObject("errorMsg", "아이디와 비밀번호가 일치하지 않습니다.")
+			  .setViewName("common/errorPage");
+		}
+		return mv;
 	}
 }

@@ -19,7 +19,7 @@
 
 		<div class="headerInner">
 			<sapn class="header-logo">
-			<a href="/genesis/main.jsp">
+			<a href="/genesis">
 			<img class="header-logo"
 				src="https://www.genesis.com/etc.clientlibs/genesis-p2/global/clientlibs/clientlib-basepage/resources/images/logo.png"
 				width="110" height="25">

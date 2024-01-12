@@ -209,28 +209,26 @@
 				</div>
 				
 				<script>
-					$(()=>{
-						$('#memPwdCheck').keyup(()=>{
-							var pwd = $('#memPwd').val();
-							var chkPwd = $('#memPwdCheck').val();
+					$('#memPwdCheck').keyup(()=>{
+						var pwd = $('#memPwd').val();
+						var chkPwd = $('#memPwdCheck').val();
 
-							if(pwd == chkPwd){
-								$(".check3").text("비밀번호가 일치합니다.");
-								$(".check3").css("color","green");
-							}
-							else{
-								$(".check3").text("비밀번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
-								$(".check3").css("color","red");
-							}
-						})
+						if(pwd == chkPwd){
+							$(".check3").text("비밀번호가 일치합니다.");
+							$(".check3").css("color","green");
+						}
+						else{
+							$(".check3").text("비밀번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.");
+							$(".check3").css("color","red");
+						}
 					})
 				</script>
 				<br>
 				<p class="check4"></p>
 				<button onclick="enrollMember();" id="enrollMember" disabled>회원 가입</button>
+				
 				<script>
 					$('input').keyup(()=>{
-						var phone = $('#memPhone').val();
 						var hiddenPhone = $('#certification').val();
 
 						var email = $('#memEmail').val();
@@ -240,20 +238,21 @@
 						var memPwdCheck = $('#memPwdCheck').val();
 
 						var name = $('#memName').val();
-						console.log(phone +"/"+ hiddenPhone +"/"+ email+"/"+ hiddenEmail+"/"+ pwd+"/"+ memPwdCheck+"/"+ name);
+						console.log(hiddenPhone +"/"+ hiddenEmail+"/"+ pwd+"/"+ memPwdCheck+"/"+ name);
 						
-						if(phone && hiddenPhone && email && hiddenEmail && pwd && memPwdCheck && name){
-							$('#enrollMember').removeAttr("disabled");
+						if(hiddenPhone && hiddenEmail && pwd && memPwdCheck && name){
+							$('#enrollMember').attr("disabled", false);
 							$(".check4").text("");
 						}
 						else{
 							$(".check4").text("모든 항목을 입력해주시기 바랍니다.");
 							$(".check4").css("color","red");
 						}
+					})
 				</script>
+				
 				<script>	
 					function enrollMember(){
-						alert('회원가입 함수가 호출되었습니다.');
 						$.ajax({
 							url: 'enrollMember',
 							data: {
@@ -263,8 +262,13 @@
 								memName: $('#memName').val()
 								},
 							success:result=>{
-								console.log(result);
-								$('#sendMailCheck').val(result);
+								if(result === "success"){
+									location.href = "/genesis/member-login";
+								}
+								else{
+									alert("회원가입에 실패하셨습니다. 다시 시도해주시기 바랍니다.");
+									location.href = "/genesis/member-enroll";
+								}
 							},
 							error:()=>{
 								console.log('실패');

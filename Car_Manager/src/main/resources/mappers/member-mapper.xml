@@ -5,7 +5,14 @@
 <mapper namespace="memberMapper">
 	<!-- ======================== resultMap ======================== -->
 	<!-- =========================================================== -->
-
+	<resultMap type="member" id="memberResultMap">
+		<result column="MEM_PHONE"	  	property="memPhone"/>
+		<result column="MEM_EMAIL"  	property="memEmail"/>
+		<result column="MEM_NAME" 	property="memName"/>
+		<result column="MEM_PWD" property="memPwd"/>
+		<result column="MEM_ROLE"  	property="memRole"/>
+	</resultMap>
+	
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
@@ -19,4 +26,14 @@
 		INSERT INTO MEMBER (MEM_PHONE,MEM_EMAIL,MEM_NAME,MEM_PWD,MEM_ROLE)
 		VALUES(#{memPhone}, #{memEmail}, #{memName}, #{memPwd}, 'U')
 	</insert>
+	
+	<select id="loginMember" parameterType="member" resultMap="memberResultMap">
+		 SELECT MEM_PHONE,
+				MEM_EMAIL,
+				MEM_NAME,
+				MEM_PWD,
+				MEM_ROLE
+		   FROM MEMBER
+		  WHERE MEM_EMAIL = #{memEmail}
+	</select>
 </mapper>
