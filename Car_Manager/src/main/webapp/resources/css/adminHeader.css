@@ -38,7 +38,7 @@ a {
 
 li {
 	display: inline-block;
-	margin-left: 50px;
+	margin-left: 13vw;
 	font-size: 16px;
 	color: rgb(193, 193, 193);
 	font-weight: bold;
@@ -54,16 +54,11 @@ ul {
 
 .header-list {
 	margin-top: 25px;
-	width: 40vw;
+	width: 100%;
 	height: 5vh;
 	overflow: hidden;
 	white-space: nowrap;
 }
-
-.header-right {
-	padding-left: 10vw;
-}
-
 .login {
 	padding-left: 350px;
 }

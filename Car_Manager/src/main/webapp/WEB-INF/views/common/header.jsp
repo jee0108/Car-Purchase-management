@@ -33,11 +33,8 @@
 			</div>
 			<div class="header-list">
 				<ul class="header-right">
-					<c:if test="${sessionScope.loginUser.memRole eq 'R'}">
-						<li class="header-right"><a href="">관리자 페이지</a></li>
-					</c:if>
-					<c:if test="${sessionScope.loginUser.memRole eq 'D'}">
-						<li class="header-right"><a href="">관리자 페이지</a></li>
+					<c:if test="${sessionScope.loginUser.memRole eq 'R' || sessionScope.loginUser.memRole eq 'D'}">
+						<li class="header-right"><a href="admin">관리자 페이지</a></li>
 					</c:if>
 
 					<c:choose>

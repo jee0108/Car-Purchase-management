@@ -36,4 +36,9 @@
 		   FROM MEMBER
 		  WHERE MEM_EMAIL = #{memEmail}
 	</select>
+	
+	<insert id="insertAdmin" parameterType="member">
+		INSERT INTO MEMBER (MEM_PHONE,MEM_EMAIL,MEM_NAME,MEM_PWD,MEM_ROLE)
+		VALUES(#{memPhone}, #{memEmail}, #{memName}, #{memPwd}, #{memRole})
+	</insert>
 </mapper>

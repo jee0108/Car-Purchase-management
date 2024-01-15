@@ -1,0 +1,70 @@
+.admin-title{
+    padding-top: 25px;
+	text-align: center;
+	color: rgb(25, 25, 25);
+	height: 8vh;
+	width: 100vw;
+    font-size: 18px;
+	font-weight: bold;
+	border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.main-wrap{
+    width: 100vw;
+    height: 82vh;
+	background-color: rgba(222, 222, 222, 0.913);
+}
+.content{
+	margin: auto;
+	width: 80vw;
+	height: 82vh;
+}
+p{
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
+}
+.width{
+	border: 1px solid red;
+	width: 20vw;
+}
+table td{
+	border-bottom: 1px solid rgba(222, 222, 222, 0.913);
+}
+.float{
+	float: right;
+}
+.top{
+	width: 48%;
+	height: 100%;
+	background-color: white;
+	padding-left: 2vw;
+	padding-top: 1vh;
+}
+.main-top{
+	padding-top: 1vh;
+	margin: auto;
+	width: 75%;
+	height: 35%;
+}
+.main-bottom{
+	margin: auto;
+
+	padding-left: 2vw;
+	padding-top: 1vh;
+
+	background-color: white;
+
+	width: 75%;
+	height: 35%;
+}
+label{
+	font-size: 12px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
+}
+table{
+	font-size: 12px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
+}

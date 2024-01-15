@@ -55,6 +55,15 @@ public class MemberController {
 	public String enrollForm() {
 		return "member/enrollForm";
 	}
+	@GetMapping("admin")
+	public String webAdmin() {
+		return "member/adminPage";
+	}
+	@GetMapping("admin-enroll")
+	public String adminEnroll() {
+		return "member/adminEnrollForm";
+	}
+	
 	
 	// --------------------- 휴대폰인증 메세지
 	@ResponseBody
@@ -134,6 +143,22 @@ public class MemberController {
 		String message = "";
 		
 		if(memberService.insertMember(m)>0) {
+			message = "success";
+		} else {
+			message = "error";
+		}
+		return new Gson().toJson(message);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="enrollAdmin", produces="application/json; charset=UTF-8")
+	public String insertAdmin(Member m) {
+		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
+		m.setMemPwd(encPwd);
+		
+		String message = "";
+		
+		if(memberService.insertAdmin(m)>0) {
 			message = "success";
 		} else {
 			message = "error";

@@ -19,5 +19,10 @@ public class MemberDao {
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
+	
+	public int insertAdmin(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertAdmin", m);
+	}
+
 
 }

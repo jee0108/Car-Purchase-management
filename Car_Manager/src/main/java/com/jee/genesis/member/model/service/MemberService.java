@@ -24,6 +24,9 @@ public interface MemberService {
 	// 메일 인증
 	void sendMail(CertVO certVo);
 	boolean validate(CertVO certVo);
+
+	//admin 등록
+	int insertAdmin(Member m);
 	
 	
 }
