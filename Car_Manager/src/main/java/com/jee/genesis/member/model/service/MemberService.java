@@ -20,11 +20,6 @@ public interface MemberService {
 	// 아이디(이메일) 중복체크
 	int emailCheck(String memEmail);
 	
-	
-	// 메일 인증
-	void sendMail(CertVO certVo);
-	boolean validate(CertVO certVo);
-
 	//admin 등록
 	int insertAdmin(Member m);
 	

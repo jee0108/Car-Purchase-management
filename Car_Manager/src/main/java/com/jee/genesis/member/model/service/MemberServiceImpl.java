@@ -51,16 +51,4 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.emailCheck(sqlSession, memEmail);
 	}
 
-	@Override
-	public void sendMail(CertVO certVo) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean validate(CertVO certVo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

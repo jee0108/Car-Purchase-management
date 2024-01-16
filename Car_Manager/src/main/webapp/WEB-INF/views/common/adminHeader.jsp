@@ -28,7 +28,7 @@
 			<div class="header-list">
 				<ul>
 					<c:if test="${loginUser.memRole eq 'R'}">
-						<li class="header-right"><a href="#">품목 관리</a></li>
+						<li class="header-right"><a href="item-management">품목 관리</a></li>
 						<li class="header-right"><a href="equipment-management">비품 관리</a></li>
 						<li class="header-right"><a href="procurement-Management">조달 관리</a></li>
 						<li class="header-right"><a href="admin-enroll">관리자 등록</a></li>

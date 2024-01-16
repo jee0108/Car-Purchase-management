@@ -28,8 +28,11 @@ p{
 	border: 1px solid red;
 	width: 20vw;
 }
-table td{
-	border-bottom: 1px solid rgba(222, 222, 222, 0.913);
+.table-size{
+	width: 90% !important;
+}
+.main-bottom .table-size{
+	width: 95% !important;
 }
 .float{
 	float: right;
@@ -39,10 +42,10 @@ table td{
 	height: 100%;
 	background-color: white;
 	padding-left: 2vw;
-	padding-top: 1vh;
+	padding-top: 2vh;
 }
 .main-top{
-	padding-top: 1vh;
+	padding-top: 2vh;
 	margin: auto;
 	width: 75%;
 	height: 35%;
@@ -50,8 +53,8 @@ table td{
 .main-bottom{
 	margin: auto;
 
-	padding-left: 2vw;
-	padding-top: 1vh;
+	padding-left: 3vw;
+	padding-top: 2vh;
 
 	background-color: white;
 

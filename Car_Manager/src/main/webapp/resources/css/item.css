@@ -1,0 +1,49 @@
+.main-wrap{
+	padding-top: 2vh;
+    width: 100vw;
+    height: 82vh;
+	background-color: rgba(222, 222, 222, 0.913);
+	display: flex;
+}
+.graph > p {
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+}
+.items > p{
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.graph{
+	width: 40%;
+	height: 100%;
+}
+.item-graph{
+	margin: auto;
+	width: 37vw;
+	height: 72vh;
+	background-color: white;
+}
+
+.items{
+	width: 60%;
+	height: 100%;
+	float: right;
+}
+.items-inner{
+	margin: auto;
+	width: 57vw;
+	height: 72vh;
+	background-color: white;
+}
+.inner{
+	padding-top: 20px;
+	padding-left: 2vw;
+}
+.table-size{width: 95% !important;}
+.btn-end{
+	float: inline-end;
+	margin-right: 3vw;
+}

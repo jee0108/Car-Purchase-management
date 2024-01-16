@@ -1,13 +1,13 @@
 DROP TABLE "MEMBER";
 DROP TABLE "CAR";
-DROP TABLE "MODEL";
-DROP TABLE "DETAIL";
 DROP TABLE "INVENTORY";
 DROP TABLE "PART";
+DROP TABLE "CARNAME";
 DROP TABLE "CLASSIFICATION";
 DROP TABLE "DOCUMENT";
 DROP TABLE "TYPE_DOCUMENT";
 DROP TABLE "ITEM";
+DROP TABLE "CAR_FILE";
 
 -------------------------- 회원 --------------------------
 ---------------------------------------------------------
@@ -30,50 +30,30 @@ COMMENT ON COLUMN "MEMBER"."MEM_ROLE" IS '등급';
 CREATE TABLE "CAR" (
 	"CAR_NUM"	    VARCHAR2(15)	NOT NULL,
 	"MEM_PHONE"	    VARCHAR2(11)	NOT NULL,
-	"MODEL_CODE"	VARCHAR2(1)		NOT NULL,
-	"ITEM_CODE"	    VARCHAR2(1)		NOT NULL,
-	"DETAIL_CODE"	VARCHAR2(1)		NOT NULL,
+	"CLASS_CODE"	VARCHAR2(1)		NOT NULL,
 	"CAR_STATUS"	VARCHAR2(1)	    DEFAULT 'R' CHECK(CAR_STATUS IN ('R', 'A', 'Y', 'S', 'N'))	NOT NULL,
-	"CAR_DATE"	    DATE		    NULL
+	"CAR_PAY"	    NUMBER		    NOT NULL,
+    "CAR_DATE"	    DATE		    NULL
 );
 
 COMMENT ON COLUMN "CAR"."CAR_NUM" IS '차대번호';
 COMMENT ON COLUMN "CAR"."MEM_PHONE" IS '회원전화번호';
-COMMENT ON COLUMN "CAR"."MODEL_CODE" IS '차량코드';
-COMMENT ON COLUMN "CAR"."ITEM_CODE" IS '차종코드';
-COMMENT ON COLUMN "CAR"."DETAIL_CODE" IS '세부차종코드';
+COMMENT ON COLUMN "CAR"."CLASS_CODE" IS '차량코드';
 COMMENT ON COLUMN "CAR"."CAR_STATUS" IS '차상태';
+COMMENT ON COLUMN "CAR"."CAR_PAY" IS '차량가격';
 COMMENT ON COLUMN "CAR"."CAR_DATE" IS '수령날짜';
 
--------------------------- 차종 --------------------------
----------------------------------------------------------
-CREATE TABLE "MODEL" (
-	"MODEL_CODE"	VARCHAR2(1)		NOT NULL,
-	"MODEL_NAME"	VARCHAR2(30)	NOT NULL
-);
-
-COMMENT ON COLUMN "MODEL"."MODEL_CODE" IS '차종코드';
-COMMENT ON COLUMN "MODEL"."MODEL_NAME" IS '차종명';
-
--------------------------- 세부차종 --------------------------
--------------------------------------------------------------
-CREATE TABLE "DETAIL" (
-	"DETAIL_CODE"	VARCHAR2(1)		NOT NULL,
-	"DETAIL_NAME"	VARCHAR2(15)	NOT NULL
-);
-
-COMMENT ON COLUMN "DETAIL"."DETAIL_CODE" IS '세부차종코드';
-COMMENT ON COLUMN "DETAIL"."DETAIL_NAME" IS '세목명';
 
 -------------------------- 부품재고 --------------------------
 -------------------------------------------------------------
 CREATE TABLE "INVENTORY" (
-	"INVEN_CODE"	VARCHAR2(10)	NOT NULL,
+	"INVEN_CODE"	VARCHAR2(20)	NOT NULL,
 	"INVEN_NAME"	VARCHAR2(50)	NOT NULL,
 	"INVEN_PAY"	    NUMBER		    NOT NULL,
 	"INVEN_NUM"	    NUMBER		    NOT NULL,
 	"INVEN_DATE"	DATE		    NOT NULL,
-	"ITEM_CODE"	    VARCHAR2(2)		NOT NULL
+	"ITEM_CODE"	    VARCHAR2(2)		NOT NULL,
+    "INVEN_CAR"	    VARCHAR2(20)	NOT NULL
 );
 
 COMMENT ON COLUMN "INVENTORY"."INVEN_CODE" IS '부품코드';
@@ -82,22 +62,19 @@ COMMENT ON COLUMN "INVENTORY"."INVEN_PAY" IS '부품가격';
 COMMENT ON COLUMN "INVENTORY"."INVEN_NUM" IS '부품수';
 COMMENT ON COLUMN "INVENTORY"."INVEN_DATE" IS '부품수변경일';
 COMMENT ON COLUMN "INVENTORY"."ITEM_CODE" IS '품목코드';
+COMMENT ON COLUMN "INVENTORY"."INVEN_CAR" IS '사용가능차량';
 
--------------------------- 부품 --------------------------
+-------------------------- 사용부품 --------------------------
 ---------------------------------------------------------
 CREATE TABLE "PART" (
 	"INVEN_CODE"	VARCHAR2(10)	NOT NULL,
-	"MODEL_CODE"	VARCHAR2(2)		NOT NULL,
-	"ITEM_CODE"	    VARCHAR2(1)		NOT NULL,
-	"DETAIL_CODE"	VARCHAR2(1)		NOT NULL,
-	"PART_DATE"	    DATE		    NULL
+	"CAR_NUM"	    VARCHAR2(15)		NOT NULL
 );
 
 COMMENT ON COLUMN "PART"."INVEN_CODE" IS '부품코드';
-COMMENT ON COLUMN "PART"."MODEL_CODE" IS '차량코드';
-COMMENT ON COLUMN "PART"."ITEM_CODE" IS '차종코드';
-COMMENT ON COLUMN "PART"."DETAIL_CODE" IS '세부차종코드';
-COMMENT ON COLUMN "PART"."PART_DATE" IS '부품사용일';
+COMMENT ON COLUMN "PART"."CAR_NUM" IS '차대번호';
+
+
 
 -------------------------- 차량 구분 --------------------------
 --------------------------------------------------------------
@@ -113,8 +90,62 @@ INSERT INTO CLASSIFICATION values('SD', '세단');
 INSERT INTO CLASSIFICATION values('SV', 'SUV');
 INSERT INTO CLASSIFICATION values('EV', '전기차');
 
+-------------------------- 차량 이름 --------------------------
+--------------------------------------------------------------
+CREATE TABLE "CARNAME" (
+	"CAR_NAME"	    VARCHAR2(30)	NOT NULL,
+	"CLASS_CODE"	VARCHAR2(2)	    NOT NULL,
+    "CAR_PRICE"	    NUMBER	        NOT NULL,
+    "FILE_NUM"      NUMBER          NOT NULL
+);
+
+COMMENT ON COLUMN "CARNAME"."CAR_NAME" IS '차량이름';
+COMMENT ON COLUMN "CARNAME"."CLASS_CODE" IS '차량코드';
+COMMENT ON COLUMN "CARNAME"."CAR_PRICE" IS '기본가격';
+COMMENT ON COLUMN "CARNAME"."FILE_NUM" IS '첨부파일';
+
+INSERT INTO CARNAME values('G90', 'SD', 94450000, 1);
+INSERT INTO CARNAME values('G80', 'SD', 58900000, 2);
+INSERT INTO CARNAME values('G70', 'SD', 43470000, 3);
+
+INSERT INTO CARNAME values('GV80', 'SV', 69300000, 4);
+INSERT INTO CARNAME values('GV80COUPE', 'SV', 82550000, 5);
+INSERT INTO CARNAME values('GV70', 'SV', 50400000, 6);
+
+INSERT INTO CARNAME values('G80EV', 'EV', 93300000, 8);
+INSERT INTO CARNAME values('G70EV', 'EV', 73320000, 9);
+INSERT INTO CARNAME values('G60EV', 'EV', 63790000, 10);
+
+-------------------------- 첨부파일 --------------------------
+-------------------------------------------------------------
+CREATE TABLE "CAR_FILE" (
+	"FILE_NUM"	NUMBER		NOT NULL,
+	"ORIGINAL_NAME"	VARCHAR2(30)		NOT NULL,
+	"UPLOAD_NAME"	VARCHAR2(30)		NOT NULL,
+	"FILE_PATH"	VARCHAR2(1000)		NOT NULL,
+	"UPLOAD_DATE"	DATE		NOT NULL
+);
+
+COMMENT ON COLUMN "CAR_FILE"."FILE_NUM" IS '첨부파일번호';
+COMMENT ON COLUMN "CAR_FILE"."ORIGINAL_NAME" IS '파일원본명';
+COMMENT ON COLUMN "CAR_FILE"."UPLOAD_NAME" IS '파일저장명';
+COMMENT ON COLUMN "CAR_FILE"."FILE_PATH" IS '저장폴더경로';
+COMMENT ON COLUMN "CAR_FILE"."UPLOAD_DATE" IS '업로드일';
+
+INSERT INTO CAR_FILE values(1, 'g90', 'g90', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(2, 'g80', 'g80', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(3, 'g70', 'g70', 'resources/images', SYSDATE);
+
+INSERT INTO CAR_FILE values(4, 'gv80', 'gv80', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(5, 'gv80_coupe', 'gv80_coupe', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(6, 'gv70', 'gv70', 'resources/images', SYSDATE);
+
+INSERT INTO CAR_FILE values(7, 'g80_ev', 'g80_ev', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(8, 'gv70_ev', 'gv70_ev', 'resources/images', SYSDATE);
+INSERT INTO CAR_FILE values(9, 'gv60_ev', 'gv60_ev', 'resources/images', SYSDATE);
+
 -------------------------- 증빙서류 --------------------------
---------------------------------------------------------
+-------------------------------------------------------------
 CREATE TABLE "DOCUMENT" (
 	"DOCU_NUM"	    NUMBER		    NOT NULL,
 	"CAR_NUM"	    VARCHAR2(15)	NOT NULL,
@@ -145,7 +176,7 @@ INSERT INTO TYPE_DOCUMENT values('I', '검수확인서');
 INSERT INTO TYPE_DOCUMENT values('T', '세금계산서');
 
 -------------------------- 품목 --------------------------
---------------------------------------------------------
+---------------------------------------------------------
 CREATE TABLE "ITEM" (
 	"ITEM_CODE"	VARCHAR2(2)		NOT NULL,
 	"ITEM_NAME"	VARCHAR2(30)		NOT NULL
@@ -162,14 +193,11 @@ INSERT INTO ITEM values('WH', '휠타이어');
 INSERT INTO ITEM values('ID', '내장디자인');
 INSERT INTO ITEM values('OP', '옵션');
 
+-------------------------- 시퀀스 --------------------------
+---------------------------------------------------------
+CREATE SEQUENCE SEQ_FILE_NUM; 
+
 commit;
 
 --------------------------------------------------------------
 --------------------------------------------------------------
-SELECT MEM_PHONE,
-				MEM_EMAIL,
-				MEM_NAME,
-				MEM_PWD,
-				MEM_ROLE
-		   From MEMBER 
-		  WHERE MEM_EMAIL = 'admin@admin.com';

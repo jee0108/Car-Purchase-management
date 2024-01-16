@@ -124,8 +124,6 @@ public class MemberController {
 							  .secret(secret)
 							  .build();
 		
-		memberService.sendMail(certVo);
-				
 		helper.setTo(memEmail);;
 		helper.setSubject("회원가입 인증번호입니다.");
 		helper.setText("인증번호 : " +secret+"\n");

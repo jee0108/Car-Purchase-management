@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>관리자등록</title>
 <!-- css-->
 <link rel="stylesheet" href="resources/css/enrollAdmin.css">
 

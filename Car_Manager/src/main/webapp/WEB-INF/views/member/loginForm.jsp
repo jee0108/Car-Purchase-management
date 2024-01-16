@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>로그인</title>
 <!-- css-->
 <link rel="stylesheet" href="resources/css/loginForm.css">
 
