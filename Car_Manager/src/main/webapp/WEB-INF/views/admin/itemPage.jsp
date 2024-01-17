@@ -42,23 +42,40 @@
 						<option value="SV">SUV</option>
 						<option value="EV">전기차</option>
 					</select>
+					<button onclick="select();" class="btn btn-sm btn-default">조회</button>
 
 					<script>
-						$(()=>{
+						function select(){
+						
 							$.ajax({
 								url: 'check-class',
 								data: {
 									classCode: $('#classification').val()
 									},
 								success:result=>{
-									console.log(result);
-									$('#items-list').val();
+									console.log(result.list);
+									
+									var pi = result.pi;
+									var list = result.list;
+
+									let value= '';
+									for(let i in list){
+										value += '<tr>'
+											  +  '<td>' +list[i].className+ '</td>'
+											  +  '<td>' +list[i].carName+ '</td>'
+											  +  '<td>' +list[i].carPrice+ '</td>'
+											  +  '<td>' +'<a href= "'+list[i].filePath+'/'+list[i].uploadName+'" download="'+list[i].originName+'">'+list[i].originName+ '<a/></td>'
+											  +  '<td style="border:none;"><button onclick="delete();" class="btn btn-sm btn-default">삭제</button></td>'
+											  +  '</tr>'
+									}
+
+									$('#items-list tbody').html(value);
 								},
 								error:()=>{
 									console.log('실패');
 								}
 							});
-						})
+						}
 					</script>
 					<button class="btn btn-sm btn-end btn-default">추가</button>
 					<br><br>
@@ -70,29 +87,22 @@
 									<th>구분</th>
 									<th>차량명</th>
 									<th>기본가격</th>
-									<th>이미지첨부</th>
+									<th>이미지</th>
 								</tr>
 							</thead>
 
 							<tbody>
-								<tr>
-									<td>세단</td>
-									<td>G80</td>
-									<td>100,000,000</td>
-									<td>미리보기</td>
-								</tr>
-								<tr>
-									<td>세단</td>
-									<td>G70</td>
-									<td>100,000,000</td>
-									<td>미리보기</td>
-								</tr>
+								
 							</tbody>
 						</table>
 
 					</div>
 				</div>
+				<div id="pagingArea" style="border: 1px solid red;">
+					
+				</div>
 			</div>
+
 		</div>
 	
 	</div>

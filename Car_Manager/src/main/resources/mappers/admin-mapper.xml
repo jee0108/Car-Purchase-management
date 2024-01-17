@@ -13,6 +13,18 @@
 		<result column="CAR_DATE"  	property="carDate"/>
 	</resultMap>
 	
+	<resultMap type="carName" id="carNameResultMap">
+		<result column="CAR_NUM"	  	property="carNum"/>
+		<result column="CLASS_CODE"  	property="classCode"/>
+		<result column="CLASS_NAME"  	property="className"/>
+		<result column="CAR_PRICE" 	property="carPrice"/>
+		<result column="FILE_NUM" 	property="fileNum"/>
+		<result column="ORIGINAL_NAME" property="originName"/>
+		<result column="UPLOAD_NAME"  	property="uploadName"/>
+		<result column="FILE_PATH"  	property="filePath"/>
+		<result column="UPLOAD_DATE"  	property="uploadDate"/>
+	</resultMap>
+	
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
@@ -21,14 +33,19 @@
 		  FROM CARNAME
 	</select>
 	
-	<select id="classCheck" resultMap="">
+	<select id="classCheck" resultMap="carNameResultMap">
 		 SELECT CAR_NAME,
 				CLASS_CODE,
+				CLASS_NAME,
 				CAR_PRICE,
-				ORIGIN_NAME,
-				CHANGE_NAME
+				FILE_NUM,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				FILE_PATH,
+				UPLOAD_DATE
 		   FROM CARNAME
-		   JOIN CAR_FILE
+		   JOIN CAR_FILE USING(FILE_NUM)
+		   JOIN CLASSIFICATION USING(CLASS_CODE)
 		<if test="classCode != 'AL'">
 		  WHERE CLASS_CODE = #{classCode}
 		</if>

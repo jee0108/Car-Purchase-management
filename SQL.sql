@@ -201,3 +201,14 @@ commit;
 
 --------------------------------------------------------------
 --------------------------------------------------------------
+SELECT CAR_NAME,
+				CLASS_CODE,
+				CAR_PRICE,
+				FILE_NUM,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				FILE_PATH,
+				UPLOAD_DATE
+		   FROM CARNAME
+		   JOIN CAR_FILE USING(FILE_NUM);
+

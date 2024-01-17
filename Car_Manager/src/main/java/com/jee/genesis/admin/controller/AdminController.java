@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -58,11 +59,16 @@ public class AdminController {
 	@ResponseBody
 	@GetMapping(value="check-class", produces="application/json; charset=UTF-8")
 	public String classCheck(String classCode, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
-		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 5, 5);
 		
+		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 10, 10);
 		ArrayList<ClassList> list = adminService.classCheck(pi, classCode);
 		
-		return new Gson().toJson(list);
+		HashMap<String, Object> map = new HashMap();
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return new Gson().toJson(map);
 	}
 	
 }
