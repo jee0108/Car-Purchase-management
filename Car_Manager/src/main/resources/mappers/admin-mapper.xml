@@ -13,15 +13,14 @@
 		<result column="CAR_DATE"  	property="carDate"/>
 	</resultMap>
 	
-	<resultMap type="carName" id="carNameResultMap">
-		<result column="CAR_NUM"	  	property="carNum"/>
+	<resultMap type="carType" id="carTypeResultMap">
+		<result column="CAR_NAME"	  	property="carName"/>
 		<result column="CLASS_CODE"  	property="classCode"/>
 		<result column="CLASS_NAME"  	property="className"/>
 		<result column="CAR_PRICE" 	property="carPrice"/>
 		<result column="FILE_NUM" 	property="fileNum"/>
-		<result column="ORIGINAL_NAME" property="originName"/>
+		<result column="ORIGINAL_NAME" property="originalName"/>
 		<result column="UPLOAD_NAME"  	property="uploadName"/>
-		<result column="FILE_PATH"  	property="filePath"/>
 		<result column="UPLOAD_DATE"  	property="uploadDate"/>
 	</resultMap>
 	
@@ -33,7 +32,7 @@
 		  FROM CARNAME
 	</select>
 	
-	<select id="classCheck" resultMap="carNameResultMap">
+	<select id="classCheck" parameterType="string" resultMap="carTypeResultMap">
 		 SELECT CAR_NAME,
 				CLASS_CODE,
 				CLASS_NAME,
@@ -41,7 +40,6 @@
 				FILE_NUM,
 				ORIGINAL_NAME,
 				UPLOAD_NAME,
-				FILE_PATH,
 				UPLOAD_DATE
 		   FROM CARNAME
 		   JOIN CAR_FILE USING(FILE_NUM)
@@ -50,5 +48,22 @@
 		  WHERE CLASS_CODE = #{classCode}
 		</if>
 	</select>
+	
+	<insert id="enrollCarTypeFile" parameterType="carType">
+	    INSERT INTO CAR_FILE(FILE_NUM, ORIGINAL_NAME, UPLOAD_NAME, UPLOAD_DATE)
+	    VALUES (SEQ_FILE_NUM.NEXTVAL, #{originalName}, #{uploadName}, SYSDATE)
+	</insert>
+	
+	<insert id="enrollCarType" parameterType="carType">
+	    INSERT INTO CARNAME(CAR_NAME, CLASS_CODE, FILE_NUM, CAR_PRICE)
+	    VALUES (#{carName}, #{classCode}, SEQ_FILE_NUM.CURRVAL, #{carPrice})
+	</insert>
+	
+	<insert id="enrollCarTypePart" parameterType="carType">
+	    INSERT INTO MANAGEMENT(CAR_NAME, INVEN_CODE)
+	  	VALUES (#{carName}, #{invenCode})
+	</insert>
+	
+	
 	
 </mapper>

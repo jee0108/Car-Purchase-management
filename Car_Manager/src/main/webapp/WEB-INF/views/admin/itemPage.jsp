@@ -64,7 +64,7 @@
 											  +  '<td>' +list[i].className+ '</td>'
 											  +  '<td>' +list[i].carName+ '</td>'
 											  +  '<td>' +list[i].carPrice+ '</td>'
-											  +  '<td>' +'<a href= "'+list[i].filePath+'/'+list[i].uploadName+'" download="'+list[i].originName+'">'+list[i].originName+ '<a/></td>'
+											  +  '<td>' +'<a href= "'+list[i].uploadName+'" download="'+list[i].originName+'">'+list[i].originName+ '<a/></td>'
 											  +  '<td style="border:none;"><button onclick="delete();" class="btn btn-sm btn-default">삭제</button></td>'
 											  +  '</tr>'
 									}
@@ -84,6 +84,7 @@
 					<div id="myModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 					
+							<form method="post" action="enroll-model" enctype="multipart/form-data">
 							<!-- Modal content-->
 							<div class="modal-content"  style="width: 50vw;">
 								<div class="modal-header">
@@ -95,7 +96,7 @@
 										<tr style="height: 50px;">
 											<th width="90">모델 타입</th>
 											<td width="120">
-												<select name="classCode">
+												<select name="classCode" id="classCode">
 												<option value="SD">세단</option>
 												<option value="SV">SUV</option>
 												<option value="EV">전기차</option>
@@ -112,130 +113,115 @@
 										<tr style="height: 50px;">
 											<th  width="90">엔진 타입</th>
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;가솔린 2.5T
+												<input type="checkbox" name="invenCode" value="EN-G25T">&nbsp;가솔린 2.5T
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;가솔린 3.5T
+												<input type="checkbox" name="invenCode" value="EN-G35T">&nbsp;가솔린 3.5T
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;가솔린 3.5T 48V
+												<input type="checkbox" name="invenCode" value="EN-G48V">&nbsp;가솔린 3.5T 48V
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;전기모터
+												<input type="checkbox" name="invenCode" value="EN-EV00">&nbsp;전기모터
 											</td>
 										</tr>
 
 										<tr style="height: 50px;">
 											<th>구동 타입</th>
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;2WD
+												<input type="checkbox" name="invenCode" value="2WD">&nbsp;2WD
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;AWD
+												<input type="checkbox" name="invenCode" value="AWD">&nbsp;AWD
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;AWD-LSD
+												<input type="checkbox" name="invenCode" value="AWD-LSD">&nbsp;AWD-LSD
 											</td>
 										</tr>
 
-										<tr style="height: 70px;">
+										<tr style="height: 110px;">
 											<th>컬러</th>
+											
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;우유니 화이트
+												<input type="checkbox" name="invenCode" value="CR-UYH">&nbsp;우유니 화이트
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;세빌 실버
+												<input type="checkbox" name="invenCode" value="CR-BRB">&nbsp;브루클린 블랙
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;마칼루 그레이
+												<input type="checkbox" name="invenCode" value="CR-SSS">&nbsp;세빌 실버
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;비크 블랙
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;테즈먼 블루
-
+												<input type="checkbox" name="invenCode" value="CR-NCM">&nbsp;마칼루 그레이
 												<br>
-												<input type="checkbox" name="" value="">&nbsp;한라산 그린
+
+												<input type="checkbox" name="invenCode" value="CR-URA">&nbsp;테즈먼 블루
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;브루클린 브라운
+												<input type="checkbox" name="invenCode" value="CR-MDY">&nbsp;한라산 그린
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;캐번디시 레드
+												<input type="checkbox" name="invenCode" value="CR-RLA">&nbsp;캐번디시 레드
+												<br>
+
+												<input type="checkbox" name="invenCode" value="CR-PH3">&nbsp;[매트] 비크 블랙
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;배르비에 화이트
+												<input type="checkbox" name="invenCode" value="CR-NA3">&nbsp;[매트] 배르비에 화이트
 											</td>
 										</tr>
 
 										<tr style="height: 70px;">
 											<th>휠/타이어</th>
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;18인치 다이아
+												<input type="checkbox" name="invenCode" value="WH-18D">&nbsp;18인치 다이아
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;19인치 하이퍼
+												<input type="checkbox" name="invenCode" value="WH-19H">&nbsp;19인치 하이퍼
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;19인치 다이아
+												<input type="checkbox" name="invenCode" value="WH-19D">&nbsp;19인치 다이아
 												<br>
-												<input type="checkbox" name="" value="">&nbsp;20인치 스퍼터링
+												<input type="checkbox" name="invenCode" value="WH-20S">&nbsp;20인치 스퍼터링
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;20인치 다이아
+												<input type="checkbox" name="invenCode" value="WH-20D">&nbsp;20인치 다이아
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;22인치 다이아
+												<input type="checkbox" name="invenCode" value="WH-22D">&nbsp;22인치 다이아
 											</td>
 										</tr>
 
 										<tr style="height: 70px;">
 											<th>내장 디자인</th>
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;옵시디언 블랙 모노톤
+												<input type="checkbox" name="invenCode" value="ID-BN">&nbsp;옵시디언 블랙 모노톤
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;에크루 카멜 모노톤
+												<input type="checkbox" name="invenCode" value="ID-CN">&nbsp;에크루 카멜 모노톤
 												<br>
-												<input type="checkbox" name="" value="">&nbsp;에쉬 그레이/바닐라 베이지 투톤
+												<input type="checkbox" name="invenCode" value="ID-GB">&nbsp;에쉬 그레이/바닐라 베이지 투톤
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;마룬 브라운/포레스트 블루 투톤
+												<input type="checkbox" name="invenCode" value="ID-BB">&nbsp;마룬 브라운/포레스트 블루 투톤
 											</td>
 										</tr>
 
 										<tr style="height: 70px;">
 											<th>옵션</th>
 											<td colspan="5">
-												<input type="checkbox" name="" value="">&nbsp;파라노마 선루프
+												<input type="checkbox" name="invenCode" value="OP-SUN">&nbsp;파라노마 선루프
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;헤드업 디스플레이
+												<input type="checkbox" name="invenCode" value="OP-HAD">&nbsp;헤드업 디스플레이
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;뒷자석 듀얼 모니터
+												<input type="checkbox" name="invenCode" value="OP-MOR">&nbsp;뒷자석 듀얼 모니터
 												<br>
 
-												<input type="checkbox" name="" value="">&nbsp;드라이빙 어시스턴스 패키지
+												<input type="checkbox" name="invenCode" value="OP-DRA">&nbsp;드라이빙 어시스턴스 패키지
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;뱅앤올룹슨 사운드 패키지
+												<input type="checkbox" name="invenCode" value="OP-BAN">&nbsp;뱅앤올룹슨 사운드 패키지
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="" value="">&nbsp;빌트인 캠 패키지
+												<input type="checkbox" name="invenCode" value="OP-BIL">&nbsp;빌트인 캠 패키지
 											</td>
 										</tr>
 
 										<tr style="height: 50px;">
 											<th>이미지</th>
-											<td colspan="5"><input type="file" name="originalName"></td>
+											<td colspan="5"><input type="file" name="upfile"></td>
 										</tr>
 
 									</table>
 									
 								</div>
 								<div class="modal-footer">
-									<button type="button" onclick="enrollCar()">추가</button>
+									<button type="submit">추가</button>
 								</div>
 							</div>
+							</form>
 							
-							<script>
-								function enrollCar(){
-						
-									$.ajax({
-										url: 'enroll-model',
-										data: {
-											
-											},
-										success:result=>{
-											console.log(result.list);
-										},
-										error:()=>{
-											console.log('실패');
-										}
-									});
-								}
-
-							</script>
 						</div>
 					</div>
 

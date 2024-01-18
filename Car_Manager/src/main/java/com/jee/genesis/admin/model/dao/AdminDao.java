@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.ClassList;
 
 @Repository
@@ -17,6 +18,18 @@ public class AdminDao {
 	
 	public ArrayList<ClassList> classCheck(SqlSessionTemplate sqlSession, String classCode, RowBounds rowBounds) {
 		return (ArrayList)sqlSession.selectList("adminMapper.classCheck", classCode, rowBounds);
+	}
+
+	public int enrollCarType(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.insert("adminMapper.enrollCarType", c);
+	}
+
+	public int enrollCarTypePart(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.insert("adminMapper.enrollCarTypePart", c);
+	}
+
+	public int enrollCarTypeFile(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.insert("adminMapper.enrollCarTypeFile", c);
 	}
 
 	

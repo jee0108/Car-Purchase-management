@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jee.genesis.admin.model.dao.AdminDao;
+import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.ClassList;
 import com.jee.genesis.common.model.vo.PageInfo;
 
@@ -31,6 +32,21 @@ public class AdminServiceImpl implements AdminService {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return adminDao.classCheck(sqlSession, classCode, rowBounds);
+	}
+
+	@Override
+	public int enrollCarType(CarType c) {
+		return adminDao.enrollCarType(sqlSession, c);
+	}
+
+	@Override
+	public int enrollCarTypePart(CarType c) {
+		return adminDao.enrollCarTypePart(sqlSession, c);
+	}
+
+	@Override
+	public int enrollCarTypeFile(CarType c) {
+		return adminDao.enrollCarTypeFile(sqlSession, c);
 	}
 
 	
