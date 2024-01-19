@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jee.genesis.admin.model.dao.AdminDao;
 import com.jee.genesis.admin.model.vo.CarType;
-import com.jee.genesis.admin.model.vo.ClassList;
 import com.jee.genesis.common.model.vo.PageInfo;
 
 @EnableTransactionManagement
@@ -28,10 +27,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public ArrayList<ClassList> classCheck(PageInfo pi, String classCode) {
+	public ArrayList<CarType> codeCheck(PageInfo pi, String classCode) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return adminDao.classCheck(sqlSession, classCode, rowBounds);
+		return adminDao.codeCheck(sqlSession, classCode, rowBounds);
 	}
 
 	@Override
@@ -47,6 +46,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int enrollCarTypeFile(CarType c) {
 		return adminDao.enrollCarTypeFile(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<CarType> allList(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return adminDao.allList(sqlSession, rowBounds);
 	}
 
 	

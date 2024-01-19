@@ -17,9 +17,9 @@
 		<result column="CAR_NAME"	  	property="carName"/>
 		<result column="CLASS_CODE"  	property="classCode"/>
 		<result column="CLASS_NAME"  	property="className"/>
-		<result column="CAR_PRICE" 	property="carPrice"/>
-		<result column="FILE_NUM" 	property="fileNum"/>
-		<result column="ORIGINAL_NAME" property="originalName"/>
+		<result column="CAR_PRICE" 		property="carPrice"/>
+		<result column="FILE_NUM" 		property="fileNum"/>
+		<result column="ORIGINAL_NAME" 	property="originalName"/>
 		<result column="UPLOAD_NAME"  	property="uploadName"/>
 		<result column="UPLOAD_DATE"  	property="uploadDate"/>
 	</resultMap>
@@ -32,15 +32,21 @@
 		  FROM CARNAME
 	</select>
 	
-	<select id="classCheck" parameterType="string" resultMap="carTypeResultMap">
+	<select id="allList" resultMap="carTypeResultMap">
 		 SELECT CAR_NAME,
-				CLASS_CODE,
-				CLASS_NAME,
+		 		CLASS_NAME,
 				CAR_PRICE,
-				FILE_NUM,
-				ORIGINAL_NAME,
-				UPLOAD_NAME,
-				UPLOAD_DATE
+                TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') as "UPLOAD_DATE" 
+		   FROM CARNAME
+		   JOIN CAR_FILE USING(FILE_NUM)
+		   JOIN CLASSIFICATION USING(CLASS_CODE)
+	</select>
+	
+	<select id="codeCheck" parameterType="string" resultMap="carTypeResultMap">
+		 SELECT CAR_NAME,
+		 		CLASS_NAME,
+				CAR_PRICE,
+				TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') as "UPLOAD_DATE"
 		   FROM CARNAME
 		   JOIN CAR_FILE USING(FILE_NUM)
 		   JOIN CLASSIFICATION USING(CLASS_CODE)

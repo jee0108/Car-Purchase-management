@@ -10,7 +10,6 @@
 		<typeAlias type="com.jee.genesis.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.Car" alias="car" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.CarType" alias="carType" />
-		<typeAlias type="com.jee.genesis.admin.model.vo.ClassList" alias="classList" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.Inventory" alias="inventory" />
 	</typeAliases>
 

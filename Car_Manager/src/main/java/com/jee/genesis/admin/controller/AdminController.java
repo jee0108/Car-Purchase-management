@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.jee.genesis.admin.model.service.AdminService;
 import com.jee.genesis.admin.model.vo.CarType;
-import com.jee.genesis.admin.model.vo.ClassList;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
 
@@ -36,7 +34,12 @@ public class AdminController {
 	
 	// -------------------------- 화면연결
 	@GetMapping("item-management")
-	public String loginPage() {
+	public String itemPage(@RequestParam(value="cPage", defaultValue="1") int currentPage, Model model) {
+		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 5, 5);
+		
+		model.addAttribute("allList", adminService.allList(pi));
+		model.addAttribute("pi", pi);
+		
 		return "admin/itemPage";
 	}
 	
@@ -61,14 +64,15 @@ public class AdminController {
 	
 	// ---------------------------------------
 	@ResponseBody
-	@GetMapping(value="check-class", produces="application/json; charset=UTF-8")
-	public String classCheck(String classCode, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
-		
+	@GetMapping(value="codeCheck", produces="application/json; charset=UTF-8")
+	public String codeCheck(String classCode, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
+		//System.out.println(classCode);
 		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 10, 10);
-		ArrayList<ClassList> list = adminService.classCheck(pi, classCode);
+		//System.out.println(pi);
+		ArrayList<CarType> list = adminService.codeCheck(pi, classCode);
+		//System.out.println(list);
 		
 		HashMap<String, Object> map = new HashMap();
-		
 		map.put("pi", pi);
 		map.put("list", list);
 		
@@ -97,4 +101,5 @@ public class AdminController {
 			return "common/errorPage";
 		}
 	}
+	
 }

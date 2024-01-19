@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.jee.genesis.admin.model.vo.CarType;
-import com.jee.genesis.admin.model.vo.ClassList;
 
 @Repository
 public class AdminDao {
@@ -16,8 +15,8 @@ public class AdminDao {
 		return sqlSession.selectOne("adminMapper.selectListCount");
 	}
 	
-	public ArrayList<ClassList> classCheck(SqlSessionTemplate sqlSession, String classCode, RowBounds rowBounds) {
-		return (ArrayList)sqlSession.selectList("adminMapper.classCheck", classCode, rowBounds);
+	public ArrayList<CarType> codeCheck(SqlSessionTemplate sqlSession, String classCode, RowBounds rowBounds) {
+		return (ArrayList)sqlSession.selectList("adminMapper.codeCheck", classCode, rowBounds);
 	}
 
 	public int enrollCarType(SqlSessionTemplate sqlSession, CarType c) {
@@ -30,6 +29,10 @@ public class AdminDao {
 
 	public int enrollCarTypeFile(SqlSessionTemplate sqlSession, CarType c) {
 		return sqlSession.insert("adminMapper.enrollCarTypeFile", c);
+	}
+
+	public ArrayList<CarType> allList(SqlSessionTemplate sqlSession, RowBounds rowBounds) {
+		return (ArrayList)sqlSession.selectList("adminMapper.allList", null, rowBounds);
 	}
 
 	

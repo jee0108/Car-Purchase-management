@@ -50,3 +50,8 @@
 .table-heigth{
 	height: 50px !important;
 }
+#pagingArea {
+	width:fit-content !important; 
+	margin:auto !important;
+	text-align:center !important;
+}
