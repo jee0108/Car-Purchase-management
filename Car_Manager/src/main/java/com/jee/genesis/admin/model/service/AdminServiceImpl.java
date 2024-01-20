@@ -55,5 +55,25 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.allList(sqlSession, rowBounds);
 	}
 
+	@Override
+	public CarType detailView(String carName) {
+		return adminDao.detailView(sqlSession, carName);
+	}
+
+	@Override
+	public int updateCarTypeFile(CarType c) {
+		return adminDao.updateCarTypeFile(sqlSession, c);
+	}
+
+	@Override
+	public int updateCarType(CarType c) {
+		return adminDao.updateCarType(sqlSession, c);
+	}
+
+	@Override
+	public int updateCarTypePart(CarType c) {
+		return adminDao.updateCarTypePart(sqlSession, c);
+	}
+
 	
 }

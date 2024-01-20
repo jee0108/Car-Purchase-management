@@ -19,4 +19,12 @@ public interface AdminService {
 
 	ArrayList<CarType> allList(PageInfo pi);
 
+	CarType detailView(String carName);
+
+	int updateCarTypeFile(CarType c);
+
+	int updateCarType(CarType c);
+
+	int updateCarTypePart(CarType c);
+
 }

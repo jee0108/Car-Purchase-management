@@ -21,18 +21,7 @@
 	
 	<div class="main-wrap">
 
-		<div class="graph">
-			<p>품목별 통계</p>
-			<div class="item-graph">
-				<div class="inner">
-					세단 SUV EV
-				</div>
-				
-			</div>
-		</div>
-
 		<div class="items">
-			<p>품목별 관리</p>
 			<div class="items-inner">
 				<div class="inner">
 					<label>차량 구분&nbsp;&nbsp;</label>
@@ -262,7 +251,7 @@
 					<div id="resultModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 					
-							<form method="post" action="enroll-model" enctype="multipart/form-data">
+							<form method="post" action="update-model" enctype="multipart/form-data">
 							<!-- Modal content-->
 							<div class="modal-content"  style="width: 50vw;">
 								<div class="modal-header">
@@ -271,6 +260,11 @@
 								</div>
 								<div class="modal-body">
 									<table>
+										<tr style="height: 160px;">
+											<th>원본 이미지</th>
+											<td colspan="5"><img src="" id="originFile" height="113" width="296"></td>
+										</tr>
+
 										<tr style="height: 50px;">
 											<th width="90">모델 타입</th>
 											<td width="120">
@@ -285,7 +279,7 @@
 											<td  width="230"><input type="text" name="carName" id="cname" readonly></td>
 
 											<th width="90">기본 가격</th>
-											<td width="230"><input type="number" name="carPrice"></td>
+											<td width="230"><input type="number" name="carPrice" id="carPrice"></td>
 										</tr>
 
 										<tr style="height: 50px;">
@@ -385,9 +379,9 @@
 												<input type="checkbox" name="invenCode" value="OP-BIL">&nbsp;빌트인 캠 패키지
 											</td>
 										</tr>
-
+										
 										<tr style="height: 50px;">
-											<th>이미지</th>
+											<th>수정본</th>
 											<td colspan="5"><input type="file" name="upfile"></td>
 										</tr>
 
@@ -406,7 +400,6 @@
 									var cname = $(this).children('.cname').text();
 									$('#cname').val(cname);
 									console.log(cname);
-
 									
 									$.ajax({
 										url: 'detail-item',
@@ -414,8 +407,21 @@
 											carName: cname
 											},
 										success:result=>{
-											console.log(result.list);
-											
+											var carName = result.carName;
+											var carPrice = result.carPrice;
+											var classCode = result.classCode;
+											var invenCode = result.invenCode;
+											var originName = result.originName;
+											var uploadName = result.uploadName;
+
+											var invenCodeArray = invenCode.split(',');
+											invenCodeArray.forEach(code => {
+												$('#resultModal input[name="invenCode"][value="' + code + '"]').prop('checked', true);
+											});
+
+											$('#carPrice').val(carPrice);
+											$('#classCode option[value="'+classCode+'"]').attr('selected','selected');
+											$('#originFile').attr('src', uploadName);
 										},
 										error:()=>{
 											console.log('실패');
@@ -427,8 +433,8 @@
 
 					</div>
 				</div>
-				<div id="pagingArea" style="border: 1px solid red; display: block; margin: auto;">
-					<ul class="pagination"  style="border: 1px solid green; text-align: center !important; width: auto;">
+				<div id="pagingArea">
+					<ul class="pagination">
 						<c:choose>
 							<c:when test="${pi.currentPage eq 1 }">
 								<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
@@ -457,5 +463,6 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
+
 </body>
 </html>

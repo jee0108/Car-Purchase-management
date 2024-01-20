@@ -35,6 +35,14 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.allList", null, rowBounds);
 	}
 
+	public CarType detailView(SqlSessionTemplate sqlSession, String carName) {
+		return sqlSession.selectOne("adminMapper.detailView", carName);
+	}
+
+	public int updateCarTypeFile(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.update("adminMapper.updateCarTypeFile", c);
+	}
+
 	
 
 }

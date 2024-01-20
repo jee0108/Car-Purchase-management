@@ -32,18 +32,6 @@ public class AdminController {
 	@Autowired
 	private JavaMailSender sender;
 	
-	// -------------------------- 화면연결
-	@GetMapping("item-management")
-	public String itemPage(@RequestParam(value="cPage", defaultValue="1") int currentPage, Model model) {
-		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 5, 5);
-		
-		model.addAttribute("allList", adminService.allList(pi));
-		model.addAttribute("pi", pi);
-		
-		return "admin/itemPage";
-	}
-	
-	// ------------------------------------
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String originName = upfile.getOriginalFilename();
@@ -62,16 +50,23 @@ public class AdminController {
 		return "resources/uploadFiles/" + changeName;
 	}
 	
-	// ---------------------------------------
+	// -------------------------- 화면연결
+	@GetMapping("item-management")
+	public String itemPage(@RequestParam(value="cPage", defaultValue="1") int currentPage, Model model) {
+		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 5, 5);
+		
+		model.addAttribute("allList", adminService.allList(pi));
+		model.addAttribute("pi", pi);
+		
+		return "admin/itemPage";
+	}
+	
+	// --------------------------------------- 기능구현
 	@ResponseBody
 	@GetMapping(value="codeCheck", produces="application/json; charset=UTF-8")
 	public String codeCheck(String classCode, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
-		//System.out.println(classCode);
 		PageInfo pi = Pagination.getPageInfo(adminService.selectListCount(), currentPage, 10, 10);
-		//System.out.println(pi);
 		ArrayList<CarType> list = adminService.codeCheck(pi, classCode);
-		//System.out.println(list);
-		
 		HashMap<String, Object> map = new HashMap();
 		map.put("pi", pi);
 		map.put("list", list);
@@ -88,11 +83,8 @@ public class AdminController {
 		}
 		
 		if(adminService.enrollCarTypeFile(c)>0) {
-			
 			adminService.enrollCarType(c);
-			
 			adminService.enrollCarTypePart(c);
-				
 			session.setAttribute("alertMsg", "모델 추가 성공");
 			return "redirect:item-management";
 			
@@ -100,6 +92,32 @@ public class AdminController {
 			model.addAttribute("errorMsg", "모델 추가 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping(value="detail-item", produces="application/json; charset=UTF-8")
+	public String detailView(String carName){
+		
+		CarType car = adminService.detailView(carName);
+		return new Gson().toJson(car);
+	}
+	
+	@PostMapping("update-model")
+	public String updateModel(MultipartFile upfile, HttpSession session, CarType c, Model model) {
+		
+		if(!upfile.getOriginalFilename().equals("")){
+			c.setOriginalName(upfile.getOriginalFilename());
+			c.setUploadName(saveFile(upfile, session));
+			
+			adminService.updateCarTypeFile(c);
+			adminService.updateCarType(c);
+			adminService.updateCarTypePart(c);
+			
+		}else {
+			adminService.updateCarType(c);
+			adminService.updateCarTypePart(c);
+		}
+		return "redirect:item-management";
 	}
 	
 }

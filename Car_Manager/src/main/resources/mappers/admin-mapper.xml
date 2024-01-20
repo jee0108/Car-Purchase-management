@@ -18,6 +18,7 @@
 		<result column="CLASS_CODE"  	property="classCode"/>
 		<result column="CLASS_NAME"  	property="className"/>
 		<result column="CAR_PRICE" 		property="carPrice"/>
+		<result column="INVEN_CODE"  	property="invenCode"/>
 		<result column="FILE_NUM" 		property="fileNum"/>
 		<result column="ORIGINAL_NAME" 	property="originalName"/>
 		<result column="UPLOAD_NAME"  	property="uploadName"/>
@@ -69,6 +70,23 @@
 	    INSERT INTO MANAGEMENT(CAR_NAME, INVEN_CODE)
 	  	VALUES (#{carName}, #{invenCode})
 	</insert>
+	
+	<select id="detailView" parameterType="string" resultMap="carTypeResultMap">
+		 SELECT CAR_NAME,
+		 		CLASS_CODE,
+				CAR_PRICE,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				INVEN_CODE
+		   FROM CARNAME
+		   JOIN CAR_FILE USING(FILE_NUM)
+		   JOIN MANAGEMENT USING(CAR_NAME)
+		  WHERE CAR_NAME = #{carName}
+	</select>
+	
+	<update id="updateCarTypeFile" parameterType="carType">
+		UPDATE 
+	</update>
 	
 	
 	
