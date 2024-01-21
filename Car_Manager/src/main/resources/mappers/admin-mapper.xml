@@ -106,22 +106,19 @@
 		 WHERE CAR_NAME = #{carName}
 	</update>
 	
+	<delete id="deleteModelPart" parameterType="string">
+		DELETE FROM MANAGEMENT
+		 WHERE CAR_NAME = #{carName}
+	</delete>
+	
+	<delete id="deleteModel" parameterType="string">
+		DELETE FROM CARNAME
+		 WHERE CAR_NAME = #{carName}
+	</delete>
+	
 	<delete id="deleteModelFile" parameterType="_int">
-		DELETE 
-		  FORM CAR_FILE
-		 WHERE FILE_NUM = #{fileNum}
-	</delete>
-	
-	<delete id="deleteModelPart" parameterType="_int">
-		DELETE 
-		  FORM MANAGEMENT
-		 WHERE CAR_NAME = #{carName}
-	</delete>
-	
-	<delete id="deleteModel" parameterType="_int">
-		DELETE 
-		  FORM CARNAME
-		 WHERE CAR_NAME = #{carName}
+		DELETE FROM CAR_FILE
+		WHERE FILE_NUM = #{fileNum}
 	</delete>
 	
 </mapper>

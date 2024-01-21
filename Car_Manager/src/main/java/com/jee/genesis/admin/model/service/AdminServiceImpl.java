@@ -74,10 +74,10 @@ public class AdminServiceImpl implements AdminService {
 	public int updateCarTypePart(CarType c) {
 		return adminDao.updateCarTypePart(sqlSession, c);
 	}
-
+	
 	@Override
-	public int deleteModelFile(Integer fileNum) {
-		return adminDao.deleteModelFile(sqlSession, fileNum);
+	public int deleteModelPart(String carName) {
+		return adminDao.deleteModelPart(sqlSession, carName);
 	}
 
 	@Override
@@ -86,8 +86,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int deleteModelPart(String carName) {
-		return adminDao.deleteModelPart(sqlSession, carName);
+	public int deleteModelFile(Integer fileNum) {
+		return adminDao.deleteModelFile(sqlSession, fileNum);
 	}
 
 	

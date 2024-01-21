@@ -124,9 +124,9 @@ public class AdminController {
 	public String deleteModel(String carName, Integer fileNum){
 		String message = "";
 		System.out.println(fileNum +"/"+fileNum);
-		if(adminService.deleteModelFile(fileNum)>0) {
-			adminService.deleteModelPart(carName);
+		if(adminService.deleteModelPart(carName)>0) {
 			adminService.deleteModel(carName);
+			adminService.deleteModelFile(fileNum);
 		}else {
 			message = "삭제 실패";
 		}
