@@ -35,14 +35,14 @@
 
 					<script>
 						function select(){
-							console.log($('#classification').val());
+							
 							$.ajax({
 								url: 'codeCheck',
 								data: {
 									classCode: $('#classification').val()
 									},
 								success:result=>{
-									//console.log(result.list);
+									
 									let value= '';
 									var pi = result.pi;
 									var list = result.list;
@@ -57,7 +57,6 @@
 											  +  '<td>' + list[i].carName	+ '</td>'
 											  +  '<td>' + list[i].carPrice	+ '</td>'
 											  +  '<td>' + list[i].uploadDate+ '</td>'
-											  +  '<td style="border:none; width: 20px;"><button onclick="delete();" class="btn btn-sm btn-default">삭제</button></td>'
 											  +  '</tr>'
 									}
 
@@ -241,13 +240,54 @@
 										<td class="cname">${c.carName}</td>
 										<td class="price">${c.carPrice}</td>
 										<td>${c.uploadDate}</td>
-										<td style="border:none; width: 20px;" aria-readonly="true"><button onclick="delete();" class="btn btn-sm btn-default">삭제</button></td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 
-						<!-- Modal -->
+
+
+						<script>
+							$(()=>{
+								$('#items-list>table>tbody>tr').click(function () {
+									var cname = $(this).children('.cname').text();
+									$('#cname').val(cname);
+									
+									$.ajax({
+										url: 'detail-item',
+										data: {
+											carName: cname
+											},
+										success:result=>{
+											var carName = result.carName;
+											var carPrice = result.carPrice;
+											var classCode = result.classCode;
+											var invenCode = result.invenCode;
+											var originName = result.originName;
+											var uploadName = result.uploadName;
+											var fileNum = result.fileNum;
+											
+											var invenCodeArray = invenCode.split(',');
+											invenCodeArray.forEach(code => {
+												$('#resultModal input[name="invenCode"][value="' + code + '"]').prop('checked', true);
+											});
+
+											$('#carPrice').val(carPrice);
+											$('#classCode option[value="'+classCode+'"]').attr('selected','selected');
+											$('#originFile').attr('src', uploadName);
+
+											$('#fileNum').val(fileNum);
+										},
+										error:()=>{
+											console.log('실패');
+										}
+									});
+								});
+						   })
+						</script>
+
+
+					<!-- Modal -->
 					<div id="resultModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 					
@@ -260,6 +300,7 @@
 								</div>
 								<div class="modal-body">
 									<table>
+										<input type="hidden" name="fileNum" id="fileNum" val="">
 										<tr style="height: 160px;">
 											<th>원본 이미지</th>
 											<td colspan="5"><img src="" id="originFile" height="113" width="296"></td>
@@ -276,7 +317,7 @@
 											</td>
 
 											<th width="70">모델명</th>
-											<td  width="230"><input type="text" name="carName" id="cname" readonly></td>
+											<td  width="230"><input type="text" name="carName" id="cname" val="" readonly></td>
 
 											<th width="90">기본 가격</th>
 											<td width="230"><input type="number" name="carPrice" id="carPrice"></td>
@@ -390,49 +431,39 @@
 								</div>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-sm btn-success">수정하기</button>
-									<button onclick="delete();" class="btn btn-sm btn-danger">삭제하기</button>
-								</div>
-							</div>
+									<button onclick="deleteModel();" class="btn btn-sm btn-danger">삭제하기</button>
 
-						<script>
-							$(()=>{
-								$('#items-list>table>tbody>tr').click(function () {
-									var cname = $(this).children('.cname').text();
-									$('#cname').val(cname);
-									console.log(cname);
-									
-									$.ajax({
-										url: 'detail-item',
-										data: {
-											carName: cname
-											},
-										success:result=>{
-											var carName = result.carName;
-											var carPrice = result.carPrice;
-											var classCode = result.classCode;
-											var invenCode = result.invenCode;
-											var originName = result.originName;
-											var uploadName = result.uploadName;
-
-											var invenCodeArray = invenCode.split(',');
-											invenCodeArray.forEach(code => {
-												$('#resultModal input[name="invenCode"][value="' + code + '"]').prop('checked', true);
+									<script>
+										function deleteModel(){
+											console.log('Delete button clicked');
+											console.log($('#cname').val());
+											console.log($('#fileNum').val());
+											$.ajax({
+												url: 'deleteModel',
+												data: {
+													carName: $('#cname').val(),
+													fileNum: $('#fileNum').val()
+													},
+												success:result=>{
+													console.log(result);
+												},
+												error:()=>{
+													console.log('실패');
+												}
 											});
-
-											$('#carPrice').val(carPrice);
-											$('#classCode option[value="'+classCode+'"]').attr('selected','selected');
-											$('#originFile').attr('src', uploadName);
-										},
-										error:()=>{
-											console.log('실패');
 										}
-									});
-								});
-						   })
-						</script>
+									</script>
+								</div>
+							</form>
+
+							
+
+							</div>
 
 					</div>
 				</div>
+
+
 				<div id="pagingArea">
 					<ul class="pagination">
 						<c:choose>

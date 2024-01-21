@@ -301,15 +301,3 @@ commit;
 --------------------------------------------------------------
 --------------------------------------------------------------
 
-SELECT CAR_NAME,
-				CLASS_CODE,
-				CLASS_NAME,
-				CAR_PRICE,
-				FILE_NUM,
-				ORIGINAL_NAME,
-				UPLOAD_NAME,
-				UPLOAD_DATE
-		   FROM CARNAME
-		   JOIN CAR_FILE USING(FILE_NUM)
-		   JOIN CLASSIFICATION USING(CLASS_CODE)
-		  WHERE CLASS_CODE = 'SD';

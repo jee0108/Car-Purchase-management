@@ -77,7 +77,8 @@
 				CAR_PRICE,
 				ORIGINAL_NAME,
 				UPLOAD_NAME,
-				INVEN_CODE
+				INVEN_CODE,
+				FILE_NUM
 		   FROM CARNAME
 		   JOIN CAR_FILE USING(FILE_NUM)
 		   JOIN MANAGEMENT USING(CAR_NAME)
@@ -85,9 +86,42 @@
 	</select>
 	
 	<update id="updateCarTypeFile" parameterType="carType">
-		UPDATE 
+		UPDATE CAR_FILE
+		   SET ORIGINAL_NAME = #{originalName}, 
+			   UPLOAD_NAME = #{uploadName}, 
+			   UPLOAD_DATE = SYSDATE
+		 WHERE FILE_NUM = #{fileNum}
 	</update>
 	
+	<update id="updateCarType" parameterType="carType">
+		UPDATE CARNAME
+		   SET CLASS_CODE = #{classCode},
+			   CAR_PRICE = #{carPrice}
+		 WHERE CAR_NAME = #{carName}
+	</update>
 	
+	<update id="updateCarTypePart" parameterType="carType">
+		UPDATE MANAGEMENT
+		   SET INVEN_CODE = #{invenCode}
+		 WHERE CAR_NAME = #{carName}
+	</update>
+	
+	<delete id="deleteModelFile" parameterType="_int">
+		DELETE 
+		  FORM CAR_FILE
+		 WHERE FILE_NUM = #{fileNum}
+	</delete>
+	
+	<delete id="deleteModelPart" parameterType="_int">
+		DELETE 
+		  FORM MANAGEMENT
+		 WHERE CAR_NAME = #{carName}
+	</delete>
+	
+	<delete id="deleteModel" parameterType="_int">
+		DELETE 
+		  FORM CARNAME
+		 WHERE CAR_NAME = #{carName}
+	</delete>
 	
 </mapper>

@@ -104,7 +104,6 @@ public class AdminController {
 	
 	@PostMapping("update-model")
 	public String updateModel(MultipartFile upfile, HttpSession session, CarType c, Model model) {
-		
 		if(!upfile.getOriginalFilename().equals("")){
 			c.setOriginalName(upfile.getOriginalFilename());
 			c.setUploadName(saveFile(upfile, session));
@@ -120,4 +119,18 @@ public class AdminController {
 		return "redirect:item-management";
 	}
 	
+	@ResponseBody
+	@GetMapping(value="deleteModel", produces="application/json; charset=UTF-8")
+	public String deleteModel(String carName, Integer fileNum){
+		String message = "";
+		System.out.println(fileNum +"/"+fileNum);
+		if(adminService.deleteModelFile(fileNum)>0) {
+			adminService.deleteModelPart(carName);
+			adminService.deleteModel(carName);
+		}else {
+			message = "삭제 실패";
+		}
+		
+		return new Gson().toJson(message);
+	}
 }

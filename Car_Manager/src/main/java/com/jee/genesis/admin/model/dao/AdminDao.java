@@ -43,6 +43,27 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.updateCarTypeFile", c);
 	}
 
+	public int updateCarType(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.update("adminMapper.updateCarType", c);
+	}
+
+	public int updateCarTypePart(SqlSessionTemplate sqlSession, CarType c) {
+		return sqlSession.update("adminMapper.updateCarTypePart", c);
+	}
+
+	public int deleteModelFile(SqlSessionTemplate sqlSession, Integer fileNum) {
+		return sqlSession.delete("adminMapper.deleteModelFile", fileNum);
+	}
+
+	public int deleteModelPart(SqlSessionTemplate sqlSession, String carName) {
+		return sqlSession.delete("adminMapper.deleteModelPart", carName);
+	}
+	
+	public int deleteModel(SqlSessionTemplate sqlSession, String carName) {
+		return sqlSession.delete("adminMapper.deleteModel", carName);
+	}
+
+
 	
 
 }

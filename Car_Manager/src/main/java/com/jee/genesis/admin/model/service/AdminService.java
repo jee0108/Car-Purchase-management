@@ -27,4 +27,10 @@ public interface AdminService {
 
 	int updateCarTypePart(CarType c);
 
+	int deleteModelFile(Integer fileNum);
+
+	int deleteModel(String carName);
+
+	int deleteModelPart(String carName);
+
 }

@@ -75,5 +75,20 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateCarTypePart(sqlSession, c);
 	}
 
+	@Override
+	public int deleteModelFile(Integer fileNum) {
+		return adminDao.deleteModelFile(sqlSession, fileNum);
+	}
+
+	@Override
+	public int deleteModel(String carName) {
+		return adminDao.deleteModel(sqlSession, carName);
+	}
+
+	@Override
+	public int deleteModelPart(String carName) {
+		return adminDao.deleteModelPart(sqlSession, carName);
+	}
+
 	
 }
