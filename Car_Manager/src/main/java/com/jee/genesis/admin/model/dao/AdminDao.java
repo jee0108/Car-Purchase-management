@@ -76,6 +76,14 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.insertList");
 	}
 
+	public ArrayList<Inventory> selectItem(SqlSessionTemplate sqlSession, String itemCode) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectItem", itemCode);
+	}
+
+	public int selectItemCount(SqlSessionTemplate sqlSession, String itemCode) {
+		return sqlSession.selectOne("adminMapper.selectItemCount", itemCode);
+	}
+
 
 	
 

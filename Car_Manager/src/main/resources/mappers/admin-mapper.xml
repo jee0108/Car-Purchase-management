@@ -159,4 +159,25 @@
 		  FROM INVENTORY
 		  JOIN ITEM USING (ITEM_CODE)
 	</select>
+	
+	<select id="selectItemCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM INVENTORY
+		 WHERE ITEM_CODE = #{itemCode}
+	</select>
+	
+	<select id="selectItem" parameterType="string" resultMap="InventoryResultMap">
+		SELECT INVEN_CODE,
+       		   INVEN_NAME,
+			   INVEN_PAY,
+        	   INVEN_NUM,
+        	   ITEM_CODE,
+        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
+        	   ITEM_NAME
+		  FROM INVENTORY
+		  JOIN ITEM USING (ITEM_CODE)
+		 WHERE ITEM_CODE = #{itemCode}
+		 ORDER BY INVEN_DATE
+	</select>
+	
 </mapper>

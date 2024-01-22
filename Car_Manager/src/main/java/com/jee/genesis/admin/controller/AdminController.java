@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.jee.genesis.admin.model.service.AdminService;
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
 
@@ -145,5 +146,20 @@ public class AdminController {
 		}
 		
 		return new Gson().toJson(message);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="selectItem", produces="application/json; charset=UTF-8")
+	public String selectItem(String itemCode, @RequestParam(value="cPage", defaultValue="1") int currentPage){
+		
+		PageInfo pi = Pagination.getPageInfo(adminService.selectItemCount(itemCode), currentPage, 10, 10);
+		ArrayList<Inventory> invenList = adminService.selectItem(itemCode, pi);
+		
+		HashMap<String, Object> map = new HashMap();
+		map.put("pi", pi);
+		map.put("invenList", invenList);
+		
+			
+		return new Gson().toJson(map);
 	}
 }

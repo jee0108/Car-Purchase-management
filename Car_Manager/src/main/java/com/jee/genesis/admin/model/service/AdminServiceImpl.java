@@ -107,6 +107,17 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<Inventory> insertList() {
 		return adminDao.insertList(sqlSession);
 	}
+	@Override
+	public int selectItemCount(String itemCode) {
+		return adminDao.selectItemCount(sqlSession, itemCode);
+	}
+
+	@Override
+	public ArrayList<Inventory> selectItem(String itemCode, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return adminDao.selectItem(sqlSession, itemCode);
+	}
 
 	
 }

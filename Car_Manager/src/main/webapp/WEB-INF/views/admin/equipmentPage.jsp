@@ -43,7 +43,25 @@
 									itemCode: $('#item').val()
 									},
 								success:result=>{
-									console.log(result);
+									console.log(result.pi);
+                                    var invenList = result.invenList;
+                                    var pi = result.pi;
+
+                                    let value= '';
+
+                                    for(let i in invenList){
+										value += '<tr>'
+											  +  '<td>' + invenList[i].itemName    + '</td>'
+											  +  '<td>' + invenList[i].invenCode	+ '</td>'
+											  +  '<td>' + invenList[i].invenName   + '</td>'
+											  +  '<td>' + invenList[i].invenNum    + '</td>'
+                                              +  '<td>' + invenList[i].invenDate   + '</td>'
+											  +  '</tr>'
+									}
+                                    $('#items-list tbody').html(value);
+
+                                    $('#pagingArea').hide(); 
+                                    $('#pagingArea').val(); 
 								},
 								error:()=>{
 									console.log('실패');
@@ -241,6 +259,7 @@
 													},
 												success:result=>{
 													console.log(result);
+
 												},
 												error:()=>{
 													console.log('실패');
@@ -260,7 +279,7 @@
 					<ul class="pagination">
 						<c:choose>
 							<c:when test="${pi.currentPage eq 1 }">
-								<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+								<li class="page-item disabled"><a class="page-link" href="#">◄</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage-1}">Previous</a></li>
@@ -271,7 +290,7 @@
 						</c:forEach>
 						<c:choose>
 							<c:when test="${pi.endPage eq pi.maxPage}">
-								<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+								<li class="page-item disabled"><a class="page-link" href="#">►</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage+11}">Next</a></li>

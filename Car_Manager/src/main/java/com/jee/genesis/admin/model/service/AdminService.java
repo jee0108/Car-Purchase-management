@@ -42,4 +42,8 @@ public interface AdminService {
 
 	ArrayList<Inventory> insertList();
 
+	ArrayList<Inventory> selectItem(String itemCode, PageInfo pi);
+
+	int selectItemCount(String itemCode);
+
 }
