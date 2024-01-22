@@ -25,6 +25,15 @@
 		<result column="UPLOAD_DATE"  	property="uploadDate"/>
 	</resultMap>
 	
+	<resultMap type="inventory" id="InventoryResultMap">
+		<result column="INVEN_CODE"	  	property="invenCode"/>
+		<result column="INVEN_NAME"	  	property="invenName"/>
+		<result column="INVEN_PAY"	  	property="invenPay"/>
+		<result column="INVEN_NUM"	  	property="invenNum"/>
+		<result column="INVEN_DATE"	  	property="invenDate"/>
+		<result column="ITEM_CODE"	  	property="itemCode"/>
+		<result column="ITEM_NAME"	  	property="itemName"/>
+	</resultMap>
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
@@ -41,6 +50,7 @@
 		   FROM CARNAME
 		   JOIN CAR_FILE USING(FILE_NUM)
 		   JOIN CLASSIFICATION USING(CLASS_CODE)
+		   ORDER BY UPLOAD_DATE
 	</select>
 	
 	<select id="codeCheck" parameterType="string" resultMap="carTypeResultMap">
@@ -121,4 +131,32 @@
 		WHERE FILE_NUM = #{fileNum}
 	</delete>
 	
+	<select id="equipmentListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM INVENTORY
+	</select>
+	
+	<select id="equipmentList" resultMap="InventoryResultMap">
+		SELECT INVEN_CODE,
+       		   INVEN_NAME,
+			   INVEN_PAY,
+        	   INVEN_NUM,
+        	   ITEM_CODE,
+        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
+        	   ITEM_NAME
+		  FROM INVENTORY
+		  JOIN ITEM USING (ITEM_CODE)
+	</select>
+	
+	<select id="insertList" resultMap="InventoryResultMap">
+		SELECT INVEN_CODE,
+       		   INVEN_NAME,
+			   INVEN_PAY,
+        	   INVEN_NUM,
+        	   ITEM_CODE,
+        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
+        	   ITEM_NAME
+		  FROM INVENTORY
+		  JOIN ITEM USING (ITEM_CODE)
+	</select>
 </mapper>

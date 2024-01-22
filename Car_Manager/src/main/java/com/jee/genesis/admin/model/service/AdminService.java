@@ -3,10 +3,12 @@ package com.jee.genesis.admin.model.service;
 import java.util.ArrayList;
 
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.common.model.vo.PageInfo;
 
 public interface AdminService {
 
+	// 품목관리
 	ArrayList<CarType> codeCheck(PageInfo pi, String classCode);
 
 	int selectListCount();
@@ -32,5 +34,12 @@ public interface AdminService {
 	int deleteModel(String carName);
 
 	int deleteModelPart(String carName);
+
+	// 비품관리
+	int equipmentListCount();
+
+	ArrayList<Inventory> equipmentList(PageInfo pi);
+
+	ArrayList<Inventory> insertList();
 
 }

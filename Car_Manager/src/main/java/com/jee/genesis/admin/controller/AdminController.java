@@ -61,6 +61,20 @@ public class AdminController {
 		return "admin/itemPage";
 	}
 	
+	@GetMapping("equipment-management")
+	public String equipment(@RequestParam(value="cPage", defaultValue="1") int currentPage, Model model) {
+		PageInfo pi = Pagination.getPageInfo(adminService.equipmentListCount(), currentPage, 10, 10);
+		
+		model.addAttribute("list", adminService.equipmentList(pi));
+		model.addAttribute("pi", pi);
+		
+		model.addAttribute("insertList", adminService.insertList());
+		
+		return "admin/equipmentPage";
+	}
+	
+	
+	
 	// --------------------------------------- 기능구현
 	@ResponseBody
 	@GetMapping(value="codeCheck", produces="application/json; charset=UTF-8")
@@ -123,7 +137,6 @@ public class AdminController {
 	@GetMapping(value="deleteModel", produces="application/json; charset=UTF-8")
 	public String deleteModel(String carName, Integer fileNum){
 		String message = "";
-		System.out.println(fileNum +"/"+fileNum);
 		if(adminService.deleteModelPart(carName)>0) {
 			adminService.deleteModel(carName);
 			adminService.deleteModelFile(fileNum);

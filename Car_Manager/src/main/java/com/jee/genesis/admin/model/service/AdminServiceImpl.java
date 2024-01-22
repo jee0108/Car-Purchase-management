@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jee.genesis.admin.model.dao.AdminDao;
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.common.model.vo.PageInfo;
 
 @EnableTransactionManagement
@@ -88,6 +89,23 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int deleteModelFile(Integer fileNum) {
 		return adminDao.deleteModelFile(sqlSession, fileNum);
+	}
+
+	@Override
+	public int equipmentListCount() {
+		return adminDao.equipmentListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Inventory> equipmentList(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return adminDao.equipmentList(sqlSession, rowBounds);
+	}
+
+	@Override
+	public ArrayList<Inventory> insertList() {
+		return adminDao.insertList(sqlSession);
 	}
 
 	

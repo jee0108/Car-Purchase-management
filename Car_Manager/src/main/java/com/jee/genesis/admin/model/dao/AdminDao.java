@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.Inventory;
 
 @Repository
 public class AdminDao {
@@ -61,6 +62,18 @@ public class AdminDao {
 	
 	public int deleteModel(SqlSessionTemplate sqlSession, String carName) {
 		return sqlSession.delete("adminMapper.deleteModel", carName);
+	}
+
+	public int equipmentListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.equipmentListCount");
+	}
+
+	public ArrayList<Inventory> equipmentList(SqlSessionTemplate sqlSession, RowBounds rowBounds) {
+		return (ArrayList)sqlSession.selectList("adminMapper.equipmentList", null, rowBounds);
+	}
+
+	public ArrayList<Inventory> insertList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.insertList");
 	}
 
 
