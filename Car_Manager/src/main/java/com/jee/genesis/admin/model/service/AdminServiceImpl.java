@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.jee.genesis.admin.model.dao.AdminDao;
 import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.Inventory;
+import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
 
 @EnableTransactionManagement
@@ -122,6 +123,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int insertInvenType(Inventory inven) {
 		return adminDao.insertInvenType(sqlSession, inven);
+	}
+
+	@Override
+	public int insertStock(StockAndDelovery stock) {
+		return adminDao.insertStock(sqlSession, stock);
 	}
 
 	

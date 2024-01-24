@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.jee.genesis.admin.model.service.AdminService;
 import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.Inventory;
+import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
 
@@ -166,9 +167,20 @@ public class AdminController {
 	@PostMapping(value="enroll-invenType")
 	public String insertInvenType(Inventory inven, HttpSession session){
 		
-		String message = "";
-		
 		if(adminService.insertInvenType(inven)>0) {
+			session.setAttribute("alertMsg", "추가 성공");
+			return "redirect:equipment-management";
+		}
+		else {
+			session.setAttribute("alertMsg", "추가 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@PostMapping(value="enroll-stock")
+	public String insertStock(StockAndDelovery stock, HttpSession session){
+		
+		if(adminService.insertStock(stock)>0) {
 			session.setAttribute("alertMsg", "추가 성공");
 			return "redirect:equipment-management";
 		}

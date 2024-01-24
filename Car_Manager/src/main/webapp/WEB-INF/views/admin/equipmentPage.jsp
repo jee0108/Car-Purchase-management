@@ -120,9 +120,9 @@
                                             <tr style="height: 40px;">
                                                 <th width="100">구분</th>
                                                 <td>
-                                                    <select name="itemCode" id="insertItem">
+                                                    <select name="invenCode" id="insertItem">
                                                         <c:forEach items="${insertList}" var="i">  
-                                                            <option value="${i.invenCode}">${i.invenCode} / ${i.invenName}</option>
+                                                            <option value="${i.invenCode}" class="searchCode">${i.invenCode} / ${i.invenName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </td>
@@ -130,7 +130,7 @@
 
                                             <tr style="height: 40px;">
                                                 <th>입고량</th>
-                                                <td><input type="number" name="invenPay" min="0" value="0"></td>
+                                                <td><input type="number" name="stockNum" min="1" value="1"></td>
                                             </tr>
                         
                                         </table>

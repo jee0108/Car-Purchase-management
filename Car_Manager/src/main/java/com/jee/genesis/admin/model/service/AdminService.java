@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.Inventory;
+import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
 
 public interface AdminService {
@@ -47,5 +48,7 @@ public interface AdminService {
 	int selectItemCount(String itemCode);
 
 	int insertInvenType(Inventory inven);
+
+	int insertStock(StockAndDelovery stock);
 
 }

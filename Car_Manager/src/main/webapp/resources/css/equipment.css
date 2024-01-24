@@ -1,5 +1,4 @@
 .main-wrap{
-
 	padding-top: 2vh;
     width: 100vw;
     height: 90vh;
@@ -33,10 +32,6 @@
 .btn-end{
 	float: inline-end;
 	margin-right: 3vw;
-}
-.btn-endd{
-	float: inline-end;
-	margin-right: 1vw;
 }
 .table-heigth{
 	height: 50px !important;

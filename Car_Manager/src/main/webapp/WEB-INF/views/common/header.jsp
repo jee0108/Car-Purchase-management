@@ -14,6 +14,12 @@
 
 </head>
 <body>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert('Completion','${alertMsg}', function(){alertify.success('success')});
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
 
 	<div id="header">
 

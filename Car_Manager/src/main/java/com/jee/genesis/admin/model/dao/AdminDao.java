@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.Inventory;
+import com.jee.genesis.admin.model.vo.StockAndDelovery;
 
 @Repository
 public class AdminDao {
@@ -86,6 +87,10 @@ public class AdminDao {
 
 	public int insertInvenType(SqlSessionTemplate sqlSession, Inventory inven) {
 		return sqlSession.insert("adminMapper.insertInvenType", inven);
+	}
+
+	public int insertStock(SqlSessionTemplate sqlSession, StockAndDelovery stock) {
+		return sqlSession.insert("adminMapper.insertStock", stock);
 	}
 
 

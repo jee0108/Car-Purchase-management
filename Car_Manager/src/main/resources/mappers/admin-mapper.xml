@@ -34,6 +34,16 @@
 		<result column="ITEM_CODE"	  	property="itemCode"/>
 		<result column="ITEM_NAME"	  	property="itemName"/>
 	</resultMap>
+	
+	<resultMap type="stockAndDelovery" id="StockAndDeloveryResultMap">
+		<result column="STOCK_PKNO"	  	property="stockPkno"/>
+		<result column="STOCK_NUM"	  	property="StockNum"/>
+		<result column="STOCK_DATE"	  	property="stockDate"/>
+		<result column="DELOVERY_PKNO"	property="deloveryPkno"/>
+		<result column="DELOVERY_NUM"	property="deloveryNum"/>
+		<result column="DELOVERY_DATE"	property="deloveryDate"/>
+		<result column="INVEN_CODE"	  	property="invenCode"/>
+	</resultMap>
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
@@ -184,6 +194,11 @@
 	<insert id="insertInvenType" parameterType="carType">
 		INSERT INTO INVENTORY(INVEN_CODE,INVEN_NAME,INVEN_PAY,INVEN_NUM,INVEN_DATE,ITEM_CODE)
 	  	VALUES (#{invenCode}, #{invenName}, #{invenPay}, #{invenNum}, SYSDATE, #{itemCode})
+	</insert>
+	
+	<insert id="insertStock" parameterType="stockAndDelovery">
+		INSERT INTO STOCK(STOCK_PKNO, INVEN_CODE, STOCK_NUM, STOCK_DATE)
+		VALUES (SEQ_STOCK_PKNO.NEXTVAL, #{invenCode}, #{stockNum}, SYSDATE)
 	</insert>
 	
 </mapper>
