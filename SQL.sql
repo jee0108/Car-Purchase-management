@@ -29,7 +29,10 @@ COMMENT ON COLUMN "MEMBER"."MEM_PWD" IS '비밀번호';
 COMMENT ON COLUMN "MEMBER"."MEM_ROLE" IS '등급';
 
 INSERT INTO "MEMBER" values('01077777777', 'admin@admin.com', '웹관리자', '$2a$10$zr82U9KRbC/WbP30Q3txtuBAKswdA1Aw3OQxZU.iidrdBhB0JPa0K', 'R');
-
+INSERT INTO "MEMBER" values('01011111111', 'dealer1@admin.com', '딜러1', '$2a$10$zr82U9KRbC/WbP30Q3txtuBAKswdA1Aw3OQxZU.iidrdBhB0JPa0K', 'D');
+INSERT INTO "MEMBER" values('01022222222', 'dealer2@admin.com', '딜러2', '$2a$10$zr82U9KRbC/WbP30Q3txtuBAKswdA1Aw3OQxZU.iidrdBhB0JPa0K', 'D');
+INSERT INTO "MEMBER" values('01033333333', 'dealer3@admin.com', '딜러3', '$2a$10$zr82U9KRbC/WbP30Q3txtuBAKswdA1Aw3OQxZU.iidrdBhB0JPa0K', 'D');
+INSERT INTO "MEMBER" values('01088888888', 'user1@gmail.com', '김철수', '$2a$10$zr82U9KRbC/WbP30Q3txtuBAKswdA1Aw3OQxZU.iidrdBhB0JPa0K', 'U');
 -------------------------- 차 --------------------------
 --------------------------------------------------------
 CREATE TABLE "CAR" (
@@ -67,9 +70,9 @@ INSERT INTO "INVENTORY" values('EN-G35T', '가솔린3.5T', 6600000, 10, SYSDATE,
 INSERT INTO "INVENTORY" values('EN-G48V', '가솔린3.5T-48V', 10800000, 10, SYSDATE, 'EN');
 INSERT INTO "INVENTORY" values('EN-EV00', '전기모터', 7800000, 10, SYSDATE, 'EN');
 
-INSERT INTO "INVENTORY" values('DN-2WD', '2WD', 2800000, 10, SYSDATE, 'DN');
-INSERT INTO "INVENTORY" values('DN-AWD', 'AWD', 4800000, 10, SYSDATE, 'DN');
-INSERT INTO "INVENTORY" values('DN-LSD', 'AWD-LSD', 6800000, 10, SYSDATE, 'DN');
+INSERT INTO "INVENTORY" values('DN-2WD', '2WD', 2800000, 10, SYSDATE, 'DV');
+INSERT INTO "INVENTORY" values('DN-AWD', 'AWD', 4800000, 10, SYSDATE, 'DV');
+INSERT INTO "INVENTORY" values('DN-LSD', 'AWD-LSD', 6800000, 10, SYSDATE, 'DV');
 
 INSERT INTO "INVENTORY" values('CR-UYH', '우유니화이트', 1000000, 10, SYSDATE, 'CR');
 INSERT INTO "INVENTORY" values('CR-BRB', '브루클린블랙', 1000000, 10, SYSDATE, 'CR');
@@ -300,7 +303,6 @@ commit;
 
 --------------------------------------------------------------
 --------------------------------------------------------------
-
 update INVENTORY
 set INVEN_NUM = (INVEN_NUM+1)
 where INVEN_CODE = 'EN-G25T';

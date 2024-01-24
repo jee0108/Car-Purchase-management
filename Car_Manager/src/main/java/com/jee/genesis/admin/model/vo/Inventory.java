@@ -1,10 +1,11 @@
 package com.jee.genesis.admin.model.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data @AllArgsConstructor @Builder
+@NoArgsConstructor @Getter @Setter @ToString
 public class Inventory {
 	private String invenCode;	//INVEN_CODE	VARCHAR2(20 BYTE)
 	private String invenName;	//INVEN_NAME	VARCHAR2(50 BYTE)

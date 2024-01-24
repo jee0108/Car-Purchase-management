@@ -189,7 +189,7 @@
 
                                             <tr style="height: 40px;">
                                                 <th>초기재고</th>
-                                                <td><input type="number" name="invenPay" min="0" value="0"></td>
+                                                <td><input type="number" name="invenNum" min="0" value="0"></td>
                                             </tr>
                         
                                         </table>

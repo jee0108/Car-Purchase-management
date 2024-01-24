@@ -119,5 +119,10 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectItem(sqlSession, itemCode);
 	}
 
+	@Override
+	public int insertInvenType(Inventory inven) {
+		return adminDao.insertInvenType(sqlSession, inven);
+	}
+
 	
 }

@@ -84,6 +84,10 @@ public class AdminDao {
 		return sqlSession.selectOne("adminMapper.selectItemCount", itemCode);
 	}
 
+	public int insertInvenType(SqlSessionTemplate sqlSession, Inventory inven) {
+		return sqlSession.insert("adminMapper.insertInvenType", inven);
+	}
+
 
 	
 

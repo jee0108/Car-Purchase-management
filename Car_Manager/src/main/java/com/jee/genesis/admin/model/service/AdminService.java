@@ -46,4 +46,6 @@ public interface AdminService {
 
 	int selectItemCount(String itemCode);
 
+	int insertInvenType(Inventory inven);
+
 }

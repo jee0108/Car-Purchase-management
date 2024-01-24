@@ -162,4 +162,20 @@ public class AdminController {
 			
 		return new Gson().toJson(map);
 	}
+	
+	@PostMapping(value="enroll-invenType")
+	public String insertInvenType(Inventory inven, HttpSession session){
+		
+		String message = "";
+		
+		if(adminService.insertInvenType(inven)>0) {
+			session.setAttribute("alertMsg", "추가 성공");
+			return "redirect:equipment-management";
+		}
+		else {
+			session.setAttribute("alertMsg", "추가 실패");
+			return "common/errorPage";
+		}
+	}
+	
 }

@@ -50,7 +50,7 @@
 		   FROM CARNAME
 		   JOIN CAR_FILE USING(FILE_NUM)
 		   JOIN CLASSIFICATION USING(CLASS_CODE)
-		   ORDER BY UPLOAD_DATE
+		   ORDER BY UPLOAD_DATE DESC
 	</select>
 	
 	<select id="codeCheck" parameterType="string" resultMap="carTypeResultMap">
@@ -146,6 +146,7 @@
         	   ITEM_NAME
 		  FROM INVENTORY
 		  JOIN ITEM USING (ITEM_CODE)
+		  ORDER BY INVEN_DATE DESC
 	</select>
 	
 	<select id="insertList" resultMap="InventoryResultMap">
@@ -177,7 +178,12 @@
 		  FROM INVENTORY
 		  JOIN ITEM USING (ITEM_CODE)
 		 WHERE ITEM_CODE = #{itemCode}
-		 ORDER BY INVEN_DATE
+		 ORDER BY INVEN_DATE DESC
 	</select>
+	
+	<insert id="insertInvenType" parameterType="carType">
+		INSERT INTO INVENTORY(INVEN_CODE,INVEN_NAME,INVEN_PAY,INVEN_NUM,INVEN_DATE,ITEM_CODE)
+	  	VALUES (#{invenCode}, #{invenName}, #{invenPay}, #{invenNum}, SYSDATE, #{itemCode})
+	</insert>
 	
 </mapper>
