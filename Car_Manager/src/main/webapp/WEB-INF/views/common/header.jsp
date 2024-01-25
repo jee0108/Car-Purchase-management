@@ -33,7 +33,7 @@
 			</sapn>
 			<div class="header-list">
 				<ul>
-					<li><a href="">모델</a></li>
+					<li><a href="model-list">모델</a></li>
 					<li><a href="">구매</a></li>
 				</ul>
 			</div>

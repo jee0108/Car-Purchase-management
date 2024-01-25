@@ -1,83 +1,73 @@
-html, body {
-	position: relative;
-	margin: 0;
-	padding: 0;
+.admin-title{
+    padding-top: 25px;
+	text-align: center;
+	color: rgb(25, 25, 25);
+	height: 8vh;
+	width: 100vw;
+    font-size: 18px;
+	font-weight: bold;
+	border-bottom: 1px solid rgb(255, 255, 255);
 }
-a{text-decoration: none;}
-a:hover{text-decoration: none;}
-body {
-	background-color: rgb(17, 17, 17);
+
+.main-wrap{
+    width: 100vw;
+    height: 82vh;
+	background-color: rgba(222, 222, 222, 0.913);
+}
+.content{
+	margin: auto;
+	width: 80vw;
+	height: 82vh;
+}
+p{
 	font-size: 14px;
-	color: #eee;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
 }
-
-swiper-container {
-	width: 100%;
+.width{
+	border: 1px solid red;
+	width: 20vw;
+}
+.table-size{
+	width: 90% !important;
+}
+.main-bottom .table-size{
+	width: 95% !important;
+}
+.float{
+	float: right;
+}
+.top{
+	width: 48%;
 	height: 100%;
+	background-color: white;
+	padding-left: 2vw;
+	padding-top: 2vh;
 }
-
-swiper-slide {
-	text-align: center;
-	font-size: 18px;
-	background: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.main-top{
+	padding-top: 2vh;
+	margin: auto;
+	width: 75%;
+	height: 35%;
 }
+.main-bottom{
+	margin: auto;
 
-/* 이미지를 가득 차게 화면에 표시하기 위한 스타일 추가 */
-swiper-slide img {
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	padding-left: 3vw;
+	padding-top: 2vh;
+
+	background-color: white;
+
+	width: 75%;
+	height: 35%;
 }
-
-.mainContent {
-	padding-top: 5vh;
-	color: #eee;
-	padding-left: 10vw;
+label{
+	font-size: 12px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
 }
-
-.display-flex {
-	display: flex;
-}
-
-.mainContent-size {
-	width: 10vw;
-}
-
-.swiper-container {
-	width: 100%;
-	height: 100%;
-}
-
-.swiper-slide {
-	text-align: center;
-	font-size: 18px;
-	background: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-/* 부드러운 페이드 효과 */
-.swiper-container-fade .swiper-slide {
-	transition-property: opacity;
-}
-
-.swiper-container-fade .swiper-slide-active, .swiper-container-fade .swiper-slide-next,
-	.swiper-container-fade .swiper-slide-prev {
-	opacity: 1;
-}
-
-.swiper-container-fade .swiper-slide-next, .swiper-container-fade .swiper-slide-prev
-	{
-	transition-timing-function: ease;
-}
-
-/* 스타일 추가 및 수정 */
-.mySwiper {
-	width: 100%;
-	height: 100%;
+table{
+	font-size: 12px;
+	font-weight: bold;
+	color: rgb(66, 66, 66);
 }

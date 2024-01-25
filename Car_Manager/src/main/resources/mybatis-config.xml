@@ -12,11 +12,13 @@
 		<typeAlias type="com.jee.genesis.admin.model.vo.CarType" alias="carType" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.Inventory" alias="inventory" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.StockAndDelovery" alias="stockAndDelovery" />
+		<typeAlias type="com.jee.genesis.car.model.vo.CarModel" alias="carModel" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/admin-mapper.xml" />
+		<mapper resource="/mappers/car-mapper.xml" />
 	</mappers>
 
 </configuration>
