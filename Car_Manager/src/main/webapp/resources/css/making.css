@@ -1,0 +1,21 @@
+div{
+    display: inline-block;
+    border: 1px solid red;
+}
+.wrap{
+    height: 82vh;
+    width: 100vw;
+    background-color: rgb(33, 33, 33);
+}
+.carName{color:white}
+a:hover{
+    color: white;
+	font-weight: bolder;
+	text-decoration: none;
+	text-decoration-line: none;
+}
+
+.labelfont{
+    font-weight: bold;
+    
+}

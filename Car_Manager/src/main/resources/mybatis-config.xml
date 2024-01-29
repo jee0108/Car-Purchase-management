@@ -13,6 +13,8 @@
 		<typeAlias type="com.jee.genesis.admin.model.vo.Inventory" alias="inventory" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.StockAndDelovery" alias="stockAndDelovery" />
 		<typeAlias type="com.jee.genesis.car.model.vo.CarModel" alias="carModel" />
+		<typeAlias type="com.jee.genesis.car.model.vo.MakeCar" alias="makeCar" />
+		<typeAlias type="com.jee.genesis.car.model.vo.Inventory" alias="inven" />
 	</typeAliases>
 
 	<mappers>

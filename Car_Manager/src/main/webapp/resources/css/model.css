@@ -1,16 +1,14 @@
 
 div{
-    border: 1px solid red;
     display: inline-block;
 }
 .wrap{
-    border: 1px solid yellow;
     height: 82vh;
     width: 100vw;
     background-color: rgb(33, 33, 33);
 }
+.carName{color:white}
 .list{
-    border: 1px solid green;
     display: block;
     text-align: center !important;
     margin: auto !important;

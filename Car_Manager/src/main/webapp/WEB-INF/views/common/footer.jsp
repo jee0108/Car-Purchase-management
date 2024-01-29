@@ -18,8 +18,6 @@
 	<div id="footer">
 
 		<div class="footer-logo">
-			
-			
 			<img class="header-logo"
 			src="https://www.genesis.com/etc.clientlibs/genesis-p2/global/clientlibs/clientlib-basepage/resources/images/logo.png"
 			width="110" height="25" />

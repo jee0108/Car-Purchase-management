@@ -21,27 +21,17 @@
 			pagination-dynamic-bullets="true" autoplay="true" delay="3000">
 		<swiper-slide>
 		<img
-			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIQeYG%2FbtqC2udDXIC%2FzermYkdXGyvvXrQfXYKxR0%2Fimg.jpg"></swiper-slide>
+			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIQeYG%2FbtqC2udDXIC%2FzermYkdXGyvvXrQfXYKxR0%2Fimg.jpg" width="2000" height="730"></swiper-slide>
 		<swiper-slide>
 		<img
-			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyVaHX%2FbtqC1HqA5pd%2FHpLHwKESZig33HQRwPXQXK%2Fimg.jpg"></swiper-slide>
+			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyVaHX%2FbtqC1HqA5pd%2FHpLHwKESZig33HQRwPXQXK%2Fimg.jpg" width="2000" height="730"></swiper-slide>
 		<swiper-slide>
 		<img
-			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbWzi06%2FbtqC6PfLRAA%2FAh0QFCskLr35JnfsaAaiIk%2Fimg.jpg"></swiper-slide>
+			src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbWzi06%2FbtqC6PfLRAA%2FAh0QFCskLr35JnfsaAaiIk%2Fimg.jpg" width="2000" height="730"></swiper-slide>
 		</swiper-container>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-
-		<div class="mainContent">
-			<div class="display-flex">
-				<span class="mainContent-size"><h3>
-						<a href="">다운로드 센터 &GT;</a>
-					</h3></span> <span class="mainContent-size"><h3>
-						<a href="">견적 내기 &GT;</a>
-					</h3></span>
-			</div>
-		</div>
 
 	</div>
 

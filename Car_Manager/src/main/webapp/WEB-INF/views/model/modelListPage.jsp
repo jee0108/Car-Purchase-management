@@ -31,11 +31,22 @@
 
 		<div class="img-list">
 			
-			<div>
-				<label>GV80</label>
-				<button type="button" class="btn btn-sm btn-end">견적내기</button>
-				<br>
-				<img src="" alt="" width="300" height="300">
+			<div class="img-result">
+				<c:if test="${empty list}">
+					<div style="color: white;">조회 결과가 없습니다.</div>
+				</c:if>
+
+				<c:forEach items="${list}" var="c">
+					<div style="margin-right: 30px;">
+						<form action="carMaking">
+							<label class="carName">${c.carName}</label>
+							<input type="hidden" name="carName" value="${c.carName}">
+							<button type="submit" class="btn btn-sm btn-end" onclick="carMaking();">견적내기</button>
+							<br>
+							<img class="carImg" src="${c.uploadName}" alt="${c.originalName}" width="300" height="150">
+						</form>
+					</div>
+				</c:forEach>
 			</div>
 			
 		</div>
@@ -46,6 +57,18 @@
 					url: 'modelAll',
 					success:result=>{
 						console.log(result);
+						let value ='';
+						if(result.length === 0){
+							value += '<div style="color: white;">조회 결과가 없습니다.</div>'
+						}
+						for(let i in result){
+							value += '<div style="margin-right: 30px;"><label class="carName">'+result[i].carName+'</label>'
+								  + '<input type="hidden" name="carName" value="'+result[i].carName+'">'
+								  + '<button type="button" class="btn btn-sm btn-end" onclick="carMaking();">견적내기</button>'
+								  + '<br>'
+								  + '<img class="carImg" src="'+result[i].uploadName+'" width="300" height="150"></div>'
+						}
+						$('.img-result').html(value);
 					},
 					error:()=>{
 						console.log('실패');
@@ -58,6 +81,18 @@
 					url: 'modelSedan',
 					success:result=>{
 						console.log(result);
+						let value ='';
+						if(result.length === 0){
+							value += '<div style="color: white;">조회 결과가 없습니다.</div>'
+						}
+						for(let i in result){
+							value += '<div style="margin-right: 30px;"><label class="carName">'+result[i].carName+'</label>'
+								  + '<input type="hidden" name="carName" value="'+result[i].carName+'">'
+								  + '<button type="button" class="btn btn-sm btn-end" onclick="carMaking();">견적내기</button>'
+								  + '<br>'
+								  + '<img class="carImg" src="'+result[i].uploadName+'" width="300" height="150"></div>'
+						}
+						$('.img-result').html(value);
 					},
 					error:()=>{
 						console.log('실패');
@@ -70,6 +105,18 @@
 					url: 'modelSuv',
 					success:result=>{
 						console.log(result);
+						let value ='';
+						if(result.length === 0){
+							value += '<div style="color: white;">조회 결과가 없습니다.</div>'
+						}
+						for(let i in result){
+							value += '<div style="margin-right: 30px;"><label class="carName">'+result[i].carName+'</label>'
+								  + '<input type="hidden" name="carName" value="'+result[i].carName+'">'
+								  + '<button type="button" class="btn btn-sm btn-end" onclick="carMaking();">견적내기</button>'
+								  + '<br>'
+								  + '<img class="carImg" src="'+result[i].uploadName+'" width="300" height="150"></div>'
+						}
+						$('.img-result').html(value);
 					},
 					error:()=>{
 						console.log('실패');
@@ -82,13 +129,24 @@
 					url: 'modelEv',
 					success:result=>{
 						console.log(result);
+						let value ='';
+						if(result.length === 0){
+							value += '<div style="color: white;">조회 결과가 없습니다.</div>'
+						}
+						for(let i in result){
+							value += '<div style="margin-right: 30px;"><label class="carName">'+result[i].carName+'</label>'
+								  + '<input type="hidden" name="carName" value="'+result[i].carName+'">'
+								  + '<button type="button" class="btn btn-sm btn-end">견적내기</button>'
+								  + '<br>'
+								  + '<img class="carImg" src="'+result[i].uploadName+'" width="300" height="150"></div>'
+						}
+						$('.img-result').html(value);
 					},
 					error:()=>{
 						console.log('실패');
 					}
 				});
 			}
-
 		</script>
 
 	</div>

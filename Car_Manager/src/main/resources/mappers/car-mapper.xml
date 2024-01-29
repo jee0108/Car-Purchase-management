@@ -5,7 +5,7 @@
 <mapper namespace="carMapper">
 	<!-- ======================== resultMap ======================== -->
 	<!-- =========================================================== -->
-	<resultMap type="car" id="carResultMap">
+	<resultMap type="carModel" id="carResultMap">
 		<result column="CAR_NAME"	  	property="carName"/>
 		<result column="CLASS_CODE"	  	property="classCode"/>
 		<result column="FILE_NUM"	  	property="fileNum"/>
@@ -13,6 +13,22 @@
 		<result column="ORIGINAL_NAME"	property="originalName"/>
 		<result column="UPLOAD_NAME"	property="uploadName"/>
 		<result column="UPLOAD_DATE"	property="uploadDate"/>
+	</resultMap>
+	
+	<resultMap type="makeCar" id="makeCarResultMap">
+		<result column="CAR_NAME"	  	property="carName"/>
+		<result column="CLASS_CODE"	  	property="classCode"/>
+		<result column="CAR_PRICE"	  	property="carPrice"/>
+		<result column="INVEN_CODE"	  	property="invenCode"/>
+	</resultMap>
+	
+	<resultMap type="inven" id="invenResultMap">
+		<result column="INVEN_CODE"	  	property="invenCode"/>
+		<result column="INVEN_NAME"	  	property="invenName"/>
+		<result column="INVEN_PAY"	  	property="invenPay"/>
+		<result column="INVEN_NUM"	  	property="invenNum"/>
+		<result column="INVEN_DATE"	  	property="invenDate"/>
+		<result column="ITEM_CODE"	  	property="itemCode"/>
 	</resultMap>
 	
 	<!-- =========================== SQL =========================== -->
@@ -29,6 +45,57 @@
 		   JOIN CAR_FILE USING (FILE_NUM)
 	</select>
 	
+	<select id="modelSedan" resultMap="carResultMap">
+		 SELECT CAR_NAME,
+				CLASS_CODE,
+				CAR_PRICE,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') as "UPLOAD_DATE"
+		   FROM CARNAME
+		   JOIN CAR_FILE USING (FILE_NUM)
+		  WHERE CLASS_CODE = 'SD'
+	</select>
 	
+	<select id="modelSuv" resultMap="carResultMap">
+		 SELECT CAR_NAME,
+				CLASS_CODE,
+				CAR_PRICE,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') as "UPLOAD_DATE"
+		   FROM CARNAME
+		   JOIN CAR_FILE USING (FILE_NUM)
+		  WHERE CLASS_CODE = 'SV'
+	</select>
+	
+	<select id="modelEv" resultMap="carResultMap">
+		 SELECT CAR_NAME,
+				CLASS_CODE,
+				CAR_PRICE,
+				ORIGINAL_NAME,
+				UPLOAD_NAME,
+				TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') as "UPLOAD_DATE"
+		   FROM CARNAME
+		   JOIN CAR_FILE USING (FILE_NUM)
+		  WHERE CLASS_CODE = 'EV'
+	</select>
+	
+	<select id="carOption" parameterType="string" resultMap="makeCarResultMap">
+		 SELECT CAR_NAME,
+				CLASS_CODE,
+				CAR_PRICE,
+				INVEN_CODE
+		   FROM CARNAME
+		   JOIN MANAGEMENT USING(CAR_NAME)
+		   WHERE CAR_NAME = #{carName}
+	</select>
+	
+	<select id="invenCodesList" resultMap="invenResultMap">
+		 SELECT INVEN_CODE,
+				INVEN_NAME,
+				ITEM_CODE
+		   FROM INVENTORY
+	</select>
 	
 </mapper>
