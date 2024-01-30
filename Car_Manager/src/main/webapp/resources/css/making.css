@@ -1,6 +1,6 @@
 div{
     display: inline-block;
-    border: 1px solid red;
+    color: white;
 }
 .wrap{
     height: 82vh;
@@ -14,8 +14,10 @@ a:hover{
 	text-decoration: none;
 	text-decoration-line: none;
 }
-
+.btn-end{
+	float: inline-end;
+}
 .labelfont{
     font-weight: bold;
-    
+
 }

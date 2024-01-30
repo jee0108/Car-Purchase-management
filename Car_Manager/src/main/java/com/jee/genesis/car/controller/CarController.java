@@ -67,4 +67,25 @@ public class CarController {
 		model.addAttribute("inven", inven);
 		return "model/carMakingPage";
 	}
+	
+	@ResponseBody
+	@GetMapping(value="checkEnginePay", produces="application/json; charset=UTF-8")
+	public String checkEnginePay(String engine) {
+		String enginePay = carService.checkEnginePay(engine);
+		return new Gson().toJson(enginePay);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="checkDrivePay", produces="application/json; charset=UTF-8")
+	public String checkDrivePay(String drive) {
+		String drivePay = carService.checkDrivePay(drive);
+		return new Gson().toJson(drivePay);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="checkColorPay", produces="application/json; charset=UTF-8")
+	public String checkColorPay(String color) {
+		String colorPay = carService.checkColorPay(color);
+		return new Gson().toJson(colorPay);
+	}
 }

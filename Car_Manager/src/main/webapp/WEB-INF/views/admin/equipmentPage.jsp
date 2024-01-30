@@ -277,23 +277,26 @@
 
 				<div id="pagingArea">
 					<ul class="pagination">
+						<li></li>
 						<c:choose>
 							<c:when test="${pi.currentPage eq 1 }">
 								<li class="page-item disabled"><a class="page-link" href="#">◄</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage-1}">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage-1}">◄</a></li>
 							</c:otherwise>
 						</c:choose>
+
 						<c:forEach begin="${pi.startPage}" end="${pi.endPage}" var ="p">
 							<li class="page-item"><a class="page-link" href="equipment-management?cPage=${p}">${p}</a></li>
 						</c:forEach>
+
 						<c:choose>
 							<c:when test="${pi.endPage eq pi.maxPage}">
 								<li class="page-item disabled"><a class="page-link" href="#">►</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage+11}">Next</a></li>
+								<li class="page-item"><a class="page-link" href="equipment-management?cPage=${pi.currentPage+11}">►</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>

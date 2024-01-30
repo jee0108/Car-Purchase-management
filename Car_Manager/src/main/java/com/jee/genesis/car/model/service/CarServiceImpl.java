@@ -50,4 +50,21 @@ public class CarServiceImpl implements CarService {
 		return carDao.invenCodesList(sqlSession);
 	}
 
+	@Override
+	public String checkEnginePay(String engine) {
+		return carDao.checkEnginePay(sqlSession, engine);
+	}
+
+	@Override
+	public String checkDrivePay(String drive) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String checkColorPay(String color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

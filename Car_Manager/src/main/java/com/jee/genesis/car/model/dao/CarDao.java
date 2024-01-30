@@ -38,4 +38,8 @@ public class CarDao {
 		return sqlSession.selectList("carMapper.invenCodesList");
 	}
 
+	public String checkEnginePay(SqlSessionTemplate sqlSession, String engine) {
+		return sqlSession.selectOne("carMapper.checkEnginePay", engine);
+	}
+
 }

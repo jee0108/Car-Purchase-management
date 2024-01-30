@@ -15,6 +15,7 @@
 		<typeAlias type="com.jee.genesis.car.model.vo.CarModel" alias="carModel" />
 		<typeAlias type="com.jee.genesis.car.model.vo.MakeCar" alias="makeCar" />
 		<typeAlias type="com.jee.genesis.car.model.vo.Inventory" alias="inven" />
+		<typeAlias type="com.jee.genesis.car.model.vo.StandOprion" alias="standOprion" />
 	</typeAliases>
 
 	<mappers>

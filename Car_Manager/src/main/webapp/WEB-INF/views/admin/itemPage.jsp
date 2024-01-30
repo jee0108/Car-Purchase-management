@@ -117,11 +117,11 @@
 										<tr style="height: 50px;">
 											<th>구동 타입</th>
 											<td colspan="5">
-												<input type="checkbox" name="invenCode" value="2WD">&nbsp;2WD
+												<input type="checkbox" name="invenCode" value="DV-2WD">&nbsp;2WD
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="invenCode" value="AWD">&nbsp;AWD
+												<input type="checkbox" name="invenCode" value="DV-AWD">&nbsp;AWD
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<input type="checkbox" name="invenCode" value="AWD-LSD">&nbsp;AWD-LSD
+												<input type="checkbox" name="invenCode" value="DV-LSD">&nbsp;AWD-LSD
 											</td>
 										</tr>
 

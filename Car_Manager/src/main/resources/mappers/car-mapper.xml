@@ -29,6 +29,7 @@
 		<result column="INVEN_NUM"	  	property="invenNum"/>
 		<result column="INVEN_DATE"	  	property="invenDate"/>
 		<result column="ITEM_CODE"	  	property="itemCode"/>
+		<result column="INVEN_PLUS_PAY"	  	property="invenPlusPay"/>
 	</resultMap>
 	
 	<!-- =========================== SQL =========================== -->
@@ -94,8 +95,15 @@
 	<select id="invenCodesList" resultMap="invenResultMap">
 		 SELECT INVEN_CODE,
 				INVEN_NAME,
-				ITEM_CODE
+				ITEM_CODE,
+				INVEN_PLUS_PAY
 		   FROM INVENTORY
+	</select>
+	
+	<select id="checkEnginePay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_CODE = #{engine}
 	</select>
 	
 </mapper>

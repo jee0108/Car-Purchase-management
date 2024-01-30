@@ -21,4 +21,10 @@ public interface CarService {
 
 	List<Inventory> invenCodesList();
 
+	String checkEnginePay(String engine);
+
+	String checkDrivePay(String drive);
+
+	String checkColorPay(String color);
+
 }
