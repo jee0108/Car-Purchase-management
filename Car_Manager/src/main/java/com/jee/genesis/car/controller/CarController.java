@@ -88,4 +88,18 @@ public class CarController {
 		String colorPay = carService.checkColorPay(color);
 		return new Gson().toJson(colorPay);
 	}
+	
+	@ResponseBody
+	@GetMapping(value="checkWheelPay", produces="application/json; charset=UTF-8")
+	public String checkWheelPay(String wheel) {
+		String wheelPay = carService.checkWheelPay(wheel);
+		return new Gson().toJson(wheelPay);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="checkInnerPay", produces="application/json; charset=UTF-8")
+	public String checkInnerPay(String inner) {
+		String innerPay = carService.checkInnerPay(inner);
+		return new Gson().toJson(innerPay);
+	}
 }

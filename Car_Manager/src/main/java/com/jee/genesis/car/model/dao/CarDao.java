@@ -42,4 +42,20 @@ public class CarDao {
 		return sqlSession.selectOne("carMapper.checkEnginePay", engine);
 	}
 
+	public String checkDrivePay(SqlSessionTemplate sqlSession, String drive) {
+		return sqlSession.selectOne("carMapper.checkDrivePay", drive);
+	}
+
+	public String checkColorPay(SqlSessionTemplate sqlSession, String color) {
+		return sqlSession.selectOne("carMapper.checkColorPay", color);
+	}
+
+	public String checkWheelPay(SqlSessionTemplate sqlSession, String wheel) {
+		return sqlSession.selectOne("carMapper.checkWheelPay", wheel);
+	}
+
+	public String checkInnerPay(SqlSessionTemplate sqlSession, String inner) {
+		return  sqlSession.selectOne("carMapper.checkInnerPay", inner);
+	}
+
 }

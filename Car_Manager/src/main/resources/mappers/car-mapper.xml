@@ -106,4 +106,28 @@
 		 WHERE INVEN_CODE = #{engine}
 	</select>
 	
+	<select id="checkDrivePay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_NAME= #{drive}
+	</select>
+	
+	<select id="checkColorPay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_CODE = #{color}
+	</select>
+	
+	<select id="checkWheelPay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_CODE = #{wheel}
+	</select>
+	
+	<select id="checkInnerPay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_CODE = #{inner}
+	</select>
+	
 </mapper>

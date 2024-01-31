@@ -86,9 +86,8 @@
 									engine: engineOption
 								},
 								success:result=>{
-									var pay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									console.log(pay);
-									$('.engine').html('+ '+pay+'원');
+									var checkEnginePay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									$('.engine').html('+ '+checkEnginePay+'원');
 								},
 								error:()=>{
 									console.log('실패');
@@ -99,16 +98,14 @@
 
 					$('#drive').on('change', 'input[type="radio"]', function() {
     					var driveOption = $(this).val();
-
 						$.ajax({
 								url: 'checkDrivePay',
 								data: {
 									drive: driveOption
 								},
 								success:result=>{
-									var pay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									console.log(pay);
-									$('.drive').html('+ '+pay+'원');
+									var checkDrivePay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									$('.drive').html('+ '+checkDrivePay+'원');
 								},
 								error:()=>{
 									console.log('실패');
@@ -119,16 +116,16 @@
 
 					$('#color').on('change', 'input[type="radio"]', function() {
     					var colorOption = $(this).val();
-
 						$.ajax({
 								url: 'checkColorPay',
 								data: {
-									drive: colorOption
+									color: colorOption
 								},
 								success:result=>{
-									var pay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									console.log(pay);
-									$('.drive').html('+ '+pay+'원');
+									console.log(result);
+									var checkColorPay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									console.log(checkColorPay);
+									$('.color').html('+ '+checkColorPay+'원');
 								},
 								error:()=>{
 									console.log('실패');
@@ -143,12 +140,11 @@
 						$.ajax({
 								url: 'checkWheelPay',
 								data: {
-									drive: wheelOption
+									wheel: wheelOption
 								},
 								success:result=>{
-									var pay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									console.log(pay);
-									$('.drive').html('+ '+pay+'원');
+									var checkWheelPay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									$('.wheel').html('+ '+checkWheelPay+'원');
 								},
 								error:()=>{
 									console.log('실패');
@@ -163,12 +159,11 @@
 						$.ajax({
 								url: 'checkInnerPay',
 								data: {
-									drive: innerOption
+									inner: innerOption
 								},
 								success:result=>{
-									var pay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									console.log(pay);
-									$('.drive').html('+ '+pay+'원');
+									var checkInnerPay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									$('.inner').html('+ '+checkInnerPay+'원');
 								},
 								error:()=>{
 									console.log('실패');
@@ -193,7 +188,6 @@
 				const toArray = String.split(',');
 
 				const inventoryDataString = '${inven}';
-				console.log(inventoryDataString);
 				const regex = /Inventory\(invenCode=([^,]+), invenName=([^,]+), itemCode=([^,]+), invenPlusPay=([^\)]+)\)/g;
 				const inventoryDataArray = [];
 

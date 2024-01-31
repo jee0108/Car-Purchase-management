@@ -27,4 +27,8 @@ public interface CarService {
 
 	String checkColorPay(String color);
 
+	String checkWheelPay(String wheel);
+
+	String checkInnerPay(String inner);
+
 }

@@ -57,14 +57,22 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public String checkDrivePay(String drive) {
-		// TODO Auto-generated method stub
-		return null;
+		return carDao.checkDrivePay(sqlSession, drive);
 	}
 
 	@Override
 	public String checkColorPay(String color) {
-		// TODO Auto-generated method stub
-		return null;
+		return carDao.checkColorPay(sqlSession, color);
+	}
+
+	@Override
+	public String checkWheelPay(String wheel) {
+		return carDao.checkWheelPay(sqlSession, wheel);
+	}
+
+	@Override
+	public String checkInnerPay(String inner) {
+		return carDao.checkInnerPay(sqlSession, inner);
 	}
 
 }
