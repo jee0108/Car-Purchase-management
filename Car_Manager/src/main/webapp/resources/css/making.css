@@ -1,9 +1,8 @@
 div{
-    display: inline-block;
     color: white;
 }
 .wrap{
-    height: 82vh;
+    height: 92vh;
     width: 100vw;
     background-color: rgb(33, 33, 33);
 }
@@ -19,5 +18,4 @@ a:hover{
 }
 .labelfont{
     font-weight: bold;
-
 }

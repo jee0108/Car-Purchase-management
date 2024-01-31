@@ -23,13 +23,29 @@
 	</resultMap>
 	
 	<resultMap type="inven" id="invenResultMap">
-		<result column="INVEN_CODE"	  	property="invenCode"/>
-		<result column="INVEN_NAME"	  	property="invenName"/>
-		<result column="INVEN_PAY"	  	property="invenPay"/>
-		<result column="INVEN_NUM"	  	property="invenNum"/>
-		<result column="INVEN_DATE"	  	property="invenDate"/>
-		<result column="ITEM_CODE"	  	property="itemCode"/>
+		<result column="INVEN_CODE"	  		property="invenCode"/>
+		<result column="INVEN_NAME"	  		property="invenName"/>
+		<result column="INVEN_PAY"	  		property="invenPay"/>
+		<result column="INVEN_NUM"	  		property="invenNum"/>
+		<result column="INVEN_DATE"	  		property="invenDate"/>
+		<result column="ITEM_CODE"	  		property="itemCode"/>
 		<result column="INVEN_PLUS_PAY"	  	property="invenPlusPay"/>
+	</resultMap>
+	
+	<resultMap type="dealer" id="dealerResultMap">
+		<result column="MEM_PHONE"		property="dealerPhone"/>
+		<result column="MEM_EMAIL"	  	property="memEmail"/>
+		<result column="MEM_NAME"	  	property="memName"/>
+		<result column="MEM_ROLE"	  	property="memRole"/>
+	</resultMap>
+	
+	<resultMap type="wantCar" id="wantCarResultMap">
+		<result column="EX_NUM"				property="exNum"/>
+		<result column="CAR_NAME"			property="carName"/>
+		<result column="EX_INVEN"			property="exInven"/>
+		<result column="EX_PRICE"			property="exPrice"/>
+		<result column="MEMBER_PHONE"		property="memberPhone"/>
+		<result column="DEALER_PHONE"		property="dealerPhone"/>
 	</resultMap>
 	
 	<!-- =========================== SQL =========================== -->
@@ -129,5 +145,18 @@
 		  FROM INVENTORY
 		 WHERE INVEN_CODE = #{inner}
 	</select>
+	
+	<select id="checkDealer" resultMap="dealerResultMap">
+		 SELECT MEM_PHONE,
+				MEM_EMAIL,
+				MEM_NAME 
+		   FROM MEMBER
+		  WHERE MEM_ROLE = 'D'
+	</select>
+	
+	<insert id="wantCar" parameterType="member">
+		INSERT INTO EX_CAR(EX_NUM,CAR_NAME,EX_INVEN,EX_PRICE,MEMBER_PHONE,DEALER_PHONE)
+		VALUES (SEQ_EX_NUM.NEXTVAL,#{carName},#{exInven},#{exPrice},#{memberPhone},#{dealerPhone})
+	</insert>
 	
 </mapper>

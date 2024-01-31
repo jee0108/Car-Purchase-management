@@ -128,11 +128,12 @@
 								},
 							success:result=>{
 								if(result === "success"){
-									location.href = "/genesis/web-admin";
+									alert("관리자를 등록하셨습니다.");
+									location.href = "/genesis/admin";
 								}
 								else{
 									alert("관리자 등록에 실패하셨습니다. 다시 시도해주시기 바랍니다.");
-									location.href = "/genesis/member-enroll";
+									location.href = "/genesis/admin-enroll";
 								}
 							},
 							error:()=>{

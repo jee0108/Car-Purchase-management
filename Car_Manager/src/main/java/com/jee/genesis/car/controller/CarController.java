@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.jee.genesis.car.model.service.CarService;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.member.model.vo.Member;
 
 @Controller
 public class CarController {
@@ -102,4 +106,30 @@ public class CarController {
 		String innerPay = carService.checkInnerPay(inner);
 		return new Gson().toJson(innerPay);
 	}
+	
+	@ResponseBody
+	@GetMapping(value="check-dealer", produces="application/json; charset=UTF-8")
+	public String checkDealer() {
+		ArrayList<Member> dealer= carService.checkDealer();
+		return new Gson().toJson(dealer);
+	}
+	
+	@PostMapping("wantCar")
+	public ModelAndView wantCar(WantCar car, ModelAndView mv) {
+		
+		String exInven = car.getCheckBoxGroup()+','+car.getColorGroup()+','+car.getDriveGroup()
+		+','+car.getEngineGroup()+','+car.getInnerGroup()+','+car.getWheelGroup();
+		
+		car.setExInven(exInven);
+		
+		if(carService.wantCar(car)>0) {
+			mv.addObject("alertMsg", "상담신청 완료되셨습니다")
+			  .setViewName("redirect:/");
+		}else {
+			mv.addObject("errorMsg", "상담신청에 실패하셨습니다.")
+			  .setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 }

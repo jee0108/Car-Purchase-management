@@ -11,6 +11,8 @@ import com.jee.genesis.car.model.dao.CarDao;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.member.model.vo.Member;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -73,6 +75,16 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public String checkInnerPay(String inner) {
 		return carDao.checkInnerPay(sqlSession, inner);
+	}
+
+	@Override
+	public ArrayList<Member> checkDealer() {
+		return carDao.checkDealer(sqlSession);
+	}
+
+	@Override
+	public int wantCar(WantCar car) {
+		return carDao.wantCar(sqlSession, car);
 	}
 
 }

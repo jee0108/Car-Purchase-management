@@ -6,6 +6,8 @@ import java.util.List;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.member.model.vo.Member;
 
 public interface CarService {
 
@@ -30,5 +32,10 @@ public interface CarService {
 	String checkWheelPay(String wheel);
 
 	String checkInnerPay(String inner);
+
+	ArrayList<Member> checkDealer();
+
+	int wantCar(WantCar car);
+
 
 }

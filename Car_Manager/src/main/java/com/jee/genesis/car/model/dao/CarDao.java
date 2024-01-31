@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.member.model.vo.Member;
 
 
 @Repository
@@ -55,7 +57,16 @@ public class CarDao {
 	}
 
 	public String checkInnerPay(SqlSessionTemplate sqlSession, String inner) {
-		return  sqlSession.selectOne("carMapper.checkInnerPay", inner);
+		return sqlSession.selectOne("carMapper.checkInnerPay", inner);
 	}
+
+	public ArrayList<Member> checkDealer(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("carMapper.checkDealer");
+	}
+
+	public int wantCar(SqlSessionTemplate sqlSession, WantCar car) {
+		return sqlSession.insert("carMapper.wantCar", car);
+	}
+
 
 }
