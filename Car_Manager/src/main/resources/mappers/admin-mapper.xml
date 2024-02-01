@@ -227,4 +227,16 @@
 		  WHERE DEALER_PHONE = #{dealerPhone}
 		  ORDER BY EX_DATE DESC
 	</select>
+	
+	<select id="detailEstimate" parameterType="_int" resultMap="exCarResultMap">
+		 SELECT EX_NUM,
+				CAR_NAME,
+				EX_INVEN,
+				EX_PRICE,
+				MEMBER_PHONE,
+				DEALER_PHONE,
+				TO_CHAR(EX_DATE, 'YYYY-MM-DD') as "EX_DATE"
+		   FROM EX_CAR
+		  WHERE EX_NUM = #{exNum}
+	</select>
 </mapper>

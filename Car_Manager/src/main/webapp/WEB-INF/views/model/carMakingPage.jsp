@@ -118,13 +118,14 @@
 												</div>
 											</c:when>
 											<c:otherwise>
-												<p>${loginUser.memName}님 정보를 확인하세요.</p>
+												<p>① ${loginUser.memName}님 정보를 확인하세요.</p>
 												<input type="tel" name="memberPhone" value="${loginUser.memPhone}" readonly>
-												<br>
+
+												<br><br>
 												<div>
 													<p style="color: black;">②어드바이저를 선택하세요.</p>
 													<select class="dealer" name="dealerPhone" style="color: black;"></select>
-												</div
+												</div>
 											</c:otherwise>
 										</c:choose>
 									</div>

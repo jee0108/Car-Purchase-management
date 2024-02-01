@@ -21,8 +21,8 @@
     <div>
         <div class="wrap">
 
-            <div class="content">
-                <div class="contentWrap">
+            <div class="content" style="border: 1px solid rgba(222, 222, 222, 0.913)">
+                <div class="contentWrap" style="border: 1px solid rgba(222, 222, 222, 0.913)">
                     
                     <h4 style="font-weight: bold; text-align: center;">구매상담 신청 목록</h4>
                     <br><br>
@@ -75,38 +75,107 @@
                     
 
                     <script>
-                        $(()=>{
-                            $.ajax({
-								url: 'detail-estimate',
-								data: {
-									exNum: $('.exNum').val()
-								},
-								success:result=>{
-									
-								},
-								error:()=>{
-									console.log('실패');
-								}
-						    });
-                        })
-                    </script>
+                        $(document).ready(() => {
+                            // inventoryDataArray 초기화
+                            const inventoryDataString = '${inven}';
+                            const regex = /Inventory\(invenCode=([^,]+), invenName=([^,]+), itemCode=([^,]+), invenPlusPay=([^\)]+)\)/g;
+                            const inventoryDataArray = [];
+                    
+                            let match;
+                            while ((match = regex.exec(inventoryDataString)) !== null) {
+                                const invenCode = match[1];
+                                const invenName = match[2];
+                                inventoryDataArray.push({ invenCode, invenName });
+                            }
+                    
+                            // 클릭 이벤트 핸들러 등록
+                            $('#estimateList>table>tbody>tr').click(function () {
+                                var exNum = $(this).find('.exNum').val();
+                    
+                                $.ajax({
+                                    url: 'detail-estimate',
+                                    data: {
+                                        exNum: exNum
+                                    },
+                                    success: result => {
+                                        console.log(result);
+                                        $('#resultCarName').html('선택모델 : ' + result.carName);
+                    
+                                        var exInven = result.exInven;
+                                        var stringArray = exInven.split(',');
+                    
+                                        function getInventoryName(codeArray) {
+                                            return codeArray.map(code => {
+                                                const inventoryItem = inventoryDataArray.find(item => item.invenCode === code);
+                                                return inventoryItem ? inventoryItem.invenName : code;
+                                            });
+                                        }
+                    
+                                        var enItems = stringArray.filter(item => item.includes('EN'));
+                                        var wdItems = stringArray.filter(item => item.includes('WD'));
+                                        var crItems = stringArray.filter(item => item.includes('CR'));
+                                        var whItems = stringArray.filter(item => item.includes('WH'));
+                                        var idItems = stringArray.filter(item => item.includes('ID'));
+                                        var opItems = stringArray.filter(item => item.includes('OP'));
+                    
 
+                                        var enType = getInventoryName(enItems);
+                                        var wdType = getInventoryName(wdItems);
+                                        var crColor = getInventoryName(crItems);
+                                        var whType = getInventoryName(whItems);
+                                        var idDesignColor = getInventoryName(idItems);
+                                        var opOptions = getInventoryName(opItems);
+                    
+
+                                        $('#resultEnItems').html('엔진타입 : ' + enType);
+                                        $('#resultWdItems').html(' 구동타입 : ' + wdType);
+                                        $('#resultCrItems').html(' 외장컬러 : ' + crColor);
+                                        $('#resultWhItems').html('휠&타이어 : ' + whType);
+                                        $('#resultIdItems').html('내장디자인&컬러 : ' + idDesignColor);
+                                        $('#resultOpItems').html('추가 옵션 : ' + opOptions.join(', '));
+
+                                        $('#resultExDate').html(result.exDate);
+                                        $('#resultExPrice').html('예상가격 : ' + result.exPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원');
+                                        $('#resultMemberPhone').html(formatPhoneNumber(result.memberPhone));
+
+                                    },
+                                    error: () => {
+                                        console.log('실패');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    
+                    
+                    
+                    
                     <!-- Modal -->
 					<div id="resultModal" class="modal modal-center fade" role="dialog">
-						<div class="modal-dialog modal-lg">
+						<div class="modal-dialog">
 					
 							<!-- Modal content-->
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">세부내역</h4>
+									<h4 class="modal-title">세부내역 </h4>
 								</div>
-								<div class="modal-body">
-									
-
+								<div class="modal-body" style="font-size: 15px;">
+                                    <br>
+                                    <p id="resultCarName" style="height: 20px;"></p>
+                                    <p id="resultEnItems"></p>
+                                    <p id="resultWdItems"></p>
+                                    <p id="resultCrItems"></p>
+                                    <p id="resultWhItems"></p>
+                                    <p id="resultIdItems"></p>
+                                    <p id="resultOpItems"></p>
+                                    <br>
+                                    <p id="resultExPrice" class="exprice"></p>
+                                    <br>
 								</div>
 								<div class="modal-footer">
-									
+                                    고객 번호 : <span id="resultMemberPhone"></span> / 
+									견적일 : <span id="resultExDate"></span>
 								</div>
 
 							</div>

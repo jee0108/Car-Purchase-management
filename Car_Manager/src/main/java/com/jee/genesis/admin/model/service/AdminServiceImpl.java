@@ -143,5 +143,10 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.estimateList(sqlSession, rowBounds, dealerPhone);
 	}
 
+	@Override
+	public ExCar detailEstimate(int exNum) {
+		return adminDao.detailEstimate(sqlSession, exNum);
+	}
+
 	
 }

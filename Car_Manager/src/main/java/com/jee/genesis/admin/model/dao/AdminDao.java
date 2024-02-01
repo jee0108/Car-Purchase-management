@@ -102,6 +102,10 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.estimateList", dealerPhone, rowBounds);
 	}
 
+	public ExCar detailEstimate(SqlSessionTemplate sqlSession, int exNum) {
+		return sqlSession.selectOne("adminMapper.detailEstimate", exNum);
+	}
+
 
 	
 

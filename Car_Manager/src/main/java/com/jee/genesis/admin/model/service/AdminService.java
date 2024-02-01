@@ -56,4 +56,6 @@ public interface AdminService {
 
 	ArrayList<ExCar> estimateList(PageInfo pi, String dealerPhone);
 
+	ExCar detailEstimate(int exNum);
+
 }

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +26,7 @@ import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
+import com.jee.genesis.car.model.service.CarService;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
 import com.jee.genesis.member.model.vo.Member;
@@ -33,6 +35,8 @@ import com.jee.genesis.member.model.vo.Member;
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private CarService carService;
 	@Autowired
 	private JavaMailSender sender;
 	
@@ -84,10 +88,12 @@ public class AdminController {
 		
 		PageInfo pi = Pagination.getPageInfo(adminService.estimateListCount(dealerPhone), currentPage, 10, 10);
 		ArrayList<ExCar> estimate = adminService.estimateList(pi, dealerPhone);
+		List<com.jee.genesis.car.model.vo.Inventory> inven = carService.invenCodesList();
 		
 		model.addAttribute("estimate", estimate);
 		model.addAttribute("pi", pi);
-		
+		model.addAttribute("inven", inven);
+
 		return "admin/dealerPage";
 	}
 	
@@ -204,6 +210,15 @@ public class AdminController {
 			session.setAttribute("alertMsg", "추가 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping(value="detail-estimate", produces="application/json; charset=UTF-8")
+	public String detailEstimate(int exNum){
+		
+		ExCar excar = adminService.detailEstimate(exNum);
+		
+		return new Gson().toJson(excar);
 	}
 	
 }
