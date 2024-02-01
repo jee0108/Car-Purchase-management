@@ -298,7 +298,8 @@ CREATE TABLE "EX_CAR" (
 	"EX_INVEN"	    VARCHAR2(3000)	NOT NULL,
 	"EX_PRICE"	    NUMBER		    NOT NULL,
 	"MEMBER_PHONE"	VARCHAR2(11)	NOT NULL,
-	"DEALER_PHONE"	VARCHAR2(11)	NOT NULL
+	"DEALER_PHONE"	VARCHAR2(11)	NOT NULL,
+    "EX_DATE"       DATE            NOT NULL
 );
 
 COMMENT ON COLUMN "EX_CAR"."EX_NUM" IS '내차번호';
@@ -307,6 +308,7 @@ COMMENT ON COLUMN "EX_CAR"."EX_INVEN" IS '부품종류';
 COMMENT ON COLUMN "EX_CAR"."EX_PRICE" IS '견적가격';
 COMMENT ON COLUMN "EX_CAR"."MEMBER_PHONE" IS '구매자전화번호';
 COMMENT ON COLUMN "EX_CAR"."DEALER_PHONE" IS '딜러전화번호';
+COMMENT ON COLUMN "EX_CAR"."EX_DATE" IS '견적날짜';
 
 -------------------------- PK, FK --------------------------
 ------------------------------------------------------------
@@ -371,3 +373,4 @@ commit;
 update INVENTORY
 set INVEN_NUM = (INVEN_NUM+1)
 where INVEN_CODE = 'EN-G25T';
+

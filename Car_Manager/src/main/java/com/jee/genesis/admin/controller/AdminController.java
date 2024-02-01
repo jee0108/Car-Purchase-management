@@ -22,10 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.jee.genesis.admin.model.service.AdminService;
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
+import com.jee.genesis.member.model.vo.Member;
 
 @Controller
 public class AdminController {
@@ -73,6 +75,20 @@ public class AdminController {
 		model.addAttribute("insertList", adminService.insertList());
 		
 		return "admin/equipmentPage";
+	}
+	
+	@GetMapping("estimate")
+	public String estimate(HttpSession session, Model model, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		String dealerPhone = loginUser.getMemPhone();
+		
+		PageInfo pi = Pagination.getPageInfo(adminService.estimateListCount(dealerPhone), currentPage, 10, 10);
+		ArrayList<ExCar> estimate = adminService.estimateList(pi, dealerPhone);
+		
+		model.addAttribute("estimate", estimate);
+		model.addAttribute("pi", pi);
+		
+		return "admin/dealerPage";
 	}
 	
 	

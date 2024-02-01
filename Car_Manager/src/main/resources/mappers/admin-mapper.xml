@@ -44,6 +44,16 @@
 		<result column="DELOVERY_DATE"	property="deloveryDate"/>
 		<result column="INVEN_CODE"	  	property="invenCode"/>
 	</resultMap>
+	
+	<resultMap type="exCar" id="exCarResultMap">
+		<result column="EX_NUM"	  		property="exNum"/>
+		<result column="CAR_NAME"	  	property="carName"/>
+		<result column="EX_INVEN"	  	property="exInven"/>
+		<result column="EX_PRICE"	  	property="exPrice"/>
+		<result column="MEMBER_PHONE"	property="memberPhone"/>
+		<result column="DEALER_PHONE"	property="dealerPhone"/>
+		<result column="EX_DATE"		property="exDate"/>
+	</resultMap>
 
 	<!-- =========================== SQL =========================== -->
 	<!-- =========================================================== -->
@@ -201,4 +211,20 @@
 		VALUES (SEQ_STOCK_PKNO.NEXTVAL, #{invenCode}, #{stockNum}, SYSDATE)
 	</insert>
 	
+	<select id="estimateListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM EX_CAR
+		 WHERE DEALER_PHONE = #{dealerPhone}
+	</select>
+	
+	<select id="estimateList" parameterType="string" resultMap="exCarResultMap">
+		 SELECT EX_NUM,
+				CAR_NAME,
+				EX_PRICE,
+				MEMBER_PHONE,
+				TO_CHAR(EX_DATE, 'YYYY-MM-DD') as "EX_DATE"
+		   FROM EX_CAR
+		  WHERE DEALER_PHONE = #{dealerPhone}
+		  ORDER BY EX_DATE DESC
+	</select>
 </mapper>

@@ -257,7 +257,7 @@
 										url: 'detail-item',
 										data: {
 											carName: cname
-											},
+										},
 										success:result=>{
 											var carName = result.carName;
 											var carPrice = result.carPrice;

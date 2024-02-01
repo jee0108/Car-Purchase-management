@@ -3,6 +3,7 @@ package com.jee.genesis.admin.model.service;
 import java.util.ArrayList;
 
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
@@ -50,5 +51,9 @@ public interface AdminService {
 	int insertInvenType(Inventory inven);
 
 	int insertStock(StockAndDelovery stock);
+
+	int estimateListCount(String dealerPhone);
+
+	ArrayList<ExCar> estimateList(PageInfo pi, String dealerPhone);
 
 }

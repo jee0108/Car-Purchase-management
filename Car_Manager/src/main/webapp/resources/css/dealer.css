@@ -1,0 +1,21 @@
+.wrap{
+	width: 100vw;
+    height: 92vh;
+	background-color: rgba(222, 222, 222, 0.913);
+}
+.content{
+
+	margin: auto;
+	width: 90vw;
+	height: 92vh;
+}
+.contentWrap{
+
+	width: 90vw;
+	height: 75vh;
+	margin-top: 28px;
+	background-color: white;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 30px;
+}

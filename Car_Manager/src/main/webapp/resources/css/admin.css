@@ -44,6 +44,17 @@ p{
 	padding-left: 2vw;
 	padding-top: 2vh;
 }
+.bigTop{
+	margin: auto;
+
+	padding-left: 3vw;
+	padding-top: 2vh;
+
+	background-color: white;
+
+	width: 75%;
+	height: 35%;
+}
 .main-top{
 	padding-top: 2vh;
 	margin: auto;

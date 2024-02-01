@@ -46,6 +46,7 @@
 		<result column="EX_PRICE"			property="exPrice"/>
 		<result column="MEMBER_PHONE"		property="memberPhone"/>
 		<result column="DEALER_PHONE"		property="dealerPhone"/>
+		<result column="EX_DATE"		property="exDate"/>
 	</resultMap>
 	
 	<!-- =========================== SQL =========================== -->
@@ -155,8 +156,8 @@
 	</select>
 	
 	<insert id="wantCar" parameterType="member">
-		INSERT INTO EX_CAR(EX_NUM,CAR_NAME,EX_INVEN,EX_PRICE,MEMBER_PHONE,DEALER_PHONE)
-		VALUES (SEQ_EX_NUM.NEXTVAL,#{carName},#{exInven},#{exPrice},#{memberPhone},#{dealerPhone})
+		INSERT INTO EX_CAR(EX_NUM,CAR_NAME,EX_INVEN,EX_PRICE,MEMBER_PHONE,DEALER_PHONE, EX_DATE)
+		VALUES (SEQ_EX_NUM.NEXTVAL,#{carName},#{exInven},#{exPrice},#{memberPhone},#{dealerPhone}, SYSDATE)
 	</insert>
 	
 </mapper>

@@ -114,13 +114,17 @@
 												<br>
 												<div>
 													<p style="color: black;">②어드바이저를 선택하세요.</p>
-													<select id="dealer" name="dealerPhone" style="color: black;"></select>
+													<select class="dealer" name="dealerPhone" style="color: black;"></select>
 												</div>
 											</c:when>
 											<c:otherwise>
 												<p>${loginUser.memName}님 정보를 확인하세요.</p>
-												<input type="tel" name="memPhone" value="${loginUser.memPhone}" readonly>
-
+												<input type="tel" name="memberPhone" value="${loginUser.memPhone}" readonly>
+												<br>
+												<div>
+													<p style="color: black;">②어드바이저를 선택하세요.</p>
+													<select class="dealer" name="dealerPhone" style="color: black;"></select>
+												</div
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -144,7 +148,7 @@
 										for(let i in result){
 											value += '<option value="'+result[i].dealerPhone+'" class="dealerPhone">'+result[i].memName+' ('+result[i].dealerPhone +' / '+result[i].memEmail+')</option>'
 										}
-										$('#dealer').html(value);
+										$('.dealer').html(value);
 									},
 									error:()=>{
 										console.log('실패');

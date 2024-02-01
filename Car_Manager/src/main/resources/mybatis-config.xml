@@ -8,10 +8,13 @@
 
 	<typeAliases>
 		<typeAlias type="com.jee.genesis.member.model.vo.Member" alias="member" />
+		
 		<typeAlias type="com.jee.genesis.admin.model.vo.Car" alias="car" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.CarType" alias="carType" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.Inventory" alias="inventory" />
 		<typeAlias type="com.jee.genesis.admin.model.vo.StockAndDelovery" alias="stockAndDelovery" />
+		<typeAlias type="com.jee.genesis.admin.model.vo.ExCar" alias="exCar" />
+		
 		<typeAlias type="com.jee.genesis.car.model.vo.CarModel" alias="carModel" />
 		<typeAlias type="com.jee.genesis.car.model.vo.MakeCar" alias="makeCar" />
 		<typeAlias type="com.jee.genesis.car.model.vo.Inventory" alias="inven" />

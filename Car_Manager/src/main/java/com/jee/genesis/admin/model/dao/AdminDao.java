@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
 
@@ -91,6 +92,14 @@ public class AdminDao {
 
 	public int insertStock(SqlSessionTemplate sqlSession, StockAndDelovery stock) {
 		return sqlSession.insert("adminMapper.insertStock", stock);
+	}
+
+	public int estimateListCount(SqlSessionTemplate sqlSession, String dealerPhone) {
+		return sqlSession.selectOne("adminMapper.estimateListCount", dealerPhone);
+	}
+
+	public ArrayList<ExCar> estimateList(SqlSessionTemplate sqlSession, RowBounds rowBounds, String dealerPhone) {
+		return (ArrayList)sqlSession.selectList("adminMapper.estimateList", dealerPhone, rowBounds);
 	}
 
 

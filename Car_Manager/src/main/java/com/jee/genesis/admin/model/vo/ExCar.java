@@ -1,4 +1,4 @@
-package com.jee.genesis.car.model.vo;
+package com.jee.genesis.admin.model.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @Getter @Setter @ToString
-public class WantCar {
+public class ExCar {
 	
 	private int exNum;			//EX_NUM	NUMBER
 	private String carName;		//CAR_NAME	VARCHAR2(30 BYTE)
@@ -15,11 +15,4 @@ public class WantCar {
 	private String memberPhone;	//MEMBER_PHONE	VARCHAR2(11 BYTE)
 	private String dealerPhone;	//DEALER_PHONE	VARCHAR2(11 BYTE)
 	private String exDate;
-	
-	private String engineGroup;
-	private String driveGroup;
-	private String colorGroup;
-	private String wheelGroup;
-	private String innerGroup;
-	private String checkBoxGroup;
 }

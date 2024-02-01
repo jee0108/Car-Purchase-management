@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jee.genesis.admin.model.dao.AdminDao;
 import com.jee.genesis.admin.model.vo.CarType;
+import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.common.model.vo.PageInfo;
@@ -128,6 +129,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int insertStock(StockAndDelovery stock) {
 		return adminDao.insertStock(sqlSession, stock);
+	}
+
+	@Override
+	public int estimateListCount(String dealerPhone) {
+		return adminDao.estimateListCount(sqlSession, dealerPhone);
+	}
+
+	@Override
+	public ArrayList<ExCar> estimateList(PageInfo pi, String dealerPhone) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return adminDao.estimateList(sqlSession, rowBounds, dealerPhone);
 	}
 
 	
