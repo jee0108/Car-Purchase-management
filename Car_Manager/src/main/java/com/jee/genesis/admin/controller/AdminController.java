@@ -27,6 +27,8 @@ import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
 import com.jee.genesis.car.model.service.CarService;
+import com.jee.genesis.car.model.vo.CarModel;
+import com.jee.genesis.car.model.vo.MakeCar;
 import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.common.template.Pagination;
 import com.jee.genesis.member.model.vo.Member;
@@ -79,6 +81,13 @@ public class AdminController {
 		model.addAttribute("insertList", adminService.insertList());
 		
 		return "admin/equipmentPage";
+	}
+	
+	@GetMapping("write-quote")
+	public String adminEquipment(Model model) {
+		ArrayList<CarModel> list = carService.modelAll();
+		model.addAttribute("list", list);
+		return "admin/adminCarMakingPage";
 	}
 	
 	@GetMapping("estimate")
