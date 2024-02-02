@@ -208,16 +208,7 @@
 							}
 						</script>
 
-
 					</div>
-
-					<script>
-						$(document).ready(function(){
-						  $("#myBtn").click(function(){
-							$("#myModal").modal();
-						  });
-						});
-					</script>
 
 				<script>
 					function getNumericValue(str) {
@@ -227,94 +218,90 @@
 					function formatNumber(number) {
 						return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 					}
+				</script>
 
+				<!-- 추가금액 조회/계산-->
+				<script>
 					$('#engine').on('change', 'input[type="radio"]', function() {
     					var engineOption = $(this).val();
-
 						$.ajax({
-								url: 'checkEnginePay',
-								data: {
-									engine: engineOption
-								},
-								success:result=>{
-									var checkEnginePay = formatNumber(result);
-									$('.engine').html('+ '+checkEnginePay+'원');
-									updateTotalPrice();
-								},
-								error:()=>{
-									console.log('실패');
-								}
+							url: 'checkEnginePay',
+							data: {
+								engine: engineOption
+							},
+							success:result=>{
+								var checkEnginePay = formatNumber(result);
+								$('.engine').html('+ '+checkEnginePay+'원');
+								updateTotalPrice();
+							},
+							error:()=>{
+								console.log('실패');
+							}
 						});
-					
 					});
 
 					$('#drive').on('change', 'input[type="radio"]', function() {
     					var driveOption = $(this).val();
 						$.ajax({
-								url: 'checkDrivePay',
-								data: {
-									drive: driveOption
-								},
-								success:result=>{
-									var checkDrivePay = formatNumber(result);
-									$('.drive').html('+ '+checkDrivePay+'원');
-									updateTotalPrice();
-								},
-								error:()=>{
-									console.log('실패');
-								}
+							url: 'checkDrivePay',
+							data: {
+								drive: driveOption
+							},
+							success:result=>{
+								var checkDrivePay = formatNumber(result);
+								$('.drive').html('+ '+checkDrivePay+'원');
+								updateTotalPrice();
+							},
+							error:()=>{
+								console.log('실패');
+							}
 						});
-					
 					});
 
 					$('#color').on('change', 'input[type="radio"]', function() {
     					var colorOption = $(this).val();
 						$.ajax({
-								url: 'checkColorPay',
-								data: {
-									color: colorOption
-								},
-								success:result=>{
-									var checkColorPay = formatNumber(result);
-									$('.color').html('+ '+checkColorPay+'원');
-									updateTotalPrice();
-								},
-								error:()=>{
-									console.log('실패');
-								}
+							url: 'checkColorPay',
+							data: {
+								color: colorOption
+							},
+							success:result=>{
+								var checkColorPay = formatNumber(result);
+								$('.color').html('+ '+checkColorPay+'원');
+								updateTotalPrice();
+							},
+							error:()=>{
+								console.log('실패');
+							}
 						});
-					
 					});
 
 					$('#wheel').on('change', 'input[type="radio"]', function() {
     					var wheelOption = $(this).val();
-
 						$.ajax({
-								url: 'checkWheelPay',
-								data: {
-									wheel: wheelOption
-								},
-								success:result=>{
-									var checkWheelPay = formatNumber(result);
-									
-									if ($('#wheel input:first').prop('checked')) {
-										$('.wheel').html('+ 0원');
-									}
-									else{
-										$('.wheel').html('+ '+checkWheelPay+'원');
-									}
-									updateTotalPrice();
-								},
-								error:()=>{
-									console.log('실패');
+							url: 'checkWheelPay',
+							data: {
+								wheel: wheelOption
+							},
+							success:result=>{
+								var checkWheelPay = formatNumber(result);
+								
+								if ($('#wheel input:first').prop('checked')) {
+									$('.wheel').html('+ 0원');
 								}
+								else{
+									$('.wheel').html('+ '+checkWheelPay+'원');
+								}
+								updateTotalPrice();
+							},
+							error:()=>{
+								console.log('실패');
+							}
 						});
-					
 					});
 
 					$('#inner').on('change', 'input[type="radio"]', function() {
     					var innerOption = $(this).val();
-
 						$.ajax({
 								url: 'checkInnerPay',
 								data: {
@@ -329,7 +316,6 @@
 									console.log('실패');
 								}
 						});
-					
 					});
 
 					$('#option').on('change', 'input[type="checkbox"]', function() {
@@ -358,16 +344,15 @@
 						$('#totalPay').text('예상 가격: ' + formatNumber(totalPay) + '원');
 						$('#totalPrice').val(totalPay);
 					}
-
 					updateTotalPrice();
-				</script>
+				</script> <!-- 추가금액 조회 / 계산 끝 -->
 
 			</div>
 
 		</form>
 
 		</div>
-		
+			<!-- 차량별 옵션/체크박스 생성-->
 			<script>
 				const inventoryDataArray = [];
 
@@ -412,17 +397,6 @@
 					container.append(radioInput, label);
 					});
         		}
-				createRadioButtons($('#engine'), filteredEngine, 'engineGroup', inventoryDataArray);
-				createRadioButtons($('#drive'), filteredDrive, 'driveGroup', inventoryDataArray);
-				createRadioButtons($('#color'), filteredColor, 'colorGroup', inventoryDataArray);
-				createRadioButtons($('#wheel'), filteredWheel, 'wheelGroup', inventoryDataArray);
-				createRadioButtons($('#inner'), filteredInner, 'innerGroup', inventoryDataArray);
-
-				$('#engine input:first').prop('checked', true);
-				$('#drive input:first').prop('checked', true);
-				$('#color input:first').prop('checked', true);
-				$('#wheel input:first').prop('checked', true);
-				$('#inner input:first').prop('checked', true);
 
 				function createCheckboxes(container, array, groupName, inventoryDataArray) {
 					array.forEach(item => {
@@ -443,8 +417,19 @@
 						container.append(checkboxInput, label, priceParagraph);
 					});
 				}
+				createRadioButtons($('#engine'), filteredEngine, 'engineGroup', inventoryDataArray);
+				createRadioButtons($('#drive'), filteredDrive, 'driveGroup', inventoryDataArray);
+				createRadioButtons($('#color'), filteredColor, 'colorGroup', inventoryDataArray);
+				createRadioButtons($('#wheel'), filteredWheel, 'wheelGroup', inventoryDataArray);
+				createRadioButtons($('#inner'), filteredInner, 'innerGroup', inventoryDataArray);
 				createCheckboxes($('#option'), filteredOption, 'checkBoxGroup', inventoryDataArray);
-			</script>
+				
+				$('#engine input:first').prop('checked', true);
+				$('#drive input:first').prop('checked', true);
+				$('#color input:first').prop('checked', true);
+				$('#wheel input:first').prop('checked', true);
+				$('#inner input:first').prop('checked', true);	
+			</script> <!-- 차량별 옵션/체크박스 생성 끝-->
 			
 		</div>
 

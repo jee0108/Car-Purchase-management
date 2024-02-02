@@ -57,4 +57,9 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> searchMember(String memName) {
 		return memberDao.searchMember(sqlSession, memName);
 	}
+
+	@Override
+	public Member buyMember(Member m) {
+		return memberDao.buyMember(sqlSession, m);
+	}
 }

@@ -15,8 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -180,7 +180,6 @@ public class MemberController {
 		return mv;
 	}
 	
-	
 	@ResponseBody
 	@GetMapping(value="searchMember", produces="application/json; charset=UTF-8")
 	public String searchMember(String memName){
@@ -188,5 +187,21 @@ public class MemberController {
 		ArrayList<Member> mem = memberService.searchMember(memName);
 		
 		return new Gson().toJson(mem);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="finalCheck", produces="application/json; charset=UTF-8")
+	public String finalCheck(Member m){
+		
+		Member buyMember = memberService.buyMember(m);
+		
+		String message ="";
+		if(buyMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), buyMember.getMemPwd())) {// 로그인 성공
+			message ="Y";
+		} else {
+			message ="N";
+		}
+		
+		return new Gson().toJson(message);
 	}
 }

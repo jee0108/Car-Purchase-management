@@ -29,4 +29,8 @@ public class MemberDao {
 	public ArrayList<Member> searchMember(SqlSessionTemplate sqlSession, String memName) {
 		return (ArrayList)sqlSession.selectList("memberMapper.searchMember", memName);
 	}
+
+	public Member buyMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.buyMember", m);
+	}
 }

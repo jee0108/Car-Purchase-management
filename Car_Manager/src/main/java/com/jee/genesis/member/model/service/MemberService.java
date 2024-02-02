@@ -26,6 +26,8 @@ public interface MemberService {
 	int insertAdmin(Member m);
 
 	ArrayList<Member> searchMember(String memName);
+
+	Member buyMember(Member m);
 	
 	
 }

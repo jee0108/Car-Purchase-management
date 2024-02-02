@@ -51,4 +51,14 @@
 		   FROM MEMBER
 		  WHERE MEM_NAME = #{memName}
 	</select>
+	
+	<select id="buyMember" parameterType="member" resultMap="memberResultMap">
+		SELECT MEM_PHONE,
+				MEM_EMAIL,
+				MEM_NAME,
+				MEM_PWD,
+				MEM_ROLE
+		   FROM MEMBER
+		  WHERE MEM_PHONE = #{memPhone}
+	</select>
 </mapper>
