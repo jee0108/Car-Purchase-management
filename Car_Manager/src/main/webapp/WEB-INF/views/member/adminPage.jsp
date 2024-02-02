@@ -133,7 +133,7 @@
 			
 				<div class="main-top">
 
-					<div class="bigTop">
+					<div class="bigTop" style="height: 250px; width: 1025px;">
 						<p>상담 신청</p>
 						<br>
 						<div>

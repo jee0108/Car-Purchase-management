@@ -41,4 +41,14 @@
 		INSERT INTO MEMBER (MEM_PHONE,MEM_EMAIL,MEM_NAME,MEM_PWD,MEM_ROLE)
 		VALUES(#{memPhone}, #{memEmail}, #{memName}, #{memPwd}, #{memRole})
 	</insert>
+	
+	<select id="searchMember" parameterType="string" resultMap="memberResultMap">
+		 SELECT MEM_PHONE,
+				MEM_EMAIL,
+				MEM_NAME,
+				MEM_PWD,
+				MEM_ROLE
+		   FROM MEMBER
+		  WHERE MEM_NAME = #{memName}
+	</select>
 </mapper>

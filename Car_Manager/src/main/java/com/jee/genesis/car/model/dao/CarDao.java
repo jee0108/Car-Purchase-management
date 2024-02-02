@@ -68,5 +68,13 @@ public class CarDao {
 		return sqlSession.insert("carMapper.wantCar", car);
 	}
 
+	public CarModel selectCar(SqlSessionTemplate sqlSession, String carName) {
+		return sqlSession.selectOne("carMapper.selectCar", carName);
+	}
+
+	public String checkOptionPay(SqlSessionTemplate sqlSession, String option) {
+		return sqlSession.selectOne("carMapper.checkOptionPay", option);
+	}
+
 
 }

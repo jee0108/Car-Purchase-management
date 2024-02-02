@@ -86,7 +86,10 @@ public class AdminController {
 	@GetMapping("write-quote")
 	public String adminEquipment(Model model) {
 		ArrayList<CarModel> list = carService.modelAll();
+		List<com.jee.genesis.car.model.vo.Inventory> inven = carService.invenCodesList();
 		model.addAttribute("list", list);
+		model.addAttribute("inven", inven);
+		
 		return "admin/adminCarMakingPage";
 	}
 	

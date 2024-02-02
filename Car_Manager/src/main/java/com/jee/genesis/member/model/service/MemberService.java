@@ -1,5 +1,7 @@
 package com.jee.genesis.member.model.service;
 
+import java.util.ArrayList;
+
 import com.jee.genesis.member.model.vo.CertVO;
 import com.jee.genesis.member.model.vo.Member;
 
@@ -22,6 +24,8 @@ public interface MemberService {
 	
 	//admin 등록
 	int insertAdmin(Member m);
+
+	ArrayList<Member> searchMember(String memName);
 	
 	
 }

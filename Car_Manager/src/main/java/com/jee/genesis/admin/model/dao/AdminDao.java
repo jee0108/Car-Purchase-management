@@ -10,6 +10,7 @@ import com.jee.genesis.admin.model.vo.CarType;
 import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.admin.model.vo.Inventory;
 import com.jee.genesis.admin.model.vo.StockAndDelovery;
+import com.jee.genesis.member.model.vo.Member;
 
 @Repository
 public class AdminDao {
@@ -105,8 +106,5 @@ public class AdminDao {
 	public ExCar detailEstimate(SqlSessionTemplate sqlSession, int exNum) {
 		return sqlSession.selectOne("adminMapper.detailEstimate", exNum);
 	}
-
-
-	
 
 }

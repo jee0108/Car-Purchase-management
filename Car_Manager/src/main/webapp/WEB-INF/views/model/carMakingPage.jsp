@@ -334,7 +334,7 @@
 
 					$('#option').on('change', 'input[type="checkbox"]', function() {
 						updateTotalPrice();
-					});
+					});				
 
 					function updateTotalPrice() {
 						var enginePay = getNumericValue($('.engine').text());
@@ -353,7 +353,6 @@
 							}
 						});
 
-
 						var totalPay = carPay + enginePay + drivePay + colorPay + wheelPay + innerPay + optionPay;
 
 						$('#totalPay').text('예상 가격: ' + formatNumber(totalPay) + '원');
@@ -363,24 +362,6 @@
 					updateTotalPrice();
 				</script>
 
-				<script>
-					function result(){
-						
-						$.ajax({
-								url: 'estimation',
-								data: {
-									wheel: wheelOption
-								},
-								success:result=>{
-									var checkWheelPay = result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-									$('.wheel').html('+ '+checkWheelPay+'원');
-								},
-								error:()=>{
-									console.log('실패');
-								}
-						});
-					}
-				</script>
 			</div>
 
 		</form>
@@ -388,12 +369,13 @@
 		</div>
 		
 			<script>
+				const inventoryDataArray = [];
+
 				var String = $('#hiddenInvenCode').val();
 				const toArray = String.split(',');
 
 				const inventoryDataString = '${inven}';
 				const regex = /Inventory\(invenCode=([^,]+), invenName=([^,]+), itemCode=([^,]+), invenPlusPay=([^\)]+)\)/g;
-				const inventoryDataArray = [];
 
 				let match;
 				while ((match = regex.exec(inventoryDataString)) !== null) {
@@ -442,8 +424,6 @@
 				$('#wheel input:first').prop('checked', true);
 				$('#inner input:first').prop('checked', true);
 
-				const inventoryPayString = '${pay}';
-				
 				function createCheckboxes(container, array, groupName, inventoryDataArray) {
 					array.forEach(item => {
 						const checkboxInput = document.createElement("input");

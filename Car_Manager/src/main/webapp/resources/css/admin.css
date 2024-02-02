@@ -25,7 +25,6 @@ p{
 	color: rgb(66, 66, 66);
 }
 .width{
-	border: 1px solid red;
 	width: 20vw;
 }
 .table-size{
@@ -52,8 +51,8 @@ p{
 
 	background-color: white;
 
-	width: 75%;
-	height: 35%;
+	height: 250px;
+	width: 1025px;
 }
 .main-top{
 	padding-top: 2vh;

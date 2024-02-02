@@ -2,6 +2,7 @@ package com.jee.genesis.member.controller;
 
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -177,5 +178,15 @@ public class MemberController {
 			  .setViewName("common/errorPage");
 		}
 		return mv;
+	}
+	
+	
+	@ResponseBody
+	@GetMapping(value="searchMember", produces="application/json; charset=UTF-8")
+	public String searchMember(String memName){
+		
+		ArrayList<Member> mem = memberService.searchMember(memName);
+		
+		return new Gson().toJson(mem);
 	}
 }

@@ -147,6 +147,12 @@
 		 WHERE INVEN_CODE = #{inner}
 	</select>
 	
+	<select id="checkOptionPay" parameterType="string" resultType="string">
+		SELECT INVEN_PLUS_PAY
+		  FROM INVENTORY
+		 WHERE INVEN_CODE = #{option}
+	</select>
+	
 	<select id="checkDealer" resultMap="dealerResultMap">
 		 SELECT MEM_PHONE,
 				MEM_EMAIL,
@@ -160,4 +166,12 @@
 		VALUES (SEQ_EX_NUM.NEXTVAL,#{carName},#{exInven},#{exPrice},#{memberPhone},#{dealerPhone}, SYSDATE)
 	</insert>
 	
+	<select id="selectCar" parameterType="string" resultMap="carResultMap">
+		 SELECT CAR_NAME,
+				CAR_PRICE,
+				UPLOAD_NAME
+		   FROM CARNAME
+		   JOIN CAR_FILE USING (FILE_NUM)
+		  WHERE CAR_NAME = #{carName}
+	</select>
 </mapper>

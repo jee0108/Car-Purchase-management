@@ -37,5 +37,9 @@ public interface CarService {
 
 	int wantCar(WantCar car);
 
+	CarModel selectCar(String carName);
+
+	String checkOptionPay(String option);
+
 
 }

@@ -87,4 +87,14 @@ public class CarServiceImpl implements CarService {
 		return carDao.wantCar(sqlSession, car);
 	}
 
+	@Override
+	public CarModel selectCar(String carName) {
+		return carDao.selectCar(sqlSession, carName);
+	}
+
+	@Override
+	public String checkOptionPay(String option) {
+		return carDao.checkOptionPay(sqlSession, option);
+	}
+
 }

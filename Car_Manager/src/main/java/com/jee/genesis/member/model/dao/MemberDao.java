@@ -1,5 +1,7 @@
 package com.jee.genesis.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +26,7 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertAdmin", m);
 	}
 
-
+	public ArrayList<Member> searchMember(SqlSessionTemplate sqlSession, String memName) {
+		return (ArrayList)sqlSession.selectList("memberMapper.searchMember", memName);
+	}
 }

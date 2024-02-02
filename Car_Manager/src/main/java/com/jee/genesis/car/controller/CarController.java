@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.car.model.service.CarService;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
@@ -108,6 +109,13 @@ public class CarController {
 	}
 	
 	@ResponseBody
+	@GetMapping(value="checkOptionPay", produces="application/json; charset=UTF-8")
+	public String checkOptionPay(String option) {
+		String optionPay = carService.checkOptionPay(option);
+		return new Gson().toJson(optionPay);
+	}
+	
+	@ResponseBody
 	@GetMapping(value="check-dealer", produces="application/json; charset=UTF-8")
 	public String checkDealer() {
 		ArrayList<Member> dealer= carService.checkDealer();
@@ -132,4 +140,19 @@ public class CarController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@GetMapping(value="selectCar", produces="application/json; charset=UTF-8")
+	public String selectCar(String carName) {
+		CarModel car= carService.selectCar(carName);
+		return new Gson().toJson(car);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="selectCarOption", produces="application/json; charset=UTF-8")
+	public String selectCarOption(String carName){
+		
+		MakeCar car = carService.carOption(carName);
+		
+		return new Gson().toJson(car);
+	}
 }

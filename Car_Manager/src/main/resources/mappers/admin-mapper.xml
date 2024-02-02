@@ -239,4 +239,5 @@
 		   FROM EX_CAR
 		  WHERE EX_NUM = #{exNum}
 	</select>
+
 </mapper>
