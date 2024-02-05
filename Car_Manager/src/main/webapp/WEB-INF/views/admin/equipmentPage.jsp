@@ -13,6 +13,7 @@
 <!-- bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -189,6 +190,11 @@
                                             <tr style="height: 40px;">
                                                 <th>초기재고</th>
                                                 <td><input type="number" name="invenNum" min="0" value="0"></td>
+                                            </tr>
+
+											<tr style="height: 40px;">
+                                                <th>추가가격</th>
+                                                <td><input type="number" name="invenPlusPay" min="0" value="0"></td>
                                             </tr>
                         
                                         </table>

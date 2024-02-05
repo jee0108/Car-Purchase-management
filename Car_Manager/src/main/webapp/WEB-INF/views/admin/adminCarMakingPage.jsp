@@ -31,6 +31,7 @@
 
 						<div class="left">
 							<label>담당 : ${loginUser.memName}</label>
+							<input type="hidden" name="mycarDealer" value="${loginUser.memPhone}">
 							<br>
 							<input type="hidden" name="mycarDealer" value="${loginUser.memPhone}">
 							<label>회원명 : </label>
@@ -50,7 +51,7 @@
 							<select id="selectCarName" name="carName"  style="width: 150px; height: 25px; text-align: center;">
 									<option id="carNameOption">차를 선택해주세요</option>
 								<c:forEach items="${list}" var="c">
-									<option class="carName">${c.carName}</option>
+									<option class="carName" value="${c.carName}">${c.carName}</option>
 								</c:forEach>
 							</select>
 							<br><br>
@@ -435,7 +436,7 @@
 				$('#finalPriceView').html('<b>'+formatNumber(totalPay) + '원</b> 입니다.');
 
 				$('#totalPrice').val(totalPay);
-				$('#finalPrice').val(totalPay);
+				$('#finalPriceResult').val(totalPay);
 
 				$('#plusPay').text('+ '+ formatNumber(plusPay) + '원');
 			}
@@ -466,13 +467,13 @@
 					<br><br>
 					<div>
 						<span>최종 계약금액은</span>
-						<input type="hidden" name="mycarPrice" value="" id="finalPrice">
+						<input type="hidden" name="mycarPrice" value="" id="finalPriceResult">
 						<div id="finalPriceView"></div>
 					</div>
 				</div>
 
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-sm btn-primary">신청하기</button>
+					<button type="button" class="btn btn-sm btn-primary" onclick="myCarAndMyPart();">신청하기</button>
 				</div>
 			</div>
 			
@@ -496,6 +497,54 @@
 						$('#finalCheck').html('정보가 일치하지 않습니다.');
 						$('#finalCheck').css('color', 'red');
 					}
+				},
+				error:()=>{
+					console.log('실패');
+				}
+			});
+		}
+	</script>
+
+	<script>
+		function myCarAndMyPart (){
+			var selectedEngine = $("input[name='engineGroup']:checked").val();
+			var selectedDrive = $("input[name='driveGroup']:checked").val();
+			var selectedColor = $("input[name='colorGroup']:checked").val();
+			var selectedWheel = $("input[name='wheelGroup']:checked").val();
+			var selectedInner = $("input[name='innerGroup']:checked").val();
+
+			var selectedOptionsString = $("input[name='checkBoxGroup']:checked").map(function () {
+				return $(this).val();
+			}).get().join(',');
+
+			var data = {
+				selectedEngine,
+				selectedDrive,
+				selectedColor,
+				selectedWheel,
+				selectedInner,
+				selectedOptions: selectedOptionsString
+			};
+
+			var jsonString = JSON.stringify(data);
+			var jsonData = JSON.parse(jsonString);
+			var values = Object.values(jsonData);
+
+			$.ajax({
+				type:"POST",
+				url: 'myCarAndMyPart',
+				data: {
+					memPhone: $('#member').val(),
+					carName: $('.carName').val(),
+					mycarPhone: $('option[name="mycarPhone"]').val(),
+					mycarDealer: $('input[name="mycarDealer"]').val(),
+					mycarPrice: $('#finalPriceResult').val(),
+					invenCode: values
+				},
+				success:result=>{
+					console.log(result);
+					alert("견적서를 발송하셨습니다.");
+					location.href = "/genesis/admin";
 				},
 				error:()=>{
 					console.log('실패');

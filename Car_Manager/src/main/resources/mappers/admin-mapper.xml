@@ -33,6 +33,7 @@
 		<result column="INVEN_DATE"	  	property="invenDate"/>
 		<result column="ITEM_CODE"	  	property="itemCode"/>
 		<result column="ITEM_NAME"	  	property="itemName"/>
+		<result column="INVEN_PLUS_PAY"	  	property="invenPlusPay"/>
 	</resultMap>
 	
 	<resultMap type="stockAndDelovery" id="StockAndDeloveryResultMap">
@@ -157,16 +158,23 @@
 	</select>
 	
 	<select id="equipmentList" resultMap="InventoryResultMap">
-		SELECT INVEN_CODE,
-       		   INVEN_NAME,
-			   INVEN_PAY,
-        	   INVEN_NUM,
-        	   ITEM_CODE,
-        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
-        	   ITEM_NAME
-		  FROM INVENTORY
-		  JOIN ITEM USING (ITEM_CODE)
-		  ORDER BY INVEN_DATE DESC
+		 SELECT INVENTORY.INVEN_CODE,
+			    INVEN_NAME,
+			    INVEN_PAY,
+			    INVEN_DATE,
+			    ITEM_CODE,
+			    ITEM_NAME,
+			    (INVEN_NUM + COALESCE(STOCK.TOTAL_STOCK_NUM, 0) - COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0)) AS INVEN_NUM
+			FROM INVENTORY
+			JOIN ITEM USING (ITEM_CODE)
+			LEFT JOIN (SELECT INVEN_CODE,
+			                  COALESCE(SUM(STOCK_NUM), 0) AS TOTAL_STOCK_NUM
+			             FROM STOCK
+			            GROUP BY INVEN_CODE) STOCK ON STOCK.INVEN_CODE = INVENTORY.INVEN_CODE
+			LEFT JOIN (SELECT INVEN_CODE,
+			                  COALESCE(SUM(DELOVERY_NUM), 0) AS TOTAL_DELOVERY_NUM
+			             FROM DELOVERY
+			            GROUP BY INVEN_CODE) DELOVERY ON DELOVERY.INVEN_CODE = INVENTORY.INVEN_CODE
 	</select>
 	
 	<select id="insertList" resultMap="InventoryResultMap">
@@ -201,9 +209,9 @@
 		 ORDER BY INVEN_DATE DESC
 	</select>
 	
-	<insert id="insertInvenType" parameterType="carType">
-		INSERT INTO INVENTORY(INVEN_CODE,INVEN_NAME,INVEN_PAY,INVEN_NUM,INVEN_DATE,ITEM_CODE)
-	  	VALUES (#{invenCode}, #{invenName}, #{invenPay}, #{invenNum}, SYSDATE, #{itemCode})
+	<insert id="insertInvenType" parameterType="inventory">
+		INSERT INTO INVENTORY(INVEN_CODE,INVEN_NAME,INVEN_PAY,INVEN_NUM,INVEN_DATE,ITEM_CODE, INVEN_PLUS_PAY)
+	  	VALUES (#{invenCode}, #{invenName}, #{invenPay}, #{invenNum}, SYSDATE, #{itemCode}, #{invenPlusPay})
 	</insert>
 	
 	<insert id="insertStock" parameterType="stockAndDelovery">
@@ -238,6 +246,14 @@
 				TO_CHAR(EX_DATE, 'YYYY-MM-DD') as "EX_DATE"
 		   FROM EX_CAR
 		  WHERE EX_NUM = #{exNum}
+	</select>
+	
+	<select id="stockAllList" resultMap="StockAndDeloveryResultMap">
+		 SELECT STOCK_PKNO,
+				INVEN_CODE,
+				STOCK_NUM,
+				STOCK_DATE
+		   FROM STOCK
 	</select>
 
 </mapper>

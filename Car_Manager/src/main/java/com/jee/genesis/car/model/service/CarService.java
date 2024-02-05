@@ -6,7 +6,9 @@ import java.util.List;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.MyCarAndMyPart;
 import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.common.model.vo.PageInfo;
 import com.jee.genesis.member.model.vo.Member;
 
 public interface CarService {
@@ -41,5 +43,18 @@ public interface CarService {
 
 	String checkOptionPay(String option);
 
+	int mycar(MyCarAndMyPart carPart);
+
+	int mypart(String invenCode);
+
+	ArrayList<MyCarAndMyPart> carPartList(PageInfo pi, String mycarDealer);
+
+	int insertCar(String carNum);
+
+	int carPartListCount(String mycarDealer);
+
+	int adminCarPartListCount();
+
+	ArrayList<MyCarAndMyPart> adminCarPartList(PageInfo pi);
 
 }

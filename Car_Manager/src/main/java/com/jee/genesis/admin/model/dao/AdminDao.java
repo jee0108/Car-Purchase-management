@@ -107,4 +107,12 @@ public class AdminDao {
 		return sqlSession.selectOne("adminMapper.detailEstimate", exNum);
 	}
 
+	public ArrayList<StockAndDelovery> stockAllList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.stockAllList");
+	}
+
+	public ArrayList<StockAndDelovery> deloveryAllList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.deloveryAllList");
+	}
+
 }

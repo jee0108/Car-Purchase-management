@@ -77,7 +77,6 @@ public class AdminController {
 		
 		model.addAttribute("list", adminService.equipmentList(pi));
 		model.addAttribute("pi", pi);
-		
 		model.addAttribute("insertList", adminService.insertList());
 		
 		return "admin/equipmentPage";

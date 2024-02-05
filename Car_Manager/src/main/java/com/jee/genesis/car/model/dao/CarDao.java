@@ -3,12 +3,14 @@ package com.jee.genesis.car.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.MyCarAndMyPart;
 import com.jee.genesis.car.model.vo.WantCar;
 import com.jee.genesis.member.model.vo.Member;
 
@@ -76,5 +78,33 @@ public class CarDao {
 		return sqlSession.selectOne("carMapper.checkOptionPay", option);
 	}
 
+	public int mycar(SqlSessionTemplate sqlSession, MyCarAndMyPart carPart) {
+		return sqlSession.insert("carMapper.mycar", carPart);
+	}
+
+	public int mypart(SqlSessionTemplate sqlSession, String invenCode) {
+		return sqlSession.insert("carMapper.mypart", invenCode);
+	}
+
+	public int insertCar(SqlSessionTemplate sqlSession, String carNum) {
+		return sqlSession.insert("carMapper.insertCar", carNum);
+	}
+
+	public int carPartListCount(SqlSessionTemplate sqlSession, String mycarDealer) {
+		return sqlSession.selectOne("carMapper.carPartListCount", mycarDealer);
+	}
+	
+	public ArrayList<MyCarAndMyPart> carPartList(SqlSessionTemplate sqlSession, String mycarDealer, RowBounds rowBounds) {
+		return (ArrayList)sqlSession.selectList("carMapper.carPartList", mycarDealer, rowBounds);
+	}
+
+	public int adminCarPartListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("carMapper.adminCarPartListCount");
+	}
+
+	public ArrayList<MyCarAndMyPart> adminCarPartList(SqlSessionTemplate sqlSession, Object object,
+			RowBounds rowBounds) {
+		return (ArrayList)sqlSession.selectList("carMapper.adminCarPartList", null, rowBounds);
+	}
 
 }

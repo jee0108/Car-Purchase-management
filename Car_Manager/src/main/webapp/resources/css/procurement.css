@@ -1,0 +1,17 @@
+.main-wrap{
+    width: 100vw;
+    height: 92vh;
+	background-color: rgba(222, 222, 222, 0.913);
+}
+.contentWrap{
+	width: 90vw;
+    height: 75vh;
+	background-color: white;
+	margin: auto;
+	margin-top: 15px;
+}
+.content{
+	width: 85vw;
+    height: 62vh;
+	margin: auto;
+}

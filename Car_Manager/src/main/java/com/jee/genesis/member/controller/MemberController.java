@@ -204,4 +204,6 @@ public class MemberController {
 		
 		return new Gson().toJson(message);
 	}
+	
+	
 }

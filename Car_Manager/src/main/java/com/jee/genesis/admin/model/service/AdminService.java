@@ -59,4 +59,8 @@ public interface AdminService {
 
 	ExCar detailEstimate(int exNum);
 
+	ArrayList<StockAndDelovery> stockAllList();
+
+	ArrayList<StockAndDelovery> deloveryAllList();
+
 }

@@ -149,4 +149,14 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.detailEstimate(sqlSession, exNum);
 	}
 
+	@Override
+	public ArrayList<StockAndDelovery> stockAllList() {
+		return adminDao.stockAllList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<StockAndDelovery> deloveryAllList() {
+		return adminDao.deloveryAllList(sqlSession);
+	}
+
 }

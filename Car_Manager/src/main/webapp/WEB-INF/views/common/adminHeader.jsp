@@ -42,7 +42,7 @@
 						<li class="header-right"><a href="estimate">상담 확인</a></li>
 						<li class="header-right"><a href="member-enroll">회원 등록</a></li>
 						<li class="header-right"><a href="write-quote">견적서 작성</a></li>
-						<li class="header-right"><a href="procurement">조달 신청</a></li>
+						<li class="header-right"><a href="procurement">조달신청 목록</a></li>
 					</c:if>
 				</ul>
 			</div>

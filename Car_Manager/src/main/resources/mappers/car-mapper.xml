@@ -40,13 +40,27 @@
 	</resultMap>
 	
 	<resultMap type="wantCar" id="wantCarResultMap">
-		<result column="EX_NUM"				property="exNum"/>
-		<result column="CAR_NAME"			property="carName"/>
-		<result column="EX_INVEN"			property="exInven"/>
-		<result column="EX_PRICE"			property="exPrice"/>
-		<result column="MEMBER_PHONE"		property="memberPhone"/>
-		<result column="DEALER_PHONE"		property="dealerPhone"/>
+		<result column="EX_NUM"			property="exNum"/>
+		<result column="CAR_NAME"		property="carName"/>
+		<result column="EX_INVEN"		property="exInven"/>
+		<result column="EX_PRICE"		property="exPrice"/>
+		<result column="MEMBER_PHONE"	property="memberPhone"/>
+		<result column="DEALER_PHONE"	property="dealerPhone"/>
 		<result column="EX_DATE"		property="exDate"/>
+	</resultMap>
+	
+	<resultMap type="carPart" id="carPartResultMap">
+		<result column="CAR_NAME"		property="carName"/>
+		<result column="MYCAR_PHONE"	property="mycarPhone"/>
+		<result column="MEM_NAME"	property="memName"/>
+		<result column="MYCAR_DEALER"	property="mycarDealer"/>
+		<result column="MYCAR_PRICE"	property="mycarPrice"/>
+		<result column="MYCAR_DATE"		property="mycarDate"/>
+		<result column="MYCAR_NUM"		property="mycarNum"/>
+		<result column="INVEN_CODE"		property="invenCode"/>
+		<result column="CAR_NUM"		property="carNum"/>
+		<result column="CAR_STATUS"		property="carStatus"/>
+		<result column="CAR_DATE"		property="carDate"/>
 	</resultMap>
 	
 	<!-- =========================== SQL =========================== -->
@@ -174,4 +188,72 @@
 		   JOIN CAR_FILE USING (FILE_NUM)
 		  WHERE CAR_NAME = #{carName}
 	</select>
+	
+	<insert id="mycar" parameterType="carPart">
+		INSERT INTO MYCAR(MYCAR_NUM,CAR_NAME,MYCAR_PHONE,MYCAR_DEALER,MYCAR_PRICE,MYCAR_DATE)
+		VALUES(SEQ_MYCAR_NUM.NEXTVAL, #{carName}, #{mycarPhone}, #{mycarDealer}, #{mycarPrice}, SYSDATE)
+	</insert>
+	
+	<insert id="mypart" parameterType="string">
+		INSERT INTO MYPART(MYCAR_NUM,INVEN_CODE)
+		VALUES(SEQ_MYCAR_NUM.CURRVAL, #{invenCode})
+	</insert>
+	
+	<insert id="insertCar" parameterType="string">
+		INSERT INTO CAR(CAR_NUM,MYCAR_NUM,CAR_STATUS,CAR_DATE)
+		VALUES(#{carNum}, SEQ_MYCAR_NUM.CURRVAL, 'R', SYSDATE)
+	</insert>
+	
+	<select id="carPartListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MYCAR
+		  JOIN CAR USING(MYCAR_NUM)
+		  JOIN MYPART USING(MYCAR_NUM)
+		 WHERE MYCAR_DEALER = #{mycarDealer}
+	</select>
+	
+	<select id="carPartList" parameterType="string" resultMap="carPartResultMap">
+		 SELECT MYCAR.MYCAR_NUM,
+		        MYCAR.CAR_NAME,
+		        MYCAR.MYCAR_PHONE,
+		        MEMBER.MEM_NAME,
+		        MYCAR.MYCAR_DEALER,
+		        MYCAR.MYCAR_PRICE,
+		        TO_CHAR(MYCAR.MYCAR_DATE, 'YYYY-MM-DD') as "MYCAR_DATE",
+		        CAR.CAR_NUM,
+		        CAR.CAR_STATUS,
+		        TO_CHAR(CAR.CAR_DATE, 'YYYY-MM-DD') as "CAR_DATE",
+		        MYPART.INVEN_CODE
+		   FROM MYCAR
+		   JOIN CAR ON(MYCAR.MYCAR_NUM = CAR.MYCAR_NUM)
+		   JOIN MYPART ON(MYCAR.MYCAR_NUM = MYPART.MYCAR_NUM)
+		   JOIN MEMBER ON(MYCAR_PHONE = MEM_PHONE)
+		  WHERE MYCAR_DEALER = #{mycarDealer}
+	</select>
+	
+	<select id="adminCarPartListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MYCAR
+		  JOIN CAR USING(MYCAR_NUM)
+		  JOIN MYPART USING(MYCAR_NUM)
+	</select>
+	
+	<select id="adminCarPartList" resultMap="carPartResultMap">
+		SELECT MYCAR.MYCAR_NUM,
+			   MYCAR.CAR_NAME,
+			   DEALER.MEM_NAME,
+			   MYCAR.MYCAR_DEALER,
+			   MYCAR.MYCAR_PRICE,
+			   TO_CHAR(MYCAR.MYCAR_DATE, 'YYYY-MM-DD') AS "MYCAR_DATE",
+			   CAR.CAR_NUM,
+			   CAR.CAR_STATUS,
+			   TO_CHAR(CAR.CAR_DATE, 'YYYY-MM-DD') AS "CAR_DATE",
+			   MYPART.INVEN_CODE
+		  FROM MYCAR
+		  JOIN CAR ON (MYCAR.MYCAR_NUM = CAR.MYCAR_NUM)
+		  JOIN MYPART ON (MYCAR.MYCAR_NUM = MYPART.MYCAR_NUM)
+		  JOIN MEMBER DEALER ON (MYCAR.MYCAR_DEALER = DEALER.MEM_PHONE)
+		 WHERE DEALER.MEM_ROLE = 'D'
+	</select>
+	
 </mapper>

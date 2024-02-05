@@ -1,23 +1,32 @@
 package com.jee.genesis.car.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.jee.genesis.admin.model.vo.ExCar;
 import com.jee.genesis.car.model.service.CarService;
 import com.jee.genesis.car.model.vo.CarModel;
 import com.jee.genesis.car.model.vo.Inventory;
 import com.jee.genesis.car.model.vo.MakeCar;
+import com.jee.genesis.car.model.vo.MyCarAndMyPart;
 import com.jee.genesis.car.model.vo.WantCar;
+import com.jee.genesis.common.model.vo.PageInfo;
+import com.jee.genesis.common.template.Pagination;
 import com.jee.genesis.member.model.vo.Member;
 
 @Controller
@@ -33,6 +42,37 @@ public class CarController {
 		model.addAttribute("list", list);
 		
 		return "model/modelListPage";
+	}
+	
+	@GetMapping("procurement")
+	public String procurement(HttpSession session, Model model, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		String mycarDealer = loginUser.getMemPhone();
+		
+		PageInfo pi = Pagination.getPageInfo(carService.carPartListCount(mycarDealer), currentPage, 5, 5);
+		ArrayList<MyCarAndMyPart> carPart = carService.carPartList(pi, mycarDealer);
+		
+		model.addAttribute("carPart", carPart);
+		model.addAttribute("pi", pi);
+		
+		
+		
+		return "admin/procurementPage";
+	}
+	
+	@GetMapping("procurement-Management")
+	public String procurementManagement(HttpSession session, Model model, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		PageInfo pi = Pagination.getPageInfo(carService.adminCarPartListCount(), currentPage, 5, 5);
+		ArrayList<MyCarAndMyPart> carPart = carService.adminCarPartList(pi);
+		List<Inventory> inven = carService.invenCodesList();
+	
+		model.addAttribute("carPart", carPart);
+		model.addAttribute("pi", pi);
+		model.addAttribute("inven", inven);
+		
+		return "admin/procurementManagement";
 	}
 	
 	// --------------------------- 기능
@@ -154,5 +194,50 @@ public class CarController {
 		MakeCar car = carService.carOption(carName);
 		
 		return new Gson().toJson(car);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="myCarAndMyPart", produces="application/json; charset=UTF-8")
+	public String myCarAndMyPart(MyCarAndMyPart carPart){
+		String message="";
+		String invenCode = carPart.getInvenCode();
+		
+		String currentTime = new SimpleDateFormat("yyMMddHHmm").format(new Date());
+		int ranNum = (int)(Math.random()*900) +100;
+		String carNum = currentTime+"-KMH"+ranNum;
+		
+		if(carService.mycar(carPart)>0) {
+			if(carService.mypart(invenCode)>0) {
+				if(carService.insertCar(carNum)>0) {
+					message="Y";
+				}else {
+					message="N1";
+				}
+			}else {
+				message="N2";
+			}
+		}else {
+			message="N3";
+		}
+		return new Gson().toJson(message);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="delivery", produces="application/json; charset=UTF-8")
+	public String delivery(WantCar option){
+		String message ="";
+		String engineGroup = option.getEngineGroup();
+		String driveGroup = option.getDriveGroup();
+		String colorGroup = option.getColorGroup();
+		String wheelGroup = option.getWheelGroup();
+		String innerGroup = option.getInnerGroup();
+		String checkBoxGroup = option.getCheckBoxGroup();
+		
+		HashMap<String, Object> params = new HashMap<>();
+	    params.put("checkBoxGroup", option.getCheckBoxGroup());
+		
+		System.out.println(params);
+		
+		return new Gson().toJson(message);
 	}
 }

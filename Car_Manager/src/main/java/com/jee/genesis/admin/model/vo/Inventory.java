@@ -14,5 +14,6 @@ public class Inventory {
 	private String invenDate;		//INVEN_DATE	DATE
 	private String itemCode;	//ITEM_CODE	VARCHAR2(2 BYTE)
 	private String itemName;	//ITEM_NAME
+	private int invenPlusPay;
 	
 }
