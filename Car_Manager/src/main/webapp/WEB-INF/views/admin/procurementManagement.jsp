@@ -110,6 +110,8 @@
 					<div id="resultWhItems"></div>
 					<div id="resultIdItems"></div>
 					<div id="resultOpItems"></div>
+					
+					<input type="hidden" name="mycarNum" id="mycarNum">
 					<input type="hidden" name="engineGroup" id="engineGroup">
 					<input type="hidden" name="driveGroup" id="driveGroup">
 					<input type="hidden" name="colorGroup" id="colorGroup">
@@ -193,7 +195,8 @@
 	<!-- 부품 이름 변경 /모달내부 -->
 	<script>
 		$('#procurementManagement>table>tbody>tr').click(function () {
-
+			var mycarNum = $(this).children('.mycarNum').text();
+			$('#mycarNum').val(mycarNum);
 			const inventoryDataString = '${inven}';
 			const regex = /Inventory\(invenCode=([^,]+), invenName=([^,]+), itemCode=([^,]+), invenPlusPay=([^\)]+)\)/g;
 			const inventoryDataArray = [];
@@ -248,9 +251,11 @@
 
 	<script>
 		function delivery(){
+			console.log($('#mycarNum').val());
 			$.ajax({
 				url: 'delivery',
 				data: {
+					exNum: $('#mycarNum').val(),
 					engineGroup: $('#engineGroup').val(),
 					driveGroup: $('#driveGroup').val(),
 					colorGroup: $('#colorGroup').val(),
@@ -260,6 +265,7 @@
 				},
 				success:result=>{
 					console.log(result);
+						
 				},
 				error:()=>{
 					console.log('실패');

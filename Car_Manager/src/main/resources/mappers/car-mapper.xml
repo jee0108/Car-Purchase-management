@@ -256,4 +256,40 @@
 		 WHERE DEALER.MEM_ROLE = 'D'
 	</select>
 	
+	<insert id="insertEngineGroup" parameterType="string">
+		INSERT INTO DELOVERY(DELOVERY_PKNO,INVEN_CODE,DELOVERY_NUM,DELOVERY_DATE)
+        VALUES(SEQ_DELOVERY_PKNO.NEXTVAL, #{engineGroup}, 1, SYSDATE)
+	</insert>
+	
+	<insert id="insertDriveGroup" parameterType="string">
+		INSERT INTO DELOVERY(DELOVERY_PKNO,INVEN_CODE,DELOVERY_NUM,DELOVERY_DATE)
+        VALUES(SEQ_DELOVERY_PKNO.NEXTVAL, #{driveGroup}, 1, SYSDATE)
+	</insert>
+	
+	<insert id="insertColorGroup" parameterType="string">
+		INSERT INTO DELOVERY(DELOVERY_PKNO,INVEN_CODE,DELOVERY_NUM,DELOVERY_DATE)
+        VALUES(SEQ_DELOVERY_PKNO.NEXTVAL, #{colorGroup}, 1, SYSDATE)
+	</insert>
+	
+	<insert id="insertWheelGroup" parameterType="string">
+		INSERT INTO DELOVERY(DELOVERY_PKNO,INVEN_CODE,DELOVERY_NUM,DELOVERY_DATE)
+        VALUES(SEQ_DELOVERY_PKNO.NEXTVAL, #{wheelGroup}, 1, SYSDATE)
+	</insert>
+	
+	<insert id="insertInnerGroup" parameterType="string">
+		INSERT INTO DELOVERY(DELOVERY_PKNO,INVEN_CODE,DELOVERY_NUM,DELOVERY_DATE)
+        VALUES(SEQ_DELOVERY_PKNO.NEXTVAL, #{innerGroup}, 1, SYSDATE)
+	</insert>
+	
+	<insert id="insertCheckBoxGroup" parameterType="string">
+	        INSERT INTO DELOVERY(DELOVERY_PKNO, INVEN_CODE, DELOVERY_NUM, DELOVERY_DATE)
+	        VALUES (SEQ_DELOVERY_PKNO.NEXTVAL, #{checkBoxes}, 1, SYSDATE)
+	</insert>
+
+	<update id="updateCarStatus"  parameterType="_int">
+		UPDATE CAR
+		   SET CAR_STATUS = 'A'
+		 WHERE MYCAR_NUM = #{mycarNum}
+	</update>
+	
 </mapper>

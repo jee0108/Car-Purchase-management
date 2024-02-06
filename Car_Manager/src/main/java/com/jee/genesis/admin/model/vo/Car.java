@@ -14,4 +14,5 @@ public class Car {
 	private String classCode;	//MODEL_CODE	VARCHAR2(1 BYTE)
 	private String carStatus;	//CAR_STATUS	VARCHAR2(1 BYTE)
 	private String carDate;		 //CAR_DATE	DATE
+	
 }

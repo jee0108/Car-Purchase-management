@@ -223,6 +223,7 @@ public class CarController {
 	@ResponseBody
 	@GetMapping(value="delivery", produces="application/json; charset=UTF-8")
 	public String delivery(WantCar option){
+		
 		String message ="";
 		String engineGroup = option.getEngineGroup();
 		String driveGroup = option.getDriveGroup();
@@ -231,10 +232,24 @@ public class CarController {
 		String innerGroup = option.getInnerGroup();
 		String checkBoxGroup = option.getCheckBoxGroup();
 		
-		HashMap<String, Object> params = new HashMap<>();
-	    params.put("checkBoxGroup", option.getCheckBoxGroup());
+		int mycarNum = option.getExNum();
+		String[] checkBoxes  = checkBoxGroup.split(",");
 		
-		System.out.println(params);
+		System.out.println(mycarNum);
+		
+		for(int i = 0; i<checkBoxes.length; i++) {
+			carService.insertCheckBoxGroup(checkBoxes[i]);
+		}
+		if(carService.insertEngineGroup(engineGroup)>0) {
+			carService.insertDriveGroup(driveGroup);
+			carService.insertColorGroup(colorGroup);
+			carService.insertInnerGroup(innerGroup);
+			carService.updateCarStatus(mycarNum);
+			message="납품성공";
+		}else {
+			
+			message="납품실패";				
+		}
 		
 		return new Gson().toJson(message);
 	}

@@ -239,7 +239,11 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(adminService.detailInvenresultCount(invenCode), currentPage, 10, 10);
 		ArrayList<StockAndDelovery> result = adminService.detailInvenresult(pi, invenCode);
 		
-		return new Gson().toJson(result);
+		HashMap<String, Object> params = new HashMap<>();
+	    params.put("pi", pi);
+	    params.put("result", result);
+		
+		return new Gson().toJson(params);
 	}
 	
 }

@@ -14,6 +14,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<style>
+    .delivery { color: red; } /* 납품일에 대한 스타일 */
+    .reception { color: green; } /* 입고일에 대한 스타일 */
+</style>
+
 </head>
 <body>
 
@@ -56,6 +61,7 @@
 											  +  '<td>' + invenList[i].invenName + '</td>'
 											  +  '<td>' + invenList[i].finalNum  + '</td>'
                                               +  '<td>' + invenList[i].invenDate + '</td>'
+											  +  '<td style="display:none;">' + invenList[i].invenNum + '</td>'
 											  +  '<td style="display:none;">' + invenList[i].totalStockNum + '</td>'
 											  +  '<td style="display:none;">' + invenList[i].totalDeloveryNum + '</td>'
 											  +  '</tr>'
@@ -63,7 +69,7 @@
                                     $('#items-list tbody').html(value);
 
                                     $('#pagingArea').hide(); 
-                                    $('#pagingArea').val(); 
+                                    $('#pagingArea').val();
 								},
 								error:()=>{
 									console.log('실패');
@@ -101,6 +107,7 @@
 										<td class="invenName">${i.invenName}</td>
 										<td class="invenNum">${i.finalNum}</td>
                                         <td class="invenDate">${i.invenDate}</td>
+                                        <td class="invenNum" style="display:none;">${i.invenNum}</td>
                                         <td class="invenDate" style="display:none;">${i.totalStockNum}</td>
                                         <td class="invenDate" style="display:none;">${i.totalDeloveryNum}</td>
 									</tr>
@@ -231,26 +238,54 @@
 											},
 										success:result=>{
 											console.log(result);
-
 											var value = '';
-											if(result.length === 0){
+											var inven = result.result;
+											if(inven.length === 0){
 												value += '<tr>' 
 													  + '<td colspan="4" style="text-align:center;">결과가 존재하지 않습니다.</td>'
 													  + '</tr>'
 											}
-											for(let i in result){
-												value += '<tr>' 
-													  + '<td class="tableType">' + result[i].tableType + '</td>'
-													  + '<td class="invenCode">' + result[i].invenCode + '</td>'
-													  + '<td class="quantity">' + result[i].quantity + '</td>'
-													  + '<td class="day">' + result[i].day + '</td>'
-													  + '</tr>'
+											for (let i in inven) {
+											var styleClass = inven[i].tableType === '납품' ? 'delivery' : 'reception';
+											value += '<tr>' +
+												'<td class="' + styleClass + ' tableType">' + inven[i].tableType + '</td>' +
+												'<td class="invenCode">' + inven[i].invenCode + '</td>' +
+												'<td class="quantity">' + inven[i].quantity + '</td>' +
+												'<td class="day">' + inven[i].day + '</td>' +
+												'</tr>'
+										}
+
+											var pi = result.pi;
+											var currentPage = pi.currentPage; // 현재 페이지
+											var startPage = pi.startPage; // 시작 페이지
+											var endPage = pi.endPage; // 끝 페이지
+											var maxPage = pi.maxPage; // 전체 페이지 수
+											var paginationHtml ='';
+
+
+											if (currentPage === 1) {
+												paginationHtml += '<li class="page-item disabled"><span class="page-link">◄</span></li>';
+											} else {
+												paginationHtml += '<li class="page-item"><a class="page-link" href="procurement-Management?cPage=' + (currentPage - 1) + '">◄</a></li>';
 											}
 
+											for (var i = startPage; i <= endPage; i++) {
+												if (i === currentPage) {
+													paginationHtml += '<li class="page-item active"><span class="page-link">' + i + '</span></li>';
+												} else {
+													paginationHtml += '<li class="page-item"><a class="page-link" href="procurement-Management?cPage=' + i + '">' + i + '</a></li>';
+												}
+											}
+
+											if (endPage === maxPage) {
+												paginationHtml += '<li class="page-item disabled"><span class="page-link">►</span></li>';
+											} else {
+												paginationHtml += '<li class="page-item"><a class="page-link" href="procurement-Management?cPage=' + (currentPage + 1) + '">►</a></li>';
+											}
+
+											$('#modalPagination').html(paginationHtml);
 											$('.stockAndDelovery > tbody').html(value);
 											
-											
-
 										},
 										error:()=>{
 											console.log('실패');
@@ -259,18 +294,6 @@
 								});
 						   })
 						</script>
-
-						<script>
-							if(tableType === 'S'){
-								$('.tableType').html('입고');
-								$('.tableType').css('color', 'green');
-							}
-							if(tableType === 'D'){
-								$('.tableType').html('납품');
-								$('.tableType').css('color', 'red');
-							}
-						</script>
-
 
 					<!-- Modal -->
 					<div id="resultModal" class="modal modal-center fade" role="dialog">
@@ -283,45 +306,53 @@
 									<h4 class="modal-title"><p id="detail-code"></p></h4>
 								</div>
 								<div class="modal-body">
-									
-									<table class="table table-hover table-size stockAndDelovery">
-										<thead>
-											<tr>
-												<th>구분</th>
-												<th>코드명</th>
-												<th>수량</th>
-												<th>일자</th>
-											</tr>
-										</thead>
-										<tbody>
+									<div>
+										<table class="table table-hover table-size stockAndDelovery">
+											<thead>
+												<tr>
+													<th>구분</th>
+													<th>코드명</th>
+													<th>수량</th>
+													<th>일자</th>
+												</tr>
+											</thead>
+											<tbody>
 
-										</tbody>
-									</table>
+											</tbody>
+										</table>
+									</div>
 
-									<div></div>
 								</div>
 								<div class="modal-footer">
+
+									<div id="pageInfo" style="margin: auto; text-align: center;">
+										<ul class="pagination" style="padding-left: 50px;" id="modalPagination">
+											
+										</ul>
+									</div>
+
 									<button onclick="deleteInven();" class="btn btn-sm btn-danger">항목삭제</button>
 
-									<script>
-										function deleteModel(){
-											
-											$.ajax({
-												url: 'deleteInven',
-												data: {
-													
-													},
-												success:result=>{
-													console.log(result);
-
-												},
-												error:()=>{
-													console.log('실패');
-												}
-											});
-										}
-									</script>
 								</div>
+								<script>
+									function deleteModel(){
+										
+										$.ajax({
+											url: 'deleteInven',
+											data: {
+												
+												},
+											success:result=>{
+												console.log(result);
+												alert("납품처리되었습니다.");
+												window.location.href = "/genesis/procurement-Management";
+											},
+											error:()=>{
+												console.log('실패');
+											}
+										});
+									}
+								</script>
 
 							</div>
 						<div>

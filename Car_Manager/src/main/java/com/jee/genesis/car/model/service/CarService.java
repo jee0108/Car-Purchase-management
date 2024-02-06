@@ -1,6 +1,7 @@
 package com.jee.genesis.car.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.jee.genesis.car.model.vo.CarModel;
@@ -56,5 +57,19 @@ public interface CarService {
 	int adminCarPartListCount();
 
 	ArrayList<MyCarAndMyPart> adminCarPartList(PageInfo pi);
+
+	int insertEngineGroup(String engineGroup);
+
+	int insertDriveGroup(String driveGroup);
+
+	int insertColorGroup(String colorGroup);
+
+	int insertWheelGroup(String wheelGroup);
+
+	int insertInnerGroup(String innerGroup);
+
+	int insertCheckBoxGroup(String checkBoxes);
+
+	int updateCarStatus(int mycarNum);
 
 }

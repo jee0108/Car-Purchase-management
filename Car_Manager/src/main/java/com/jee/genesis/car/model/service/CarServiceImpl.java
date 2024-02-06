@@ -1,6 +1,7 @@
 package com.jee.genesis.car.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -137,6 +138,41 @@ public class CarServiceImpl implements CarService {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return carDao.adminCarPartList(sqlSession, null, rowBounds);
+	}
+
+	@Override
+	public int insertEngineGroup(String engineGroup) {
+		return carDao.insertEngineGroup(sqlSession, engineGroup);
+	}
+
+	@Override
+	public int insertDriveGroup(String driveGroup) {
+		return carDao.insertDriveGroup(sqlSession, driveGroup);
+	}
+
+	@Override
+	public int insertColorGroup(String colorGroup) {
+		return carDao.insertColorGroup(sqlSession, colorGroup);
+	}
+
+	@Override
+	public int insertWheelGroup(String wheelGroup) {
+		return carDao.insertWheelGroup(sqlSession, wheelGroup);
+	}
+
+	@Override
+	public int insertInnerGroup(String innerGroup) {
+		return carDao.insertInnerGroup(sqlSession, innerGroup);
+	}
+
+	@Override
+	public int insertCheckBoxGroup(String checkBoxes) {
+		return carDao.insertCheckBoxGroup(sqlSession, checkBoxes);
+	}
+
+	@Override
+	public int updateCarStatus(int mycarNum) {
+		return carDao.updateCarStatus(sqlSession, mycarNum);
 	}
 
 }

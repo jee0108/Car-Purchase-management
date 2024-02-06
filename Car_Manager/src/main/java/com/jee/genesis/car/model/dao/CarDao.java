@@ -1,6 +1,7 @@
 package com.jee.genesis.car.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -105,6 +106,34 @@ public class CarDao {
 	public ArrayList<MyCarAndMyPart> adminCarPartList(SqlSessionTemplate sqlSession, Object object,
 			RowBounds rowBounds) {
 		return (ArrayList)sqlSession.selectList("carMapper.adminCarPartList", null, rowBounds);
+	}
+
+	public int insertEngineGroup(SqlSessionTemplate sqlSession, String engineGroup) {
+		return sqlSession.insert("carMapper.insertEngineGroup", engineGroup);
+	}
+
+	public int insertDriveGroup(SqlSessionTemplate sqlSession, String driveGroup) {
+		return sqlSession.insert("carMapper.insertDriveGroup", driveGroup);
+	}
+
+	public int insertColorGroup(SqlSessionTemplate sqlSession, String colorGroup) {
+		return sqlSession.insert("carMapper.insertColorGroup", colorGroup);
+	}
+
+	public int insertWheelGroup(SqlSessionTemplate sqlSession, String wheelGroup) {
+		return sqlSession.insert("carMapper.insertWheelGroup", wheelGroup);
+	}
+
+	public int insertInnerGroup(SqlSessionTemplate sqlSession, String innerGroup) {
+		return sqlSession.insert("carMapper.insertInnerGroup", innerGroup);
+	}
+
+	public int insertCheckBoxGroup(SqlSessionTemplate sqlSession, String checkBoxes) {
+		return sqlSession.insert("carMapper.insertCheckBoxGroup", checkBoxes);
+	}
+
+	public int updateCarStatus(SqlSessionTemplate sqlSession, int mycarNum) {
+		return sqlSession.update("carMapper.updateCarStatus", mycarNum);
 	}
 
 }
