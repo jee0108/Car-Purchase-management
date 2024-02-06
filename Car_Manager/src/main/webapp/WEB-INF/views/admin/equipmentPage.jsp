@@ -51,11 +51,13 @@
 
                                     for(let i in invenList){
 										value += '<tr>'
-											  +  '<td>' + invenList[i].itemName    + '</td>'
-											  +  '<td>' + invenList[i].invenCode	+ '</td>'
-											  +  '<td>' + invenList[i].invenName   + '</td>'
-											  +  '<td>' + invenList[i].invenNum    + '</td>'
-                                              +  '<td>' + invenList[i].invenDate   + '</td>'
+											  +  '<td>' + invenList[i].itemName + '</td>'
+											  +  '<td>' + invenList[i].invenCode + '</td>'
+											  +  '<td>' + invenList[i].invenName + '</td>'
+											  +  '<td>' + invenList[i].finalNum  + '</td>'
+                                              +  '<td>' + invenList[i].invenDate + '</td>'
+											  +  '<td style="display:none;">' + invenList[i].totalStockNum + '</td>'
+											  +  '<td style="display:none;">' + invenList[i].totalDeloveryNum + '</td>'
 											  +  '</tr>'
 									}
                                     $('#items-list tbody').html(value);
@@ -97,8 +99,10 @@
 										<td class="itemName">${i.itemName}</td>
 										<td class="invenPk">${i.invenCode}</td>
 										<td class="invenName">${i.invenName}</td>
-										<td class="invenNum">${i.invenNum}</td>
+										<td class="invenNum">${i.finalNum}</td>
                                         <td class="invenDate">${i.invenDate}</td>
+                                        <td class="invenDate" style="display:none;">${i.totalStockNum}</td>
+                                        <td class="invenDate" style="display:none;">${i.totalDeloveryNum}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -223,10 +227,30 @@
 									$.ajax({
 										url: 'detail-inven',
 										data: {
-											carName: cname
+											invenCode: invenPk
 											},
 										success:result=>{
+											console.log(result);
+
+											var value = '';
+											if(result.length === 0){
+												value += '<tr>' 
+													  + '<td colspan="4" style="text-align:center;">결과가 존재하지 않습니다.</td>'
+													  + '</tr>'
+											}
+											for(let i in result){
+												value += '<tr>' 
+													  + '<td class="tableType">' + result[i].tableType + '</td>'
+													  + '<td class="invenCode">' + result[i].invenCode + '</td>'
+													  + '<td class="quantity">' + result[i].quantity + '</td>'
+													  + '<td class="day">' + result[i].day + '</td>'
+													  + '</tr>'
+											}
+
+											$('.stockAndDelovery > tbody').html(value);
 											
+											
+
 										},
 										error:()=>{
 											console.log('실패');
@@ -234,6 +258,17 @@
 									});
 								});
 						   })
+						</script>
+
+						<script>
+							if(tableType === 'S'){
+								$('.tableType').html('입고');
+								$('.tableType').css('color', 'green');
+							}
+							if(tableType === 'D'){
+								$('.tableType').html('납품');
+								$('.tableType').css('color', 'red');
+							}
 						</script>
 
 
@@ -249,7 +284,21 @@
 								</div>
 								<div class="modal-body">
 									
+									<table class="table table-hover table-size stockAndDelovery">
+										<thead>
+											<tr>
+												<th>구분</th>
+												<th>코드명</th>
+												<th>수량</th>
+												<th>일자</th>
+											</tr>
+										</thead>
+										<tbody>
 
+										</tbody>
+									</table>
+
+									<div></div>
 								</div>
 								<div class="modal-footer">
 									<button onclick="deleteInven();" class="btn btn-sm btn-danger">항목삭제</button>

@@ -105,11 +105,12 @@ public class AdminServiceImpl implements AdminService {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return adminDao.equipmentList(sqlSession, rowBounds);
 	}
-
+	
 	@Override
 	public ArrayList<Inventory> insertList() {
-		return adminDao.insertList(sqlSession);
+		return  adminDao.insertList(sqlSession);
 	}
+
 	@Override
 	public int selectItemCount(String itemCode) {
 		return adminDao.selectItemCount(sqlSession, itemCode);
@@ -158,5 +159,19 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<StockAndDelovery> deloveryAllList() {
 		return adminDao.deloveryAllList(sqlSession);
 	}
+
+	@Override
+	public ArrayList<StockAndDelovery> detailInvenresult(PageInfo pi, String invenCode) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return adminDao.detailInvenresult(sqlSession, rowBounds, invenCode);
+	}
+
+	@Override
+	public int detailInvenresultCount(String invenCode) {
+		return adminDao.detailInvenresultCount(sqlSession, invenCode);
+	}
+
+	
 
 }

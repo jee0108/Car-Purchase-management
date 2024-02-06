@@ -55,8 +55,6 @@ public class CarController {
 		model.addAttribute("carPart", carPart);
 		model.addAttribute("pi", pi);
 		
-		
-		
 		return "admin/procurementPage";
 	}
 	

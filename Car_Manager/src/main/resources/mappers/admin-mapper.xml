@@ -34,6 +34,9 @@
 		<result column="ITEM_CODE"	  	property="itemCode"/>
 		<result column="ITEM_NAME"	  	property="itemName"/>
 		<result column="INVEN_PLUS_PAY"	  	property="invenPlusPay"/>
+		<result column="TOTAL_STOCK_NUM"	  	property="totalStockNum"/>
+		<result column="TOTAL_DELOVERY_NUM"	  	property="totalDeloveryNum"/>
+		<result column="FINAL_NUM"	  	property="finalNum"/>
 	</resultMap>
 	
 	<resultMap type="stockAndDelovery" id="StockAndDeloveryResultMap">
@@ -44,6 +47,10 @@
 		<result column="DELOVERY_NUM"	property="deloveryNum"/>
 		<result column="DELOVERY_DATE"	property="deloveryDate"/>
 		<result column="INVEN_CODE"	  	property="invenCode"/>
+		<result column="ID"	  	property="id"/>
+		<result column="QUANTITY"	  	property="quantity"/>
+		<result column="DAY"	  	property="day"/>
+		<result column="TABLE_TYPE"	  	property="tableType"/>
 	</resultMap>
 	
 	<resultMap type="exCar" id="exCarResultMap">
@@ -161,32 +168,29 @@
 		 SELECT INVENTORY.INVEN_CODE,
 			    INVEN_NAME,
 			    INVEN_PAY,
+			    INVEN_NUM,
+			    COALESCE(STOCK.TOTAL_STOCK_NUM, 0) AS TOTAL_STOCK_NUM,
+			    COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0) AS TOTAL_DELOVERY_NUM,
 			    INVEN_DATE,
 			    ITEM_CODE,
 			    ITEM_NAME,
-			    (INVEN_NUM + COALESCE(STOCK.TOTAL_STOCK_NUM, 0) - COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0)) AS INVEN_NUM
-			FROM INVENTORY
-			JOIN ITEM USING (ITEM_CODE)
-			LEFT JOIN (SELECT INVEN_CODE,
-			                  COALESCE(SUM(STOCK_NUM), 0) AS TOTAL_STOCK_NUM
-			             FROM STOCK
-			            GROUP BY INVEN_CODE) STOCK ON STOCK.INVEN_CODE = INVENTORY.INVEN_CODE
-			LEFT JOIN (SELECT INVEN_CODE,
-			                  COALESCE(SUM(DELOVERY_NUM), 0) AS TOTAL_DELOVERY_NUM
-			             FROM DELOVERY
-			            GROUP BY INVEN_CODE) DELOVERY ON DELOVERY.INVEN_CODE = INVENTORY.INVEN_CODE
+			    (INVEN_NUM + COALESCE(STOCK.TOTAL_STOCK_NUM, 0) - COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0)) AS FINAL_NUM
+		   FROM INVENTORY
+		   JOIN ITEM USING (ITEM_CODE)
+		   LEFT JOIN (SELECT INVEN_CODE,
+			                 COALESCE(SUM(STOCK_NUM), 0) AS TOTAL_STOCK_NUM
+			            FROM STOCK
+			           GROUP BY INVEN_CODE) STOCK ON STOCK.INVEN_CODE = INVENTORY.INVEN_CODE
+		   LEFT JOIN (SELECT INVEN_CODE,
+			                 COALESCE(SUM(DELOVERY_NUM), 0) AS TOTAL_DELOVERY_NUM
+			            FROM DELOVERY
+          GROUP BY INVEN_CODE) DELOVERY ON DELOVERY.INVEN_CODE = INVENTORY.INVEN_CODE
 	</select>
 	
 	<select id="insertList" resultMap="InventoryResultMap">
 		SELECT INVEN_CODE,
-       		   INVEN_NAME,
-			   INVEN_PAY,
-        	   INVEN_NUM,
-        	   ITEM_CODE,
-        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
-        	   ITEM_NAME
+			   INVEN_NAME
 		  FROM INVENTORY
-		  JOIN ITEM USING (ITEM_CODE)
 	</select>
 	
 	<select id="selectItemCount" parameterType="string" resultType="_int">
@@ -196,17 +200,27 @@
 	</select>
 	
 	<select id="selectItem" parameterType="string" resultMap="InventoryResultMap">
-		SELECT INVEN_CODE,
-       		   INVEN_NAME,
-			   INVEN_PAY,
-        	   INVEN_NUM,
-        	   ITEM_CODE,
-        	   TO_CHAR(INVEN_DATE, 'YYYY-MM-DD') as "INVEN_DATE",
-        	   ITEM_NAME
-		  FROM INVENTORY
-		  JOIN ITEM USING (ITEM_CODE)
-		 WHERE ITEM_CODE = #{itemCode}
-		 ORDER BY INVEN_DATE DESC
+		 SELECT INVENTORY.INVEN_CODE,
+			    INVEN_NAME,
+			    INVEN_PAY,
+			    INVEN_NUM,
+			    COALESCE(STOCK.TOTAL_STOCK_NUM, 0) AS TOTAL_STOCK_NUM,
+			    COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0) AS TOTAL_DELOVERY_NUM,
+			    INVEN_DATE,
+			    ITEM_CODE,
+			    ITEM_NAME,
+			    (INVEN_NUM + COALESCE(STOCK.TOTAL_STOCK_NUM, 0) - COALESCE(DELOVERY.TOTAL_DELOVERY_NUM, 0)) AS FINAL_NUM
+	       FROM INVENTORY
+		   JOIN ITEM USING (ITEM_CODE)
+		   LEFT JOIN (SELECT INVEN_CODE,
+			                 COALESCE(SUM(STOCK_NUM), 0) AS TOTAL_STOCK_NUM
+			            FROM STOCK
+			           GROUP BY INVEN_CODE) STOCK ON STOCK.INVEN_CODE = INVENTORY.INVEN_CODE
+		   LEFT JOIN (SELECT INVEN_CODE,
+			                 COALESCE(SUM(DELOVERY_NUM), 0) AS TOTAL_DELOVERY_NUM
+			            FROM DELOVERY
+			           GROUP BY INVEN_CODE) DELOVERY ON DELOVERY.INVEN_CODE = INVENTORY.INVEN_CODE
+		  WHERE ITEM_CODE = #{itemCode}
 	</select>
 	
 	<insert id="insertInvenType" parameterType="inventory">
@@ -254,6 +268,32 @@
 				STOCK_NUM,
 				STOCK_DATE
 		   FROM STOCK
+	</select>
+	
+	<select id="detailInvenresultCount" parameterType="string" resultType="_int">
+		 SELECT COUNT(*)
+		   FROM STOCK
+		   JOIN DELOVERY USING(INVEN_CODE)
+		  WHERE INVEN_CODE = #{invenCode}
+	</select>
+	
+	<select id="detailInvenresult" parameterType="string" resultMap="StockAndDeloveryResultMap">
+		SELECT ID, INVEN_CODE, QUANTITY, DAY, TABLE_TYPE
+		  FROM (SELECT STOCK_PKNO AS ID,
+		           	   INVEN_CODE AS INVEN_CODE,
+		           	   STOCK_NUM AS QUANTITY,
+		           	   STOCK_DATE AS DAY,
+		           	   '입고' AS TABLE_TYPE
+		    	  FROM STOCK
+		    	 UNION ALL
+		    	SELECT DELOVERY_PKNO AS ID,
+		           	   INVEN_CODE AS INVEN_CODE,
+		          	   DELOVERY_NUM AS QUANTITY,
+		           	   DELOVERY_DATE AS DAY,
+		           	   '납품' AS TABLE_TYPE
+		    	   FROM DELOVERY)
+		 WHERE INVEN_CODE = #{invenCode}
+		 ORDER BY DAY DESC
 	</select>
 
 </mapper>

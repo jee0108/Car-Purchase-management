@@ -75,10 +75,6 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.equipmentList", null, rowBounds);
 	}
 
-	public ArrayList<Inventory> insertList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("adminMapper.insertList");
-	}
-
 	public ArrayList<Inventory> selectItem(SqlSessionTemplate sqlSession, String itemCode) {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectItem", itemCode);
 	}
@@ -102,6 +98,10 @@ public class AdminDao {
 	public ArrayList<ExCar> estimateList(SqlSessionTemplate sqlSession, RowBounds rowBounds, String dealerPhone) {
 		return (ArrayList)sqlSession.selectList("adminMapper.estimateList", dealerPhone, rowBounds);
 	}
+	
+	public ArrayList<Inventory> insertList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.insertList");
+	}
 
 	public ExCar detailEstimate(SqlSessionTemplate sqlSession, int exNum) {
 		return sqlSession.selectOne("adminMapper.detailEstimate", exNum);
@@ -114,5 +114,15 @@ public class AdminDao {
 	public ArrayList<StockAndDelovery> deloveryAllList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("adminMapper.deloveryAllList");
 	}
+
+	public ArrayList<StockAndDelovery> detailInvenresult(SqlSessionTemplate sqlSession, RowBounds rowBounds,
+			String invenCode) {
+		return (ArrayList)sqlSession.selectList("adminMapper.detailInvenresult", invenCode, rowBounds);
+	}
+
+	public int detailInvenresultCount(SqlSessionTemplate sqlSession, String invenCode) {
+		return sqlSession.selectOne("adminMapper.detailInvenresultCount", invenCode);
+	}
+
 
 }

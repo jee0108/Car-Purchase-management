@@ -43,8 +43,6 @@ public interface AdminService {
 
 	ArrayList<Inventory> equipmentList(PageInfo pi);
 
-	ArrayList<Inventory> insertList();
-
 	ArrayList<Inventory> selectItem(String itemCode, PageInfo pi);
 
 	int selectItemCount(String itemCode);
@@ -62,5 +60,11 @@ public interface AdminService {
 	ArrayList<StockAndDelovery> stockAllList();
 
 	ArrayList<StockAndDelovery> deloveryAllList();
+
+	ArrayList<StockAndDelovery> detailInvenresult(PageInfo pi, String invenCode);
+
+	int detailInvenresultCount(String invenCode);
+
+	ArrayList<Inventory> insertList();
 
 }

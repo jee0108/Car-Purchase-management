@@ -232,4 +232,14 @@ public class AdminController {
 		return new Gson().toJson(excar);
 	}
 	
+	@ResponseBody
+	@GetMapping(value="detail-inven", produces="application/json; charset=UTF-8")
+	public String detailInvenresult(String invenCode,@RequestParam(value="cPage", defaultValue="1") int currentPage){
+		
+		PageInfo pi = Pagination.getPageInfo(adminService.detailInvenresultCount(invenCode), currentPage, 10, 10);
+		ArrayList<StockAndDelovery> result = adminService.detailInvenresult(pi, invenCode);
+		
+		return new Gson().toJson(result);
+	}
+	
 }

@@ -16,4 +16,7 @@ public class Inventory {
 	private String itemName;	//ITEM_NAME
 	private int invenPlusPay;
 	
+	private int totalStockNum;	//TOTAL_STOCK_NUM
+	private int totalDeloveryNum;	//TOTAL_DELOVERY_NUM
+	private int finalNum;
 }
