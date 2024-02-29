@@ -40,8 +40,8 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	public static final String APIKEY = "NCSCRHEL0Z2CDDBK";
-	public static final String SERVICEKEY = "QLJSBBDDWZBTYM91WCGJRGFYLOUE4RVH";
+	public static final String APIKEY = "NCSW02HP7JEZPA4F";
+	public static final String SERVICEKEY = "AXCN1TUXEGERFCHP6NIRC4DIBAZHAH2S";
 	public static final String PHONE = "01040718816";
 	
 	@Autowired
