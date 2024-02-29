@@ -50,6 +50,7 @@
 						function phoneCheck(){
 							
 							$.ajax({
+								type: "POST",
 								url: 'check-phone-meessage',
 								data: {
 									memPhone: $('#memPhone').val()

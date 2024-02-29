@@ -40,6 +40,10 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	public static final String APIKEY = "NCSCRHEL0Z2CDDBK";
+	public static final String SERVICEKEY = "QLJSBBDDWZBTYM91WCGJRGFYLOUE4RVH";
+	public static final String PHONE = "01040718816";
+	
 	@Autowired
 	private JavaMailSender sender;
 	
@@ -68,14 +72,16 @@ public class MemberController {
 	
 	// --------------------- 휴대폰인증 메세지
 	@ResponseBody
-	@GetMapping(value="check-phone-meessage", produces="application/json; charset=UTF-8")
+	@PostMapping(value="check-phone-meessage", produces="application/json; charset=UTF-8")
 	public String sendPhoneCheckMessage(String memPhone) {
-		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSCRHEL0Z2CDDBK", "QLJSBBDDWZBTYM91WCGJRGFYLOUE4RVH", "https://api.coolsms.co.kr");
-		Message message = new Message();
-		message.setFrom("01040718816");
-		message.setTo(memPhone);
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize(APIKEY, 
+																			  SERVICEKEY, 
+																			  "https://api.coolsms.co.kr");
+		int randomNum = (int)((Math.random()*(9000)) + 1000);
 		
-		int randomNum = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);
+		Message message = new Message();
+		message.setFrom(PHONE);
+		message.setTo(memPhone);
 		
 		message.setText("인증번호 : ["+randomNum +"] 입니다.\n절대 타인에게는 알려주지 마세요.");
 
@@ -87,7 +93,6 @@ public class MemberController {
 		} catch (Exception exception) {
 		  System.out.println(exception.getMessage());
 		}
-		
         return new Gson().toJson(randomNum);
 	}
 	
@@ -120,12 +125,9 @@ public class MemberController {
 		Format f = new DecimalFormat("000000");
 		String secret = f.format(i);
 		
-		CertVO certVo = CertVO.builder()
-							  .who(ip)
-							  .secret(secret)
-							  .build();
+		CertVO certVo = CertVO.builder().who(ip).secret(secret).build();
 		
-		helper.setTo(memEmail);;
+		helper.setTo(memEmail);
 		helper.setSubject("회원가입 인증번호입니다.");
 		helper.setText("인증번호 : " +secret+"\n");
 		
@@ -133,6 +135,7 @@ public class MemberController {
 		
 		return new Gson().toJson(secret);
 	}
+	
 	@ResponseBody
 	@GetMapping(value="enrollMember", produces="application/json; charset=UTF-8")
 	public String insertMember(Member m) {

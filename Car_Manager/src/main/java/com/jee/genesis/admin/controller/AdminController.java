@@ -162,6 +162,9 @@ public class AdminController {
 			adminService.updateCarTypePart(c);
 			
 		}else {
+			String notFile = "null";
+			c.setOriginalName(notFile);
+			adminService.updateCarTypeFile(c);
 			adminService.updateCarType(c);
 			adminService.updateCarTypePart(c);
 		}

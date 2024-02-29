@@ -125,9 +125,13 @@
 	
 	<update id="updateCarTypeFile" parameterType="carType">
 		UPDATE CAR_FILE
-		   SET ORIGINAL_NAME = #{originalName}, 
-			   UPLOAD_NAME = #{uploadName}, 
-			   UPLOAD_DATE = SYSDATE
+		<set>
+	        <if test="originalName != 'null'">
+	            ORIGINAL_NAME = #{originalName},
+	        	UPLOAD_NAME = #{uploadName},
+	        </if>
+	        UPLOAD_DATE = SYSDATE
+		</set>
 		 WHERE FILE_NUM = #{fileNum}
 	</update>
 	
@@ -156,7 +160,7 @@
 	
 	<delete id="deleteModelFile" parameterType="_int">
 		DELETE FROM CAR_FILE
-		WHERE FILE_NUM = #{fileNum}
+		 WHERE FILE_NUM = #{fileNum}
 	</delete>
 	
 	<select id="equipmentListCount" resultType="_int">

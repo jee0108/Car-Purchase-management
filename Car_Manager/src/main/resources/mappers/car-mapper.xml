@@ -254,6 +254,7 @@
 		  JOIN MYPART ON (MYCAR.MYCAR_NUM = MYPART.MYCAR_NUM)
 		  JOIN MEMBER DEALER ON (MYCAR.MYCAR_DEALER = DEALER.MEM_PHONE)
 		 WHERE DEALER.MEM_ROLE = 'D'
+		 ORDER BY CAR_DATE DESC
 	</select>
 	
 	<insert id="insertEngineGroup" parameterType="string">
